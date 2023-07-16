@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  @apply font-poppins bg-background;
+}
+.bar-chat{
+  @apply bg-InboxColor rounded-[15px];
+}
+.active{
+  @apply text-msgColorOn border-b-2 border-b-BordeButtomColor
+}
