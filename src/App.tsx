@@ -1,21 +1,37 @@
+import { Route, Routes } from 'react-router'
 import './App.css'
-import Inbox from './Component/Inbox'
-import Chat_box from './Component/Chat_box'
-import ChatFriends from './Component/ChatFriends'
+import Home from './Component/Home'
+import LogoBar from './Component/LogoBar'
+import Chat from './Component/Chat'
+// import LeaderBoard from './Component/LeaderBoard'
+// import NavBar from './Component/NavBar'
+// import TopScore from './Component/TopScore'
+
 function App() {
 
   return (
-    <main className=' flex justify-between gap-2 p-8 h-screen 2xl:container 2xl:mx-auto'>
-      <Inbox />
-      <div className=' bar-chat  w-[50%]'>
-        <Chat_box />
+    <div className=" flex flex-col items-center align-center gap-4">
+      <LogoBar />
+      
+        <Routes> 
+      <Route path="/" element={<Home />} />
+      <Route path="/Chat" element={<Chat />}  />
+      <Route path="/Play" element={<h1 style={{color:'#05AE13'}}>Page Play</h1>}  />
+      <Route path="/CreateRoom" element={<h1 style={{color:'#05AE13'}}>Page Create Room</h1>}  />
+      <Route path="/Profile" element={<h1 style={{color:'#05AE13'}}>Page Profile</h1>}  />
+      <Route path="*" element={<h1 style={{color:'white', fontSize:'25px'}}>404 Page Not Found </h1>}  />
+      </Routes>
       </div>
-      <div className='bar-chat  w-[25%]'>
-        <ChatFriends />
-      </div>
-
-    </main>
-  )
-}
-
-export default App
+      
+    
+    )
+  }
+  
+  export default App
+  
+  // <div className='flex flex-col flex-1 gap-5 ml-[7%]'>
+  //   
+  //   <div className='flex  '>
+  //     <Home />
+  //   </div>
+  // </div>

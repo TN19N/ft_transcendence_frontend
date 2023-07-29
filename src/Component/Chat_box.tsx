@@ -1,9 +1,9 @@
 import { OnlineIcon, PlayIcon, BlockIcon, SendIcon } from './Icons';
-import Box_message from './Box_msg';
+import Box_message from './BoxMsg';
 import avatar from '../assets/ahmaidi.png'
 const Chat_box = () => {
     return (
-        <div className='flex flex-col gap-2 bar-chat px-3'>
+        <div className='flex flex-col gap-2 bar-chat px-3 w-[25%]'>
             <div className="flex w-full">
                 <div className="flex gap-2 p-4">
                     <img src={avatar} alt="avatar" className="w-10 h-10 rounded-full" />

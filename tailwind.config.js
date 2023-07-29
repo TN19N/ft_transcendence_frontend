@@ -15,9 +15,12 @@ export default {
         ButtomMsgColor: '#808080',
         buttonPlaybgColor: '#01101F',
         nberFriendsColor: '#2E8CE5',
+        buttonLoginColor: '#0C5E8B',
+        NavBarroundedIcon: '#2A7FCF',
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
+        Stick: ['Stick No Bills', 'sans-serif'],
       }
       
     },
