@@ -3,7 +3,7 @@ import Box_message from './BoxMsg';
 import avatar from '../assets/ahmaidi.png'
 const Chat_box = () => {
     return (
-        <div className='flex flex-col gap-2 bar-chat px-3 w-[25%]'>
+        <div className='flex flex-col gap-2 bar-chat px-3 overflow-hidden w-full'>
             <div className="flex w-full">
                 <div className="flex gap-2 p-4">
                     <img src={avatar} alt="avatar" className="w-10 h-10 rounded-full" />
@@ -19,7 +19,7 @@ const Chat_box = () => {
                     <button className='bg-buttonPlaybgColor p-2 rounded-[50%]'><BlockIcon className="w-6 h-6" /></button>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 overflow-auto item-center " style={{ maxHeight: '75vh' }}>
+            <div className="flex flex-col gap-2 overflow-auto h-[60vh] item-center " style={{ maxHeight: '75vh' }}>
                 {
                     [...Array(30)].map((_, i) => (
                         <Box_message key={i} color={i % 2 === 0 ? '#01101F' : '#2E8CE5'}

@@ -16,10 +16,9 @@ const NavBar = () => {
   }, [location]);
 
   return (
-    <div className="flex items-center justify-center">
-      <div className='flex items-center justify-center gap-10 bg-InboxColor rounded-xl p-2'>
+      <div className='flex items-center justify-between bg-InboxColor rounded-xl w-[40%] p-2'>
         <button
-          className={`rounded-full w-10 h-10 ${activeButton === 'Play' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Play' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Play')}
         >
           <NavLink to="/Play">
@@ -29,7 +28,7 @@ const NavBar = () => {
           </NavLink>
         </button>
         <button
-          className={`rounded-full w-10 h-10 ${activeButton === 'Chat' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Chat' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Chat')}
         >
           <Link to="/Chat">
@@ -39,7 +38,7 @@ const NavBar = () => {
           </Link>
         </button>
         <button
-          className={`rounded-full w-10 h-10 ${activeButton === '' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === '' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('/')}
         >
           <Link to="">
@@ -49,7 +48,7 @@ const NavBar = () => {
           </Link>
         </button>
         <button
-          className={`rounded-full w-10 h-10 ${activeButton === 'CreateRoom' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'CreateRoom' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('CreateRoom')}
         >
           <Link to="/CreateRoom">
@@ -59,7 +58,7 @@ const NavBar = () => {
           </Link>
         </button>
         <button
-          className={`rounded-full w-10 h-10 ${activeButton === 'Profile' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Profile' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Profile')}
         >
           <Link to="/Profile">
@@ -69,7 +68,6 @@ const NavBar = () => {
           </Link>
         </button>
       </div>
-    </div>
   );
 };
 

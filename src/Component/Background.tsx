@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import type { Container, Engine } from "tsparticles-engine";
-import Particles from "react-tsparticles";
+import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim"; 
 
 const Background = () => {
@@ -23,29 +23,29 @@ const Background = () => {
                         value: "#01101F",
                     },
                 },
-                fpsLimit: 120,
-                interactivity: {
-                    events: {
-                        onClick: {
-                            enable: true,
-                            mode: "push",
-                        },
-                        onHover: {
-                            enable: true,
-                            mode: "repulse",
-                        },
-                        resize: true,
-                    },
-                    modes: {
-                        push: {
-                            quantity: 4,
-                        },
-                        repulse: {
-                            distance: 200,
-                            duration: 0.4,
-                        },
-                    },
-                },
+                // fpsLimit: 20,
+                // interactivity: {
+                //     events: {
+                //         onClick: {
+                //             enable: true,
+                //             mode: "push",
+                //         },
+                //         onHover: {
+                //             enable: true,
+                //             mode: "repulse",
+                //         },
+                //         resize: true,
+                //     },
+                //     modes: {
+                //         push: {
+                //             quantity: 4,
+                //         },
+                //         repulse: {
+                //             distance: 200,
+                //             duration: 0.4,
+                //         },
+                //     },
+                // },
                 particles: {
                     color: {
                         value: "#ffffff",

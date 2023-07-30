@@ -2,14 +2,14 @@ import { OnlineIcon } from "./Icons"
 import avatar from '../assets/ahmaidi.png'
 const ChatFriends = () => {
     return (
-        <div className='flex flex-col gap-2 bar-chat px-3'>
+        <div className='flex flex-col gap-2 bar-chat overflow-hidden px-3'>
             <div className="flex justify-between py-5">
                 <h3 className="text-white text-xl">Friends</h3>
                 <div className=" bg-nberFriendsColor rounded-[50%] p-1">
                     <p className="text-white">12</p>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 overflow-auto item-center" style={{ maxHeight: '80vh' }}>
+            <div className="flex flex-col gap-2 overflow-auto h-[67vh] item-center" style={{ maxHeight: '80vh' }}>
                 {
                     [...Array(20)].map((_, i) => (
                         <div key={i}>

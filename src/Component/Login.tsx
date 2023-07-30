@@ -12,7 +12,7 @@ const login = () => {
         visible: { x: 0 },    // End position, move to the original position
       };
     return (
-            <div className='flex gap-8 items-center mt-[8rem] font-Stick rounded-xl '>
+            <div className='flex gap-8 items-center font-Stick rounded-xl h-[80vh]'>
                 <motion.div
                 initial="hidden"
                 animate="visible"
