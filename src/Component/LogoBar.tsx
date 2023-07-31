@@ -24,10 +24,10 @@ const LogoBar = () => {
       <div className='flex items-center gap-3'>
       <Notification />
       <div className="relative">
-          <div className="flex gap-2 items-center text-white cursor-pointer w-full" onClick={toggleDropdown}>
+          <div className="flex gap-2 items-center text-white w-full" onClick={toggleDropdown}>
             <img src={Avatar} alt="avatar" className="w-10 h-10 rounded-full" />
             <span className="flex items-center gap-2">
-              ahmaidi <ArrowIcon className={`w-3 h-2 ${isDropdownOpen ? 'transform rotate-180' : ''}`} />
+              ahmaidi <ArrowIcon className={`w-3 h-2 cursor-pointer ${isDropdownOpen ? 'transform rotate-180' : ''}`} />
             </span>
           </div>
           {isDropdownOpen && (
