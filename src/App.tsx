@@ -8,7 +8,8 @@ import Login from './Component/Login'
 
 function App() {
   const isAuthenticated = false;
-  // const location = window.location.pathname;
+  const location = window.location.pathname;
+  
   return (
 
     <div className='h-[100vh] flex items-center justify-center'>
