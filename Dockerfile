@@ -1,6 +1,6 @@
 FROM node:18.17.0-alpine3.18
 
-RUN apk update && apk add --no-cache git
+RUN apk update && apk upgrade --no-cache
 
 WORKDIR /usr/src/app
 
