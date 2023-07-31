@@ -12,7 +12,7 @@ const login = () => {
         visible: { x: 0 },   
       };
       const handleLoginButtonClick = () => {
-        window.location.href = 'http://backend:9000/api/auth/intra42';
+        window.location.href = 'http://localhost:9000/api/auth/intra42';
       };
     return (
             <div className='flex gap-8 items-center font-Stick rounded-xl h-[80vh] w-[60%] m-auto'>
