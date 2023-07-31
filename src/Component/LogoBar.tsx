@@ -6,7 +6,7 @@ import NavBar from './NavBar';
 import Notification from './Notification';
 const LogoBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
