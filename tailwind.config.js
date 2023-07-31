@@ -5,6 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'xsm': '320px',
+      'sm': '576px',
+      'md': '960px',
+      'lg': '1440px',
+      'l': '1000px',
+    },
     extend: {
       colors:{
         background: '#01101F',
