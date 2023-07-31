@@ -12,7 +12,7 @@ const login = () => {
         visible: { x: 0 },   
       };
       const handleLoginButtonClick = () => {
-        window.location.href = 'https://www.google.com';
+        window.location.href = 'http:';
       };
     return (
             <div className='flex gap-8 items-center font-Stick rounded-xl h-[80vh] w-[60%] m-auto'>
