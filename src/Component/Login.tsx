@@ -24,22 +24,22 @@ const login = () => {
                 transition={{ ease: "easeOut", duration: 2 }}
 
                 >
-                <p className='text-white w-[70%] rounded-3xl'>
-                    <h1 className='text-4xl font-bold my-4 xsm:text-md '>Play Pong game</h1>
-                    <p className='text-xl font-thin my-5 xsm:text-md'>Welcome to the thrilling world of online ping pong,
+                <div className='text-white  w-full rounded-3xl md:w-[70%]'>
+                    <h1 className='text-lg font-bold my-4 xsm:text-4xl '>Play Pong game</h1>
+                    <p className='text-sm font-thin my-5 xsm:text-md'>Welcome to the thrilling world of online ping pong,
                         where the virtual table comes alive with intense rallies and lightning-fast reflexes.
                         Engage in epic battles with players from around the globe.</p>
                     <button className='text-white bg-buttonLoginColor rounded-2xl p-2 w-35 text-lg flex gap-2 items-center' onClick={handleLoginButtonClick}><LoginIcon className='w-6 h-6' />Login</button>
-                </p>
+                </div>
                 </motion.div>
                 <motion.div
-                className='flex-1'
+                className='flex-1 hidden md:block'
                 initial="hidden"
                 animate="visible"
                 variants={secondDivAnimation}
                 transition={{ ease: "easeOut", duration: 2 }}
                 >
-                    <img src={PlayerImg} alt="Pong" className='w-[350px] h-[275px]' />
+                    <img src={PlayerImg} alt="Pong" className=' w-[350px] h-[275px] ' />
 
                 </motion.div>
                

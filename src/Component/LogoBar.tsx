@@ -6,7 +6,7 @@ import NavBar from './NavBar';
 import Notification from './Notification';
 const LogoBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
@@ -14,14 +14,14 @@ const LogoBar = () => {
 
   return (
     <div className="flex justify-between items-center w-[95%] m-auto">
-      <Link to="/" className="w-[10%] h-[10%] py-4">
-        <LogoIcon className="w-[50%] h-[50%]" />
+      <Link to="/" className="flex  w-[10%]">
+        <LogoIcon className='w-[80%] p-2'/>
       </Link>
 
 
       {isAuthenticated && (<>
       <NavBar />
-      <div className='flex items-center gap-3'>
+      <div className='flex items-center gap-3 w-[20%]'>
       <Notification />
       <div className="relative">
           <div className="flex gap-2 items-center text-white w-full" onClick={toggleDropdown}>

@@ -1,0 +1,12 @@
+.rounded-rectangle {
+    position: absolute;
+    left: 0;
+    top: 50%; 
+    transform: translateY(-50%);
+    width: 4px;
+    height: 100%;
+    background-color: green;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px; 
+    z-index: -1;
+}

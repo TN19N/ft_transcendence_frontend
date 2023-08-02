@@ -1,5 +1,5 @@
-import Avatar from '../assets/ahmaidi.png';
-import { AddIcon, SearchIcon } from './Icons';
+import {SearchIcon } from './Icons';
+import SugPeople from './SugPeople';
 const InvitePeople = () => {
     return (
         <section className="flex gap-2 w-[68%]">
@@ -11,172 +11,24 @@ const InvitePeople = () => {
                 <SearchIcon className="fill-BordeButtomColor w-6 h-6" />
             </div>
             <div className="flex gap-6 items-center align-center px-10">
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button>
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-             
+             <SugPeople />
+             <SugPeople />
+             <SugPeople /> 
             </div>
             <div className="flex gap-6 items-center align-center px-10 ">
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-             
+              <SugPeople />
+              <SugPeople />
+              <SugPeople />
             </div>
             <div className="flex gap-6 items-center align-center px-10 ">
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-             
+              <SugPeople />
+              <SugPeople />
+              <SugPeople />
             </div>
             <div className="flex gap-6 items-center align-center px-10">
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-             
-            </div>
-            <div className="flex gap-6 items-center align-center px-10">
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-             
-            </div>
-            <div className="flex gap-6 items-center align-center px-10">
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-             
-            </div>
-            <div className="flex gap-6 items-center align-center px-10">
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-              <div className="flex gap-2 items-center text-white text-lg bg-background rounded-2xl p-3">
-                <img src={Avatar} alt="avatar" className="w-8 h-8 rounded-full" />
-                ahmaidi
-                <button >
-                  <AddIcon className="w-7 h-5" />
-                </button>
-              </div>
-             
+              <SugPeople />
+              <SugPeople />
+              <SugPeople />
             </div>
             
           </div>

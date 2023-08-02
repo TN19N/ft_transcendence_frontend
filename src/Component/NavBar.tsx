@@ -16,7 +16,7 @@ const NavBar = () => {
   }, [location]);
 
   return (
-      <div className='flex items-center justify-between bg-InboxColor rounded-xl w-[40%] p-2'>
+      <div className='flex items-center justify-between bg-InboxColor rounded-xl w-[30%] p-2'>
         <button
           className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Play' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Play')}
