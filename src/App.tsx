@@ -10,14 +10,13 @@ import Profile from './Component/Profile'
 import { UserProvider} from './Component/UserContext'
 
 function App() {
-  // const userContext = useContext<UserDataType | null>(UserContext);
    return (
     <UserProvider>
     <div className='h-[100vh] flex items-center justify-center'>
       <Background />
       <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden xsm:w-[80%] sm:w-[80%] md:w-[90%] 2xl:w-[90%]">
       <LogoBar />
-    {/* {(userContext?.isAuthenticated) ? ( */}
+          userContext?.isAuthenticated = Null
           <Routes>
             <Route path="/Login" element={<Login />} />
             <Route path="/" element={<Home />} />
@@ -27,9 +26,6 @@ function App() {
             <Route path="/Profile" element={<Profile />}  />
             <Route path="*" element={<div><h1 style={{color:'white', fontSize:'25px'}}>404 Page Not Found </h1></div>}  />
           </Routes>
-            // ):
-            // (<Login />
-            // )}
     </div>
   </div>
   </UserProvider>
