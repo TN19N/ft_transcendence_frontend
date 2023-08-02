@@ -21,7 +21,7 @@ const NavBar = () => {
           className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Play' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Play')}
         >
-          <NavLink to="/Play">
+          <NavLink to="/play">
             <div className="flex items-center justify-center">
               <NavPlayIcon className="w-7 h-7" />
             </div>
@@ -31,7 +31,7 @@ const NavBar = () => {
           className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Chat' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Chat')}
         >
-          <Link to="/Chat">
+          <Link to="/chat">
             <div className="flex items-center justify-center">
               <ChatIcon className="w-7 h-7" />
             </div>
@@ -51,7 +51,7 @@ const NavBar = () => {
           className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'CreateRoom' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('CreateRoom')}
         >
-          <Link to="/CreateRoom">
+          <Link to="/createRoom">
           <div className="flex items-center justify-center">
             <NavCreatRoomIcon className="w-8 h-8" />
           </div>
@@ -61,7 +61,7 @@ const NavBar = () => {
           className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Profile' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Profile')}
         >
-          <Link to="/Profile">
+          <Link to="/profile">
           <div className="flex items-center justify-center">
             <NavProfileIcon className="w-8 h-8" />
           </div>
