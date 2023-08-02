@@ -11,14 +11,14 @@ import { UserProvider} from './Component/UserContext'
 
 function App() {
    return (
-    <UserProvider>
-    <div className='h-[100vh] flex items-center justify-center'>
+     <div className='h-[100vh] flex items-center justify-center'>
       <Background />
       <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden xsm:w-[80%] sm:w-[80%] md:w-[90%] 2xl:w-[90%]">
       <LogoBar />
           userContext?.isAuthenticated = Null
           <Routes>
             <Route path="/login" element={<Login />} />
+      <UserProvider>
             <Route path="/home" element={<Home />} />
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />}  />
@@ -26,10 +26,10 @@ function App() {
             <Route path="/createRoom" element={<div><h1 style={{color:'#05AE13'}}>Page Create Room</h1></div>}  />
             <Route path="/profile" element={<Profile />}  />
             <Route path="*" element={<div><h1 style={{color:'white', fontSize:'25px'}}>404 Page Not Found </h1></div>}  />
+  </UserProvider>
           </Routes>
     </div>
   </div>
-  </UserProvider>
     );
   }
   
