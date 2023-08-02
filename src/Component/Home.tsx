@@ -16,24 +16,42 @@ interface UserData {
   }
   
 const Home = () => {
-    const [userData, setUserData] = useState<UserData | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  console.log('userData');
   useEffect(() => {
-    axios.get<UserData[]>('http://localhost/api/user')
-      .then(response => {
-        setUserData(response.data[0]);
-        setIsAuthenticated(true);
-      })
-      .catch(error => console.error('Error fetching user data:', error));
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('http://localhost/api/user', {
+          method: "GET",
+        });
+        console.log('userData');
+        console.log('Res: ' + response.status);
+
+        if (!response.ok) {
+          // Handle HTTP error status
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        // Handle any other errors
+        setError("Error fetching user data");
+      }
+    };
+
+    fetchUserData();
   }, []);
 
-    console.log(userData + ' ' + isAuthenticated);
+  if (error) {
+    return <div>{error}</div>;
+  }
     return (
         <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden xsm:w-[80%] sm:w-[80%] md:w-[90%] 2xl:w-[90%]">
-        <LogoBar />
+        {/* <LogoBar /> */}
         <section className=' flex gap-2  h-[78vh] w-[90%] overflow-hidden mb-6'>   
-            <InvitePeople/>
+            {/* <InvitePeople/> */}
             <TopScore/> 
         </section>
         </div>
