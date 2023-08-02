@@ -2,8 +2,4 @@ version: '3.8'
 services:
   production:
     image: fontend
-    container_name: fontend
-    build:
-      dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
+    build: .
