@@ -19,7 +19,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
-    axios.get<UserData[]>('http://localhost:9000/api/auth/intra42')
+    axios.get<UserData[]>('http://localhost/api/auth/intra42')
       .then(response => {
         setUserData(response.data[0]);
         setIsAuthenticated(true);
