@@ -7,7 +7,7 @@ import LogoBar from './Component/LogoBar'
 import Background from './Component/Background'
 import Login from './Component/Login'
 import Profile from './Component/Profile'
-import { UserProvider} from './Component/UserContext'
+// import { UserProvider} from './Component/UserContext'
 
 function App() {
    return (
@@ -18,7 +18,6 @@ function App() {
           userContext?.isAuthenticated = Null
           <Routes>
             <Route path="/login" element={<Login />} />
-      <UserProvider>
             <Route path="/home" element={<Home />} />
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />}  />
@@ -26,7 +25,6 @@ function App() {
             <Route path="/createRoom" element={<div><h1 style={{color:'#05AE13'}}>Page Create Room</h1></div>}  />
             <Route path="/profile" element={<Profile />}  />
             <Route path="*" element={<div><h1 style={{color:'white', fontSize:'25px'}}>404 Page Not Found </h1></div>}  />
-  </UserProvider>
           </Routes>
     </div>
   </div>
