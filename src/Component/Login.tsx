@@ -14,7 +14,7 @@ const login = () => {
         window.location.href = 'http://localhost/api/auth/intra42';
       };
     return (
-      <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden xsm:w-[80%] sm:w-[80%] md:w-[90%] 2xl:w-[90%]">
+      <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden w-[90%]">
       <LogoIcon className='w-[12vh] h-[12vh] p-2'/>
             <div className='flex gap-8 items-center font-Stick rounded-xl h-[80vh] w-[60%] m-auto'>
                 <motion.div
@@ -25,13 +25,12 @@ const login = () => {
                 transition={{ ease: "easeOut", duration: 2 }}
 
                 >
-                <div className='text-white  w-full rounded-3xl md:w-[70%]'>
-                    <h1 className='text-lg font-bold my-4 xsm:text-4xl '>Play Pong game</h1>
-                    <p className='text-sm font-thin my-5 xsm:text-md'>Welcome to the thrilling world of online ping pong,
+                    <h1 className=' text-nberFriendsColor font-bold my-4 text-2xl sm:text-3xl md:text-4xl'>Play Pong game</h1>
+                    <p className='text-white font-thin my-5 text-sm sm:text-md md:text-lg'>Welcome to the thrilling world of online ping pong,
                         where the virtual table comes alive with intense rallies and lightning-fast reflexes.
                         Engage in epic battles with players from around the globe.</p>
                     <button className='text-white bg-buttonLoginColor rounded-2xl p-2 w-35 text-lg flex gap-2 items-center' onClick={handleLoginButtonClick}><LoginIcon className='w-6 h-6' />Login</button>
-                </div>
+          
                 </motion.div>
                 <motion.div
                 className='flex-1 hidden md:block'
@@ -40,7 +39,7 @@ const login = () => {
                 variants={secondDivAnimation}
                 transition={{ ease: "easeOut", duration: 2 }}
                 >
-                    <img src={PlayerImg} alt="Pong" className=' w-[350px] h-[275px] ' />
+                    <img src={PlayerImg} alt="Pong" className=' md:w-[350px] md:h-[275px] 2xl:w-[450px] 2xl:h-[375px]  ' />
 
                 </motion.div>
                
