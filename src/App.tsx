@@ -1,31 +1,12 @@
 import './App.css';
-// import { useContext } from 'react';
-import { Route, Routes } from 'react-router'
-import Home from './Component/Home'
-import Chat from './Component/Chat'
-import LogoBar from './Component/LogoBar'
+import RoutesApp from './RoutesApp';
 import Background from './Component/Background'
-import Login from './Component/Login'
-import Profile from './Component/Profile'
-// import { UserProvider} from './Component/UserContext'
 
 function App() {
    return (
      <div className='h-[100vh] flex items-center justify-center'>
       <Background />
-      <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden xsm:w-[80%] sm:w-[80%] md:w-[90%] 2xl:w-[90%]">
-      <LogoBar />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/chat" element={<Chat />}  />
-            <Route path="/play" element={<div><h1 style={{color:'#05AE13'}}>Page Play</h1></div>}  />
-            <Route path="/createRoom" element={<div><h1 style={{color:'#05AE13'}}>Page Create Room</h1></div>}  />
-            <Route path="/profile" element={<Profile />}  />
-            <Route path="*" element={<div><h1 style={{color:'white', fontSize:'25px'}}>404 Page Not Found </h1></div>}  />
-          </Routes>
-    </div>
+      <RoutesApp />
   </div>
     );
   }

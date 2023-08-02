@@ -2,8 +2,11 @@ import Avatar from '../assets/ahmaidi.png';
 import { EditIcon } from './Icons';
 import './Profile.css';
 import Score from './Score';
+import LogoBar from './LogoBar';
 const Profile = () => {
     return (
+        <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden xsm:w-[80%] sm:w-[80%] md:w-[90%] 2xl:w-[90%]">
+        <LogoBar />
     <div className="flex h-[78vh] w-[90%] m-auto bg-InboxColor mb-6 rounded-xl">
        <div className="flex-3 flex flex-col gap-3 m-auto ">
             <div className='text-white flex-3 flex flex-col'>
@@ -57,6 +60,7 @@ const Profile = () => {
                 <Score/>
             </div>
         </div>
+    </div>
     </div>
     );
 }

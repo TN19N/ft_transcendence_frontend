@@ -1,7 +1,6 @@
 import PlayerImg from '../assets/playerIcon.svg'
-import { LoginIcon } from './Icons'
+import { LoginIcon, LogoIcon } from './Icons'
 import { motion } from 'framer-motion';
-
 const login = () => {
         const firstDivAnimation = {
           hidden: { x: -1200 },
@@ -15,6 +14,8 @@ const login = () => {
         window.location.href = 'http://localhost/api/auth/intra42';
       };
     return (
+      <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden xsm:w-[80%] sm:w-[80%] md:w-[90%] 2xl:w-[90%]">
+      <LogoIcon className='w-[12vh] h-[12vh] p-2'/>
             <div className='flex gap-8 items-center font-Stick rounded-xl h-[80vh] w-[60%] m-auto'>
                 <motion.div
                 className='flex-1'
@@ -43,6 +44,7 @@ const login = () => {
 
                 </motion.div>
                
+            </div>
             </div>
     );
 }
