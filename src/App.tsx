@@ -15,7 +15,6 @@ function App() {
       <Background />
       <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden xsm:w-[80%] sm:w-[80%] md:w-[90%] 2xl:w-[90%]">
       <LogoBar />
-          userContext?.isAuthenticated = Null
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
