@@ -1,62 +1,48 @@
 import axios from 'axios';
-import InvitePeople from './InvitePeople';
-import TopScore from './TopScore';
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom'; // Use Navigate instead of navigate
+import InvitePeople from './InvitePeople';
 import LogoBar from './LogoBar';
-// import { UserContext, UserDataType } from './UserContext';
+import TopScore from './TopScore';
 interface UserData {
-    id: number;
-    name: string;
-    email: string;
-  }
-  
-  export interface UserDataType {
-    userData: UserData | null;
-    isAuthenticated: boolean;
-  }
-  
+  id: number;
+  name: string;
+  email: string;
+}
+
 const Home = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  console.log('userData');
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('http://localhost/api/user', {
-          method: "GET",
-        });
-        console.log('userData');
-        console.log('Res: ' + response.status);
-
-        if (!response.ok) {
-          // Handle HTTP error status
-          throw new Error("Failed to fetch user data");
-        }
-
-        const data = await response.json();
-        setUserData(data);
-      } catch (error) {
-        // Handle any other errors
-        setError("Error fetching user data");
-      }
-    };
-
-    fetchUserData();
+    // Fetch user data from the API endpoint
+    axios.get('http://localhost/api/user')
+      .then((response) => {
+        const userData: UserData = response.data;
+        setUserData(userData);
+        setIsAuthenticated(true); // Assuming the API response indicates authentication status
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsAuthenticated(false);
+      });
   }, []);
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-    return (
+  console.log('Userdata',userData);
+  return (
+    <>
+      {isAuthenticated ? (
         <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden xsm:w-[80%] sm:w-[80%] md:w-[90%] 2xl:w-[90%]">
-        {/* <LogoBar /> */}
+        <LogoBar />
         <section className=' flex gap-2  h-[78vh] w-[90%] overflow-hidden mb-6'>   
-            {/* <InvitePeople/> */}
+            <InvitePeople/>
             <TopScore/> 
         </section>
         </div>
-    );
-}
-
+      ) : (
+        <Navigate to="/login" replace /> // Use Navigate component for redirection
+      )}
+    </>
+  );
+};
 
 export default Home;
