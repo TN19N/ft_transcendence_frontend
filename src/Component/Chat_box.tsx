@@ -6,7 +6,7 @@ const Chat_box = () => {
         <div className='flex flex-col gap-2 bar-chat px-3 overflow-hidden w-full'>
             <div className="flex w-full">
                 <div className="flex gap-2 p-4">
-                    <img src={avatar} alt="avatar" className="w-10 h-10 rounded-full" />
+                    <img src={avatar} alt="avatar" className="iphone:w-7 iphone:h-7 tablet:w-10 tablet:h-10 rounded-full" />
                     <div className="flex flex-col gap-1">
                         <p className="text-msgColorOn text-[12px]">Ahmaidi</p>
                         <div className="flex gap-1">
@@ -19,7 +19,7 @@ const Chat_box = () => {
                     <button className='bg-buttonPlaybgColor p-2 rounded-[50%]'><BlockIcon className="w-6 h-6" /></button>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 overflow-auto h-[60vh] item-center " style={{ maxHeight: '75vh' }}>
+            <div className="flex flex-col gap-2 overflow-auto h-[67vh] item-center ">
                 {
                     [...Array(30)].map((_, i) => (
                         <Box_message key={i} color={i % 2 === 0 ? '#01101F' : '#2E8CE5'}

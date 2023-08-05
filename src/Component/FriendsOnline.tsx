@@ -1,6 +1,6 @@
 import { OnlineIcon } from "./Icons"
 import avatar from '../assets/ahmaidi.png'
-const ChatFriends = () => {
+const FriendsOnline = () => {
     return (
         <div className='flex flex-col gap-2 bar-chat overflow-hidden px-3'>
             <div className="flex justify-between py-5">
@@ -9,9 +9,9 @@ const ChatFriends = () => {
                     <p className="text-white">12</p>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 overflow-auto h-[67vh] item-center" style={{ maxHeight: '80vh' }}>
+            <div className="flex flex-col gap-2 overflow-auto h-[71vh] item-center" style={{ maxHeight: '80vh' }}>
                 {
-                    [...Array(20)].map((_, i) => (
+                    [...Array(27)].map((_, i) => (
                         <div key={i}>
                             <div className="flex gap-2 px-3">
                                 <img src={avatar} alt="avatar" className="w-10 h-10 rounded-full" />
@@ -28,4 +28,4 @@ const ChatFriends = () => {
     );
 }
 
-export default ChatFriends;
+export default FriendsOnline;

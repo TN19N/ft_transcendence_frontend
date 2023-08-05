@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom'; // Use Navigate instead of navigate
+import { useEffect, useState } from 'react'; // Use Navigate instead of navigate
 import InvitePeople from './InvitePeople';
 import LogoBar from './LogoBar';
 import TopScore from './TopScore';

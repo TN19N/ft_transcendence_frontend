@@ -13,6 +13,7 @@ body{
 .active{
   @apply text-msgColorOn border-b-2 border-b-BordeButtomColor
 }
+
 .loader {
   position: relative;
   height: 40px;
@@ -20,6 +21,24 @@ body{
   color: #FFF;
   border-radius: 1px;
   animation: paddles 0.75s ease-out infinite;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #6c6c6c;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #32334a;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .loader-ball {

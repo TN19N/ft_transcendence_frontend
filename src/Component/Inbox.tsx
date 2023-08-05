@@ -11,7 +11,7 @@ const Inbox = () => {
                 <input className="w-full  text-msgColorOff bg-transparent outline-none placeholder:text-msgColorOff text-[12px]" type="text" placeholder="Search..." />
                 <SearchIcon className="fill-BordeButtomColor w-4 h-4" />
             </div>
-            <div className="flex flex-col gap-2 overflow-auto item-center ">
+            <div className="flex flex-col gap-3 overflow-auto item-center h-[67vh]">
                 {
                     [...Array(20)].map((_, i) => (
                         <div key={i}>

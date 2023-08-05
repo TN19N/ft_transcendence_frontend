@@ -28,7 +28,7 @@ const TopScore = () => {
 
     return (
         <div className="flex-1 tablet:flex-2 flex flex-col gap-4  bg-InboxColor rounded-2xl pb-3 ">
-            <div className="flex justify-between text-white text-[8px] w-[95%] p-2 tablet:text-[16px] laptop:text-[18px]">
+            <div className="flex justify-between text-white text-[8px] w-[95%] p-2 tablet:text-[16px] laptop:text-[18px] imac:text-[22px]">
                 <div className="flex gap-1 items-center">
                     <TopScoreIcon className="w-3 h-3 tablet:w-6 tablet:h-6 laptop:w-8 laptop:h-8"/>
                     Top Score
@@ -39,12 +39,11 @@ const TopScore = () => {
             {topScoresData.map((data, index) => (
                 <div
                     key={index}
-                    className="flex gap-3 items-center text-white iphone:text-[10px] tablet:text-[16px] ml-2 bg-background rounded-2xl p-2 w-[90%]"
-                >
+                    className="flex gap-3 items-center text-white iphone:text-[10px] tablet:text-[16px] ml-2 bg-background rounded-2xl p-2 w-[90%]">
                     <img
                         src={Avatar}
                         alt="avatar"
-                        className="rounded-full iphone:w-5 iphone:h-5 tablet:w-8 tablet:h-8"
+                        className="rounded-full iphone:w-5 iphone:h-5 tablet:w-8 tablet:h-8 laptop:w-10 laptop:h-10 imac:w-12 imac:h-12"
                     />
                     {data.name}
                 </div>
