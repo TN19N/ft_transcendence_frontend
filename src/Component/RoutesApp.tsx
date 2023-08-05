@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router'
-import Home from './Component/Home'
-import Chat from './Component/Chat'
-import Login from './Component/Login'
-import Profile from './Component/Profile'
+import Home from './Home'
+import Chat from './Chat'
+import Login from './Login'
+import Profile from './Profile'
 const RoutesApp = () => {
     return (
           <Routes>

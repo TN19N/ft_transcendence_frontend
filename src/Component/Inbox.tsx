@@ -2,7 +2,7 @@ import { SearchIcon } from "./Icons"
 import Cards from "./Cards"
 const Inbox = () => {
     return (
-        <div className='flex flex-col gap-4 bar-chat w-[25%] px-3'>
+        <div className= 'flex flex-col gap-4 px-3 bg-InboxColor rounded-xl overflow-hidden h-[78vh]'>
             <div className="flex justify-between">
                 <button className=" w-full p-4 text-msgColorOff active text-center">Chat</button>
                 <button className="w-full p-4 text-msgColorOff text-center">Channel</button>

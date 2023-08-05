@@ -16,54 +16,54 @@ const NavBar = () => {
   }, [location]);
 
   return (
-      <div className='flex items-center justify-between bg-InboxColor rounded-xl w-[30%] p-2'>
+      <div className='flex items-center justify-between bg-InboxColor rounded-xl w-[40%] p-[3px] iphone:w-[45%] tablet:w-[40%] tablet:p-[5px]'>
         <button
-          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Play' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          className={`rounded-full p-1 ${activeButton === 'play' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Play')}
         >
           <NavLink to="/play">
             <div className="flex items-center justify-center">
-              <NavPlayIcon className="w-7 h-7" />
+              <NavPlayIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
             </div>
           </NavLink>
         </button>
         <button
-          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Chat' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          className={`rounded-full  p-1 ${activeButton === 'chat' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Chat')}
         >
           <Link to="/chat">
             <div className="flex items-center justify-center">
-              <ChatIcon className="w-7 h-7" />
+              <ChatIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
             </div>
           </Link>
         </button>
         <button
-          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === '' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
-          onClick={() => handleButtonClick('/')}
+          className={`rounded-full  p-1 ${activeButton === 'home' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          onClick={() => handleButtonClick('home')}
         >
-          <Link to="">
+          <Link to="/home">
           <div className="flex items-center justify-center">
-            <NavHomeIcon className="w-7 h-7" />
+            <NavHomeIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
           </div>
           </Link>
         </button>
         <button
-          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'CreateRoom' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          className={`rounded-full p-1 ${activeButton === 'createRoom' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('CreateRoom')}
         >
           <Link to="/createRoom">
           <div className="flex items-center justify-center">
-            <NavCreatRoomIcon className="w-8 h-8" />
+            <NavCreatRoomIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
           </div>
           </Link>
         </button>
         <button
-          className={`rounded-full w-[10%] h-[10%] p-1 ${activeButton === 'Profile' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
+          className={`rounded-full  p-1 ${activeButton === 'profile' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Profile')}
         >
           <Link to="/profile">
           <div className="flex items-center justify-center">
-            <NavProfileIcon className="w-8 h-8" />
+            <NavProfileIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
           </div>
           </Link>
         </button>

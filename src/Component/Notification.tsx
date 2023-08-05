@@ -7,7 +7,7 @@ export default function Notification() {
       };    
   return (
     <div className='relative cursor-pointer' onClick={toggleDropdown}>
-        <NotificationIcon className="w-7 h-7"/>
+        <NotificationIcon className="iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-8 laptop:h-8"/>
         <div>
             {isDropdownOpen && (
                 <div className="absolute text-white rounded w-40 bg-background border-[1px] mt-2">
