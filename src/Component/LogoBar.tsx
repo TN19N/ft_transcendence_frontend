@@ -4,21 +4,26 @@ import Avatar from '../assets/ahmaidi.png';
 import { ArrowIcon, AuthenIcon, LogOutIcon, LogoIcon, NavProfileIcon } from './Icons';
 import NavBar from './NavBar';
 import Notification from './Notification';
+import axios from 'axios';
 
 const LogoBar = () => {
+ 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [is2FAEnabled, setIs2FAEnabled] = useState(false);
-  
+  const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
+  axios.get('/api/user/prefrences', {  
+    method: 'GET',
+  }).then((response) => {
+    setIs2FAEnabled(response.data)}
+    ).catch((error) => {
+    console.error('Error getting user preferences:', error);
+  });
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
-    setIs2FAEnabled(true);
   };
 
   const handle2FAClick = () => {
     if (is2FAEnabled) {
-      fetch('/api/user/disable', {
-        method: 'POST',
-      })
+      axios.post('/api/user/disable2fa', {})
         .then((response) => {
           console.log(response);
           console.log('2FA disabled successfully.');

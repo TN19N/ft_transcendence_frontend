@@ -15,7 +15,7 @@ const Home = () => {
   useEffect(() => {
     axios.get('http://localhost/api/user')
       .then((response) => {
-        const userData: UserData = response.data;
+        çç
         setUserData(userData);
       })
       .catch((error) => {
