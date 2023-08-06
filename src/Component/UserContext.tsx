@@ -1,37 +1,32 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
-interface UserData {
+export interface UserData {
   id: number;
-  name: string;
-  email: string;
 }
 
-export interface UserDataType {
-  userData: UserData | null;
-  isAuthenticated: boolean;
-}
-
-const UserContext = createContext<UserDataType | null>(null);
+const UserAuthen = createContext<boolean | null>(null);
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     axios.get<UserData[]>('http://localhost/api/user')
       .then(response => {
-        setUserData(response.data[0]);
+        console.log(response.data);
         setIsAuthenticated(true);
       })
-      .catch(error => console.error('Error fetching user data:', error));
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
   }, []);
 
   return (
-    <UserContext.Provider value={{ userData, isAuthenticated }}>
+    <UserAuthen.Provider value={isAuthenticated}>
       {children}
-    </UserContext.Provider>
+    </UserAuthen.Provider>
   );
 };
 
-export { UserContext, UserProvider};
+export { UserAuthen, UserProvider };
+

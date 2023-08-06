@@ -1,28 +1,14 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react'; // Use Navigate instead of navigate
+// Use Navigate instead of navigate
 import InvitePeople from './InvitePeople';
 import LogoBar from './LogoBar';
 import TopScore from './TopScore';
-interface UserData {
-  id: number;
-  name: string;
-  email: string;
-}
+import { useContext } from 'react';
+import { UserAuthen } from './UserContext';
 
 const Home = () => {
-  const [userData, setUserData] = useState<UserData | null>(null);
-
-  useEffect(() => {
-    axios.get('http://localhost/api/user')
-      .then((response) => {
-        çç
-        setUserData(userData);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-  console.log('Userdata',userData);
+  const isAuthenticated  = useContext(UserAuthen);
+  // !isAuthenticated i want to redirect to login page
+  if(!isAuthenticated) window.location.replace('/login');
   return (
         <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden w-[90%]">
         <LogoBar />

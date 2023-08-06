@@ -1,13 +1,11 @@
 import { Route, Routes } from 'react-router'
 import Home from './Home'
 import Chat from './Chat'
-import Login from './Login'
 import Profile from './Profile'
 import Authentication from './TwoFactor'
 const RoutesApp = () => {
     return (
           <Routes>
-            <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />}  />
