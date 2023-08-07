@@ -4,37 +4,45 @@ import Avatar from '../assets/ahmaidi.png';
 import { ArrowIcon, AuthenIcon, LogOutIcon, LogoIcon, NavProfileIcon } from './Icons';
 import NavBar from './NavBar';
 import Notification from './Notification';
-import axios from 'axios';
+import { useContext } from 'react';
+import { UserContext } from './UserContext';
+// import axios from 'axios';
 
 const LogoBar = () => {
- 
+  const userContext = useContext(UserContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
-  axios.get('/api/user/prefrences', {  
-    method: 'GET',
-  }).then((response) => {
-    setIs2FAEnabled(response.data)}
-    ).catch((error) => {
-    console.error('Error getting user preferences:', error);
-  });
+  // const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
+  if (userContext?.isAuthenticated)
+  {
+    // setIs2FAEnabled(true);
+  }
+  // const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
+  // setIs2FAEnabled(false);
+  // // axios.get('http://localhost:4000', {  
+  // //   method: 'GET',
+  // // }).then((response) => {
+  //   // setIs2FAEnabled(response.data)}
+  // //   ).catch((error) => {
+  // //   console.error('Error getting user preferences:', error);
+  // // });
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
 
-  const handle2FAClick = () => {
-    if (is2FAEnabled) {
-      axios.post('/api/user/disable2fa', {})
-        .then((response) => {
-          console.log(response);
-          console.log('2FA disabled successfully.');
-        })
-        .catch((error) => {
-          console.error('Error disabling 2FA:', error);
-        });
-    } else {
-      window.location.href = '/authentication';
-    }
-  };
+  // const handle2FAClick = () => {
+  //   // if (is2FAEnabled) {
+  //     // axios.post('http://localhost:4000', {})
+  //     //   .then((response) => {
+  //     //     console.log(response);
+  //         console.log('2FA disabled successfully.');
+  //       // })
+  //       // .catch((error) => {
+  //       //   console.error('Error disabling 2FA:', error);
+  //       // });
+  //   // } else {
+  //   //   window.location.href = '/authentication';
+  //   // }
+  // };
 
   return (
     <div className="flex justify-between items-center w-[95%] m-auto mt-2">
@@ -70,13 +78,12 @@ const LogoBar = () => {
                   </button>
                 </Link>
                 <button
-                  className={`border-t-[0.5px] border-b-[0.5px] border-white flex gap-1 items-center p-1 ${
-                    is2FAEnabled ? 'iphone:w-[60px] tablet:w-[120px] laptop:w-[120px] imac:w-[180px]' : ''
-                  }`}
-                  onClick={handle2FAClick}
+                  className="border-t-[0.5px] border-b-[0.5px] border-white flex gap-1 items-center p-1 iphone:w-[60px] tablet:w-[120px] laptop:w-[120px] imac:w-[120px]"
+                  // onClick={handle2FAClick}
                 >
                   <AuthenIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />
-                  {is2FAEnabled ? 'Disable 2FA' : 'Enable 2FA'}
+                  {/* {is2FAEnabled ? 'Disable 2FA' : 'Enable 2FA'} */}
+                  Enable 2FA
                 </button>
                 <Link to="/login">
                   <button onClick={() => console.log('Logout clicked!')} className="flex gap-1 items-center p-1">
