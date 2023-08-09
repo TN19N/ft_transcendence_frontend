@@ -4,18 +4,13 @@ import Avatar from '../assets/ahmaidi.png';
 import { ArrowIcon, AuthenIcon, LogOutIcon, LogoIcon, NavProfileIcon } from './Icons';
 import NavBar from './NavBar';
 import Notification from './Notification';
-import { useContext } from 'react';
-import { UserContext } from './UserContext';
+
 // import axios from 'axios';
 
 const LogoBar = () => {
-  const userContext = useContext(UserContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
-  if (userContext?.isAuthenticated)
-  {
-    // setIs2FAEnabled(true);
-  }
+
   // const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
   // setIs2FAEnabled(false);
   // // axios.get('http://localhost:4000', {  

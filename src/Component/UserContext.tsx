@@ -1,59 +1,46 @@
-import { createContext, useState, useEffect, ReactNode } from 'react';
-import axios from 'axios';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import axios, { AxiosError } from 'axios'; // Import AxiosError for error type
 import Loader from './Loader';
 
 export interface UserData {
   id: number;
-  name: string;
-  email: string;
-  role: string;
 }
 
 interface UserContextValue {
-  isAuthenticated: boolean;
   user: UserData | null;
 }
 
 const UserContext = createContext<UserContextValue | null>(null);
 
-const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+interface UserProviderProps {
+  children: ReactNode;
+}
+
+  const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    axios.get('http://localhost:4000/api/sample', { withCredentials: true })
-      .then((response) => {
-        if (response.data.isAuthenticated !== undefined) {
-          console.log('Object 1', response.data);
-          setIsAuthenticated(response.data.isAuthenticated);
+    if (location.pathname !== '/login') {
+      axios.get('http://localhost/api/user', { withCredentials: true })
+        .then((response) => {
           setUser(response.data.user);
-        } else {
-          setIsAuthenticated(false);
-          setUser(null); 
-        }
-      })
-      .catch((error) => {
-        console.error('Error getting user preferences:', error);
-        setIsAuthenticated(false);
-        setUser(null);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      });
-  }, []);
+        })
+        .catch((error: AxiosError) => { // Use AxiosError to define the error type
+          if (error.response?.status === 401) {
+            window.location.href = '/login';
+            console.log('Unauthorized');
+          }
+          setUser(null);
+        })
+    }
+  }, [location.pathname]);
 
-  if (loading) {
-    return (<Loader/>);
-  }
+  setTimeout(() => {
+    return(<Loader/>);
+  }, 1000);
 
   const userContextValue: UserContextValue = {
-    isAuthenticated: isAuthenticated === null ? false : isAuthenticated,
     user: user,
   };
-  console.log('Object 2', userContextValue?.isAuthenticated, userContextValue?.user);
 
   return (
     <UserContext.Provider value={userContextValue}>
