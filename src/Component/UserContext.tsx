@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, ReactNode,} from 'react';
 import axios, { AxiosError } from 'axios';
+import { useNavigate } from 'react-router';
 
 const UserContext = createContext<number | null>(null);
 
@@ -9,7 +10,7 @@ interface UserProviderProps {
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<number | null>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (location.pathname !== '/login') {
       axios.get('http://localhost/api/v1/user', { withCredentials: true })
@@ -19,7 +20,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         })
         .catch((error: AxiosError) => {
           if (error.response?.status === 401) {
-            window.location.href = '/login';
+            navigate('/login');
             console.log('Unauthorized');
           }
           setUser(null);

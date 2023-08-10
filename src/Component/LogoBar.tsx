@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Avatar from '../assets/ahmaidi.png';
 import { ArrowIcon, AuthenIcon, LogOutIcon, LogoIcon, NavProfileIcon } from './Icons';
 import NavBar from './NavBar';
 import Notification from './Notification';
 import axios from 'axios';
-
+import Disable2fa from './Disable2fa';
+import Enable2fa from './Enable2fa';
 const LogoBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
-
-  axios.get('http://localhost/api/v1/prefrences', { withCredentials: true })
+  const [UserName, setUserName] = useState<string>("")
+  axios.get('http://localhost/api/v1/user/preferences', { withCredentials: true })
    .then((response) => {
     console.log(response.data);
-    setIs2FAEnabled(true)}
+    setIs2FAEnabled(response.data.isTwoFactorAuthenticationEnabled)}
     ).catch((error) => {
     if (error.response?.status === 401) {
       window.location.href = '/login';
@@ -23,22 +23,27 @@ const LogoBar = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
-
-  // const handle2FAClick = () => {
-  //   // if (is2FAEnabled) {
-  //     // axios.post('http://localhost:4000', {})
-  //     //   .then((response) => {
-  //     //     console.log(response);
-  //         console.log('2FA disabled successfully.');
-  //       // })
-  //       // .catch((error) => {
-  //       //   console.error('Error disabling 2FA:', error);
-  //       // });
-  //   // } else {
-  //   //   window.location.href = '/authentication';
-  //   // }
-  // };
-
+  axios.get('http://localhost/api/v1/user/profile', { withCredentials: true })
+   .then((response) => {
+    console.log(response.data);
+    setUserName(response.data.name);
+    }
+    ).catch((error) => {
+    if (error.response?.status === 401) {
+      window.location.href = '/login';
+      console.log('Unauthorized');
+    }
+  });
+  const logout = () =>{
+   axios.post('http://localhost/api/v1/auth/logout')
+   .then((response) =>{
+     window.location.href='/login';
+    console.log(response);
+   }).catch((error) =>{
+    console.log(error);
+   });
+  }
+ 
   return (
     <div className="flex justify-between items-center w-[95%] m-auto mt-2">
       <Link to="/">
@@ -50,12 +55,12 @@ const LogoBar = () => {
         <div className="relative">
           <div className="flex items-center text-white gap-1" onClick={toggleDropdown}>
             <img
-              src={Avatar}
+              src='http://localhost/api/v1/user/avatar'
               alt="avatar"
               className="rounded-full iphone:w-5 iphone:h-5 tablet:w-7 tablet:h-7 laptop:w-9 laptop:h-9"
             />
             <span className="flex items-center gap-1 iphone:text-[10px] tablet:text-[12px] laptop:text-[16px]">
-              ahmaidi{' '}
+              {UserName}
               <ArrowIcon
                 className={`iphone:w-2 iphone:h-2 tablet:w-3 tablet:h-3 cursor-pointer ${
                   isDropdownOpen ? 'transform rotate-180' : ''
@@ -74,17 +79,14 @@ const LogoBar = () => {
                 </Link>
                 <button
                   className="border-t-[0.5px] border-b-[0.5px] border-white flex gap-1 items-center p-1 iphone:w-[60px] tablet:w-[120px] laptop:w-[120px] imac:w-[120px]"
-                  // onClick={handle2FAClick}
                 >
                   <AuthenIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />
-                  {is2FAEnabled ? 'Disable 2FA' : 'Enable 2FA'}
+                  {is2FAEnabled ? <Disable2fa /> : <Enable2fa />}
                 </button>
-                <Link to="/login">
-                  <button onClick={() => console.log('Logout clicked!')} className="flex gap-1 items-center p-1">
+                  <button onClick={logout} className="flex gap-1 items-center p-1">
                     <LogOutIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />
                     Logout
                   </button>
-                </Link>
               </div>
             </div>
           )}
