@@ -4,22 +4,22 @@ import Avatar from '../assets/ahmaidi.png';
 import { ArrowIcon, AuthenIcon, LogOutIcon, LogoIcon, NavProfileIcon } from './Icons';
 import NavBar from './NavBar';
 import Notification from './Notification';
-
-// import axios from 'axios';
+import axios from 'axios';
 
 const LogoBar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
+  const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
 
-  // const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
-  // setIs2FAEnabled(false);
-  // // axios.get('http://localhost:4000', {  
-  // //   method: 'GET',
-  // // }).then((response) => {
-  //   // setIs2FAEnabled(response.data)}
-  // //   ).catch((error) => {
-  // //   console.error('Error getting user preferences:', error);
-  // // });
+  axios.get('http://localhost/api/v1/prefrences', { withCredentials: true })
+   .then((response) => {
+    console.log(response.data);
+    setIs2FAEnabled(true)}
+    ).catch((error) => {
+    if (error.response?.status === 401) {
+      window.location.href = '/login';
+      console.log('Unauthorized');
+    }
+  });
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
@@ -77,8 +77,7 @@ const LogoBar = () => {
                   // onClick={handle2FAClick}
                 >
                   <AuthenIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />
-                  {/* {is2FAEnabled ? 'Disable 2FA' : 'Enable 2FA'} */}
-                  Enable 2FA
+                  {is2FAEnabled ? 'Disable 2FA' : 'Enable 2FA'}
                 </button>
                 <Link to="/login">
                   <button onClick={() => console.log('Logout clicked!')} className="flex gap-1 items-center p-1">

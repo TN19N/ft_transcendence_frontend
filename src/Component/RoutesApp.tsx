@@ -4,11 +4,9 @@ import Chat from './Chat'
 import Profile from './Profile'
 import Authentication from './TwoFactor'
 import Login from './Login'
-import Loader from './Loader'
 const RoutesApp = () => {
     return (
           <Routes>
-            <Route path="/loader" element={<Loader />} />
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/" element={<Home />} />

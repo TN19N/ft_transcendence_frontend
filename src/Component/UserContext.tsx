@@ -1,47 +1,33 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import axios, { AxiosError } from 'axios'; // Import AxiosError for error type
-import Loader from './Loader';
+import React, { createContext, useState, useEffect, ReactNode,} from 'react';
+import axios, { AxiosError } from 'axios';
 
-export interface UserData {
-  id: number;
-}
-
-interface UserContextValue {
-  user: UserData | null;
-}
-
-const UserContext = createContext<UserContextValue | null>(null);
+const UserContext = createContext<number | null>(null);
 
 interface UserProviderProps {
   children: ReactNode;
 }
 
-  const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserData | null>(null);
+const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<number | null>(null);
+
   useEffect(() => {
     if (location.pathname !== '/login') {
-      axios.get('http://localhost/api/user', { withCredentials: true })
+      axios.get('http://localhost/api/v1/user', { withCredentials: true })
         .then((response) => {
-          setUser(response.data.user);
+          setUser(response.data.id);
+          console.log('user', response.data);
         })
-        .catch((error: AxiosError) => { // Use AxiosError to define the error type
+        .catch((error: AxiosError) => {
           if (error.response?.status === 401) {
             window.location.href = '/login';
             console.log('Unauthorized');
           }
           setUser(null);
-        })
+        });
     }
   }, [location.pathname]);
 
-  setTimeout(() => {
-    return(<Loader/>);
-  }, 1000);
-
-  const userContextValue: UserContextValue = {
-    user: user,
-  };
-
+  const userContextValue = user;
   return (
     <UserContext.Provider value={userContextValue}>
       {children}
@@ -49,4 +35,5 @@ interface UserProviderProps {
   );
 };
 
-export { UserContext, UserProvider };
+
+export { UserProvider, UserContext };
