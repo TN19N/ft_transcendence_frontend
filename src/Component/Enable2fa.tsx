@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 const Enable2fa = () => {
+    
     const navigate = useNavigate();
     const handledisable = () =>
     {
-      axios.post('http://localhost/api/v1/user/turnOn2fa', {})
+      axios.put('http://localhost/api/v1/user/turnOn2fa', {})
         .then((response) => {
           console.log(response);
           navigate('/authentication')

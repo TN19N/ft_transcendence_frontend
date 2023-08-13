@@ -1,26 +1,56 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-// import axios from "axios";
+import axios from "axios";
 import LogoBar from "./LogoBar";
+import { useNavigate } from 'react-router';
 
 export default function () {
-  // const [QrCode, setQrCode] = useState<string>("");
+  const [QrCode, setQrCode] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
 
+  axios.put('http://localhost/api/v1/user/turnOn2fa', {})
+        .then((response) => {
+          setQrCode(response.data)
+        }).catch((error) => {
+          if (error.response.status === 401)
+          {
+              navigate('/login');
+              console.log('Unauthorized');
+          }else
+            console.error('Error ', error);
+          });
+  
+  axios.get('http://localhost/api/v1/user', { withCredentials: true })
+   .then((response) => {
+    console.log(response.data);
+    setQrCode(response.data);
+    }
+    ).catch((error) => {
+    if (error.response?.status === 401) {
+      window.location.href = '/login';
+      console.log('Unauthorized');
+    }
+  
+  });
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    // event.preventDefault();
-    // axios.post("http://localhost:4000", { password })
-    //   .then((response) => {
-    //     setQrCode(response.data);
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-    console.log('event' + event);
+    event.preventDefault();
+    axios.patch("/api/v1/user/enable2fa", { password })
+      .then((response) => {
+        setQrCode(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        if (error.response.status === 401)
+        {
+            navigate('/login');
+            console.log('Unauthorized');
+        }else
+          console.error('Error ', error);
+        });
   };
 
   return (
@@ -30,7 +60,7 @@ export default function () {
         <div className="bg-InboxColor rounded-xl imac:p-10 iphone:p-2 flex flex-col iphone:gap-2 iphone:w-[200px] iphone:h-[300px] tablet:w-[300px] tablet:h-[300px] laptop:w-[400px] laptop:h-[350px] imac:w-[400px] imac:h-[400px] justify-center">
             <h1 className="text-center text-white iphone:text-[14px] tablet:text-[16px] imac:text-[25px]">Enable 2FA</h1>
         <img
-          src={"QrCode"}
+          src={QrCode}
           alt="Authentication"
           className="iphone:w-[120px] iphone:h-[120px] tablet:w-[160px] tablet:h-[160px] imac:w-[250px] imac:h-[250px] self-center"
         />

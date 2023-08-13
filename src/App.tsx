@@ -1,6 +1,6 @@
 import './App.css';
 import RoutesApp from './Component/RoutesApp';
-import Background from './Component/Background'
+import Background from './Component/Background';
 
 function App() {
    return (

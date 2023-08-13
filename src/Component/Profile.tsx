@@ -1,4 +1,5 @@
 import Avatar from '../assets/ahmaidi.png';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { EditIcon } from './Icons';
 import Score from './Score';
 import LogoBar from './LogoBar';

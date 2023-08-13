@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import InvitePeople from './InvitePeople';
 import LogoBar from './LogoBar';
 import TopScore from './TopScore';
-import { UserContext } from './UserContext';
+import { useUserContext } from './UserContext';
 
 const Home = () => {
-  const userId = useContext(UserContext);
+  const userId = useUserContext();
 
   if (userId !== null) {
     return (

@@ -1,7 +1,6 @@
-import React, { createContext, useState, useEffect, ReactNode,} from 'react';
-import axios, { AxiosError } from 'axios';
+import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router';
-
 const UserContext = createContext<number | null>(null);
 
 interface UserProviderProps {
@@ -10,23 +9,27 @@ interface UserProviderProps {
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<number | null>(null);
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
   useEffect(() => {
-    if (location.pathname !== '/login') {
-      axios.get('http://localhost/api/v1/user', { withCredentials: true })
-        .then((response) => {
+    const fetchUser = async () => {
+      if (location.pathname !== '/login') {
+        try {
+          const response = await axios.get('http://localhost/api/v1/user', { withCredentials: true });
           setUser(response.data.id);
           console.log('user', response.data);
-        })
-        .catch((error: AxiosError) => {
-          if (error.response?.status === 401) {
-            navigate('/login');
+        } catch (error) {
+          console.log('/login');
+          if (axios.isAxiosError(error) && error.response?.status === 401) {
             console.log('Unauthorized');
+           Navigate('/login');
           }
           setUser(null);
-        });
-    }
-  }, [location.pathname]);
+        }
+      }
+    };
+  
+    fetchUser();
+  }, []);
 
   const userContextValue = user;
   return (
@@ -36,5 +39,8 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   );
 };
 
+const useUserContext = () => {
+  return useContext(UserContext);
+};
 
-export { UserProvider, UserContext };
+export { UserProvider, useUserContext };

@@ -10,8 +10,11 @@ const login = () => {
         hidden: { x: 1200 }, 
         visible: { x: 0 },   
       };
-      const handleLoginButtonClick = () => {
+      const handleLogin42 = () => {
         window.location.href = 'http://localhost/api/v1/auth/intra42';
+      };
+      const handleLoginGoogle = () => {
+        window.location.href = 'http://localhost/api/v1/auth/google';
       };
     return (
       <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden w-[90%]">
@@ -29,8 +32,10 @@ const login = () => {
                     <p className='text-white font-thin my-5 text-sm iphone:text-lg tablet:text-xl laptop:text-2xl imac:text-3xl'>Welcome to the thrilling world of online ping pong,
                         where the virtual table comes alive with intense rallies and lightning-fast reflexes.
                         Engage in epic battles with players from around the globe.</p>
-                    <button className='text-white bg-buttonLoginColor rounded-2xl p-2 w-35 text-lg flex gap-2 items-center' onClick={handleLoginButtonClick}><LoginIcon className='w-6 h-6' />Login</button>
-          
+                    <div className='flex gap-2'>
+                    <button className='text-white bg-buttonLoginColor rounded-2xl p-2 w-35 text-lg flex gap-2 items-center' onClick={handleLogin42}><LoginIcon className='w-6 h-6' />Login 42</button>
+                    <button className='text-white bg-buttonLoginColor rounded-2xl p-2 w-35 text-lg flex gap-2 items-center' onClick={handleLoginGoogle}><LoginIcon className='w-6 h-6' />Login google</button>
+                </div>
                 </motion.div>
                 <motion.div
                 className='flex-1 hidden laptop:block'
