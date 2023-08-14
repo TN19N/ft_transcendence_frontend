@@ -1,7 +1,10 @@
 import Avatar from '../assets/ahmaidi.png';
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { EditIcon } from './Icons';
-import Score from './Score';
+import MatchHistory from './MatchHistory';
+import Friends from './Friends';
+import Blocked from './Blocked';
+import './Profile.css';
 import LogoBar from './LogoBar';
 const Profile = () => {
     return (
@@ -42,23 +45,30 @@ const Profile = () => {
                  <span className="iphone:text-[10px] tablet:text-[15px] imac:text-[22px] text-white">8</span> 
                 </div>
             </div>
-            <span className="iphone:text-[13px] tablet:text-[18px] imac:text-[25px] text-white overflow-hidden ">History Match</span>
-            <div className='flex w-[90%] flex-col gap-3 items-center  overflow-auto h-[50vh] tablet:h-[38vh] laptop:h-[58vh] imac:h-[62vh]'>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-                <Score/>
-            </div>
+            <Tabs className="w-[90%]" variant='enclosed'>
+                <TabList className="flex w-full" mb='1em'>
+                    <Tab flex = '1'>
+                        <span className="iphone:text-[13px] tablet:text-[18px] imac:text-[25px] text-white overflow-hidden ">History Match</span>
+                    </Tab>
+                    <Tab flex = '1'>
+                        <span className="iphone:text-[13px] tablet:text-[18px] imac:text-[25px] text-white overflow-hidden ">Friends</span>
+                    </Tab>
+                    <Tab flex = '1'>
+                        <span className="iphone:text-[13px] tablet:text-[18px] imac:text-[25px] text-white overflow-hidden ">Blocked people</span>
+                    </Tab>
+                </TabList>
+                <TabPanels>
+                  <TabPanel>
+                    <MatchHistory/>
+                  </TabPanel>
+                  <TabPanel>
+                    <Friends />
+                  </TabPanel>
+                  <TabPanel>
+                    <Blocked/>
+                  </TabPanel>
+                </TabPanels>
+            </Tabs>
         </div>
     </div>
     </div>

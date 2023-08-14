@@ -3,7 +3,7 @@ import axios from 'axios';
 const Disable2fa = () => {
     const handledisable = () =>
     {
-      axios.post('http://localhost/api/v1/user/turnOff2fa', {})
+      axios.patch(`${process.env.SERVER_HOST}/api/v1/user/turnOff2fa`, {})
         .then((response) => {
           console.log(response);
           console.log('2FA disabled successfully.');

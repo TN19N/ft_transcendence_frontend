@@ -11,10 +11,10 @@ const login = () => {
         visible: { x: 0 },   
       };
       const handleLogin42 = () => {
-        window.location.href = 'http://localhost/api/v1/auth/intra42';
+        window.location.href = `${process.env.SERVER_HOST}/api/v1/auth/intra42`;
       };
       const handleLoginGoogle = () => {
-        window.location.href = 'http://localhost/api/v1/auth/google';
+        window.location.href = `${process.env.SERVER_HOST}/api/v1/auth/google`;
       };
     return (
       <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden w-[90%]">
