@@ -3,5 +3,6 @@ services:
   production:
     build: .
     image: frontend
-
-  
+    # ports: ["2000:5173"]
+    # environment:
+    #   SERVER_HOST: "https://909f-197-230-240-146.ngrok-free.app"

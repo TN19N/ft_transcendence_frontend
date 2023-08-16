@@ -1,6 +1,20 @@
+import { useEffect } from 'react';
 import Avatar from '../assets/ahmaidi.png';
 import { PlayIcon, BlockIcon } from './Icons';
+
 export default function Friends() {
+  // useEffect(() => {
+  //   axios.get(`${process.env.SERVER_HOST}/api/v1/user/friends`, { withCredentials: true })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       if (error.response?.status === 401) {
+  //         window.location.href = '/login';
+  //         console.log('Unauthorized');
+  //       }
+  //     });
+  // }, []);
   return (
     <div className="flex w-[full] items-center text-white iphone:text-[10px] tablet:text-[15px] imac:text-[24px]">
       <div className='flex flex-col w-[40%] m-auto bg-background py-3 pl-3 rounded-xl'>

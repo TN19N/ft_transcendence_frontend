@@ -1,14 +1,18 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { useState, ChangeEvent, FormEvent} from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router';
 
 
 const Check2fa = () => {
   const [password, setPassword] = useState<string>("");
+  const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
+    const inputPassword = event.target.value;
+    setPassword(inputPassword);
+    const isValid = /^\d{6}$/.test(inputPassword);
+    setIsValidPassword(isValid);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -35,13 +39,16 @@ const Check2fa = () => {
             <h1 className="text-center text-white iphone:text-[14px] tablet:text-[16px] imac:text-[25px]">Enter Password</h1>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-3 items-center">
-          <input
-            className="w-full text-msgColorOff outline-none placeholder:text-msgColorOff iphone:text-[8px] iphone:w-[70%] tablet:w-[60%] laptop:w-[45%] imac:w-[80%] tablet:text-[10px] imac:text-[14px] rounded-xl iphone:p-[5px]"
-            type="text"
-            placeholder="Please enter your password ..."
-            value={password}
-            onChange={handleInputChange}
-          />
+        <input
+              className={`w-full outline-none placeholder:text-msgColorOff iphone:text-[8px] iphone:w-[70%] tablet:w-[60%] laptop:w-[45%] imac:w-[80%] tablet:text-[10px] imac:text-[14px] rounded-xl iphone:p-[10px] ${
+                isValidPassword ? "" : "text-red-500"
+              }`}
+              maxLength={6}
+              type="text"
+              placeholder="Please enter your password ..."
+              value={password}
+              onChange={handleInputChange}
+            />
           <input
             type="submit" value="Submit" className="iphone:w-[70px] iphone:h-[20px] iphone:text-[12px] tablet:w-[90px] tablet:h-[30px] tablet:text-[16px] imac:text-[20px] imac:w-[100px] imac:h-[40px] self-center bg-BordeButtomColor text-white rounded-lg cursor-pointer"
           />

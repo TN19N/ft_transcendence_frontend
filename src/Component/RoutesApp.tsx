@@ -22,5 +22,4 @@ const RoutesApp = () => {
     );
 }
 
-
 export default RoutesApp;

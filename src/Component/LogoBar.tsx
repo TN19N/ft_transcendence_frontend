@@ -50,6 +50,7 @@ const LogoBar = () => {
         console.log(error);
       });
   };
+
   return (
     <div className="flex justify-between items-center w-[95%] m-auto mt-2">
       <Link to="/">
@@ -84,8 +85,7 @@ const LogoBar = () => {
                   </div>
                 </Link>
                 <div
-                  className="border-t-[0.5px] border-b-[0.5px] border-white flex gap-1 items-center p-1 iphone:w-[60px] tablet:w-[120px] laptop:w-[180px] imac:w-[180px]"
-                >
+                  className="border-t-[0.5px] border-b-[0.5px] border-white flex gap-1 items-center p-1 iphone:w-[60px] tablet:w-[120px] laptop:w-[180px] imac:w-[180px]" >
                   <AuthenIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />
                   {is2FAEnabled ? <Disable2fa /> : <Enable2fa />}
                 </div>
