@@ -6,7 +6,9 @@ import Notification from './Notification';
 import axios from 'axios';
 import Disable2fa from './Disable2fa';
 import Enable2fa from './Enable2fa';
+import { useUserContext } from './UserContext';
 const LogoBar = () => {
+  const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
   const [UserName, setUserName] = useState<string>("");
@@ -78,7 +80,7 @@ const LogoBar = () => {
           {isDropdownOpen && (
             <div className="absolute text-white right-0 rounded bg-background border-[1px] mt-1 text-[4px] tablet:text-[12px] laptop:text-[14px] imac:text-[20px]">
               <div className="flex flex-col items-start cursor-pointer">
-                <Link to="/profile">
+                <Link to= {`/profile/${userId}`}>
                   <div onClick={() => console.log('Profile clicked!')} className="flex gap-1 items-center p-1">
                     <NavProfileIcon className="w-2 h-2 tablet:w-5 tablet:h-5 " />
                     Profile

@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import Avatar from '../assets/ahmaidi.png';
-import { PlayIcon, BlockIcon } from './Icons';
 
 export default function Friends() {
   // useEffect(() => {
@@ -24,8 +23,6 @@ export default function Friends() {
             <span>Ahmaidi</span>
           </div>
           <div className='flex items-center gap-2'>
-          <button className='bg-buttonPlaybgColor p-2 rounded-[50%]'><PlayIcon className="w-9 h-9" /></button>
-          <button className='bg-buttonPlaybgColor p-2 rounded-[50%]'><BlockIcon className="w-8 h-8" /></button>
           </div>
         </div>
       </div>

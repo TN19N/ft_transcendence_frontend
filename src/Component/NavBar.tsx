@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { NavCreatRoomIcon, NavHomeIcon, NavPlayIcon, NavProfileIcon, ChatIcon } from "./Icons";
+import { useUserContext } from "./UserContext";
 
 const NavBar = () => {
+  const userId = useUserContext();
   const location = useLocation().pathname;
   const [activeButton, setActiveButton] = useState<string>('');
 
@@ -60,7 +62,7 @@ const NavBar = () => {
           className={`rounded-full  p-1 ${activeButton === '/profile' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
           onClick={() => handleButtonClick('Profile')}
         >
-          <Link to="/profile">
+          <Link to= {`/profile/${userId}`}>
           <div className="flex items-center justify-center">
             <NavProfileIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
           </div>
