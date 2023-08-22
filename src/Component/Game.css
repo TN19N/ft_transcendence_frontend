@@ -1,0 +1,10 @@
+/* .Game {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+
+canvas {
+  border-radius: 6px;
+}

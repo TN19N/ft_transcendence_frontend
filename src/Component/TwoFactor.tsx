@@ -38,7 +38,6 @@ const Enable2FA = () => {
         .then((response) => {
           setQrCode(response.data);
           navigate('/home');
-          console.log('here ', response.data);
         })
         .catch((error) => {
           if (error.response.status === 401) {
@@ -52,7 +51,7 @@ const Enable2FA = () => {
   };
 
   return (
-    <div className="flex flex-col bg-background ring ring-white ring-opacity-10 rounded-lg w-[90%]">
+    <div className="flex flex-col bg-background ring ring-white ring-opacity-10 rounded-xl w-[90%]">
       <LogoBar />
       <div className="h-[78vh] self-center m-5 flex flex-col justify-center">
         <div className="bg-InboxColor rounded-xl imac:p-10 iphone:p-2 flex flex-col iphone:gap-2 iphone:w-[200px] iphone:h-[300px] tablet:w-[300px] tablet:h-[300px] laptop:w-[400px] laptop:h-[350px] imac:w-[400px] imac:h-[400px] justify-center">

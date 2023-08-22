@@ -17,7 +17,7 @@ const login = () => {
         window.location.href = `${process.env.SERVER_HOST}/api/v1/auth/google`;
       };
     return (
-      <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-lg overflow-hidden w-[90%]">
+      <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-xl overflow-hidden w-[90%]">
       <LogoIcon className='w-[12vh] h-[12vh] p-2'/>
             <div className='flex gap-8 items-center font-Stick rounded-xl h-[80vh] w-[60%] m-auto'>
                 <motion.div
@@ -33,8 +33,8 @@ const login = () => {
                         where the virtual table comes alive with intense rallies and lightning-fast reflexes.
                         Engage in epic battles with players from around the globe.</p>
                     <div className='flex gap-2'>
-                    <button className='text-white bg-buttonLoginColor rounded-2xl p-2 w-35 text-lg flex gap-2 items-center' onClick={handleLogin42}><LoginIcon className='w-6 h-6' />Login 42</button>
-                    <button className='text-white bg-buttonLoginColor rounded-2xl p-2 w-35 text-lg flex gap-2 items-center' onClick={handleLoginGoogle}><LoginIcon className='w-6 h-6' />Login google</button>
+                    <button className='text-white text-[12px] laptop:text-[15px] bg-buttonLoginColor rounded-xl py-2  px-3  flex gap-2 items-center' onClick={handleLogin42}><LoginIcon className='iphone:w-4 iphone:h-4 tablet:w-6 tablet:h-6' />Login 42</button>
+                    <button className='text-white  text-[12px] laptop:text-[15px] bg-buttonLoginColor rounded-xl py-2 px-3  flex gap-2 items-center' onClick={handleLoginGoogle}><LoginIcon className='iphone:w-4 iphone:h-4 tablet:w-6 tablet:h-6' />Login google</button>
                 </div>
                 </motion.div>
                 <motion.div

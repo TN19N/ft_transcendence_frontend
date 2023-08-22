@@ -1,31 +1,49 @@
-// import { useEffect } from 'react';
-import Avatar from '../assets/ahmaidi.png';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
+import ButtonAvatar from './ButtonAvatar';
 
-export default function Friends() {
-  // useEffect(() => {
-  //   axios.get(`${process.env.SERVER_HOST}/api/v1/user/friends`, { withCredentials: true })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       if (error.response?.status === 401) {
-  //         window.location.href = '/login';
-  //         console.log('Unauthorized');
-  //       }
-  //     });
-  // }, []);
+interface Friend {
+  id: string;
+  name: string;
+  status: string;
+}
+
+const Friends: React.FC = () => {
+  const [friends, setFriends] = useState<Friend[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get(`${process.env.SERVER_HOST}/api/v1/user/friends`, { withCredentials: true })
+      .then((response) => {
+        setFriends(response.data);
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          navigate('/login');
+          console.log('Unauthorized');
+        }
+      });
+  }, [navigate]);
+
   return (
-    <div className="flex w-[full] items-center text-white iphone:text-[10px] tablet:text-[15px] imac:text-[24px]">
-      <div className='flex flex-col w-[40%] m-auto bg-background py-3 pl-3 rounded-xl'>
-        <div className='flex w-[90%] justify-between  m-auto'>
-          <div className='flex items-center gap-4 '>
-            <img src={Avatar} alt="avatar" className="iphone:w-5 iphone:h-5 tablet:w-8 tablet:h-8 imac:w-12 imac:h-12 rounded-full" />
-            <span>Ahmaidi</span>
-          </div>
-          <div className='flex items-center gap-2'>
-          </div>
-        </div>
+    <div className="flex w-full items-center text-white text-[13px] tablet:text-[18px] laptop:text-[20px] imac:text-[24px]">
+      <div className="flex iphone:[90%] tablet:w-[70%] m-auto bg-background p-3 rounded-xl items-center justify-center gap-3">
+        {friends.length !== 0 ? (
+          <>
+            {friends.map((friend) => (
+              <div key={friend.id} className="flex items-center gap-2">
+                <ButtonAvatar id={friend.id} />
+                <span>{friend.name}</span>
+              </div>
+            ))}
+          </>
+        ) : (
+          <span>No Friends Yet</span>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Friends;

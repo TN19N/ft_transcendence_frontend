@@ -1,4 +1,4 @@
-import { useEffect, useState , memo} from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowIcon, AuthenIcon, LogOutIcon, LogoIcon, NavProfileIcon } from './Icons';
 import NavBar from './NavBar';
@@ -6,16 +6,20 @@ import Notification from './Notification';
 import axios from 'axios';
 import Disable2fa from './Disable2fa';
 import Enable2fa from './Enable2fa';
-import { useUserContext } from './UserContext';
-const LogoBar = () => {
-  const userId = useUserContext();
+
+const LogoBar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
   const [UserName, setUserName] = useState<string>("");
+  const [Render, setRender] = useState<boolean>(false); // Fixed the typo "flase" to "false"
+
+  const Disable = () => {
+    setRender((prevState) => !prevState);
+  };
+
   useEffect(() => {
     axios.get(`${process.env.SERVER_HOST}/api/v1/user/preferences`, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         setIs2FAEnabled(response.data.isTwoFactorAuthenticationEnabled);
       })
       .catch((error) => {
@@ -27,7 +31,6 @@ const LogoBar = () => {
 
     axios.get(`${process.env.SERVER_HOST}/api/v1/user/profile`, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         setUserName(response.data.name);
       })
       .catch((error) => {
@@ -36,7 +39,7 @@ const LogoBar = () => {
           console.log('Unauthorized');
         }
       });
-  }, []);
+  }, [Render]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
@@ -80,21 +83,21 @@ const LogoBar = () => {
           {isDropdownOpen && (
             <div className="absolute text-white right-0 rounded bg-background border-[1px] mt-1 text-[4px] tablet:text-[12px] laptop:text-[14px] imac:text-[20px]">
               <div className="flex flex-col items-start cursor-pointer">
-                <Link to= {`/profile/${userId}`}>
+                <Link to="/profile">
                   <div onClick={() => console.log('Profile clicked!')} className="flex gap-1 items-center p-1">
                     <NavProfileIcon className="w-2 h-2 tablet:w-5 tablet:h-5 " />
                     Profile
                   </div>
                 </Link>
                 <div
-                  className="border-t-[0.5px] border-b-[0.5px] border-white flex gap-1 items-center p-1 iphone:w-[60px] tablet:w-[120px] laptop:w-[180px] imac:w-[180px]" >
+                  className="border-t-[0.5px] border-b-[0.5px] border-white flex gap-1 items-center p-1 iphone:w-[60px] tablet:w-[120px] laptop:w-[180px] imac:w-[180px]">
                   <AuthenIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />
-                  {is2FAEnabled ? <Disable2fa /> : <Enable2fa />}
+                  {is2FAEnabled ? <Disable2fa Disable={Disable} /> : <Enable2fa />}
                 </div>
-                  <div onClick={logout} className="flex gap-1 items-center p-1">
-                    <LogOutIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />
-                    Logout
-                  </div>
+                <div onClick={logout} className="flex gap-1 items-center p-1">
+                  <LogOutIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />
+                  Logout
+                </div>
               </div>
             </div>
           )}

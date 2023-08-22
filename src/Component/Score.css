@@ -1,0 +1,29 @@
+
+.score-container {
+    position: relative;
+  }
+  
+  .winner-left::before,
+  .winner-right::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    background-color: transparent;
+    
+  }
+  
+  .winner-left::before {
+    left: 0;
+    background-color: #05AE13;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+  
+  .winner-right::after {
+    right: 0;
+    background-color: #05AE13;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  

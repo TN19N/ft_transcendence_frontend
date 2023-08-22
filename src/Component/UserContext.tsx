@@ -1,41 +1,87 @@
-import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useContext,
+} from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
-const UserContext = createContext<number | null>(null);
+interface Notification {
+  type: string;
+  id: string;
+  name: string;
+}
+
+interface UserContextType {
+  id: number | null;
+  notifications: Notification[];
+}
+
+const UserContext = createContext<UserContextType | null>(null);
 
 interface UserProviderProps {
   children: ReactNode;
 }
 
+const socket = io(`${process.env.SERVER_HOST}/user`);
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<number | null>(null);
-  const [initialFetchDone, setInitialFetchDone] = useState(false);
-  const navigate = useNavigate(); 
+  const [user, setUser] = useState<UserContextType | null>({
+    id: null,
+    notifications: [],
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      if (!initialFetchDone && (window.location.pathname !== '/login' && window.location.pathname !== '/2fa')) {
+    const fetchData = async () => {
+      if (
+        window.location.pathname !== "/login" &&
+        window.location.pathname !== "/2fa"
+      ) {
         try {
-          const response = await axios.get(`${process.env.SERVER_HOST}/api/v1/user`, { withCredentials: true });
-          setUser(response.data.id);
-          console.log('user', response.data);
+          const response = await axios.get(
+            `${process.env.SERVER_HOST}/api/v1/user`,
+            { withCredentials: true }
+          );
+
+          const friendResponse = await axios.get(
+            `${process.env.SERVER_HOST}/api/v1/user/friendRequest/received`,
+            { withCredentials: true }
+            );
+          const friendReq = friendResponse.data.map((item: any) => ({
+            type: "friend",
+            id: item.id,
+            name: item.name,
+          }));
+
+          const groupResponse = await axios.get(
+            `${process.env.SERVER_HOST}/api/v1/user/group/invites`,
+            { withCredentials: true }
+          );
+          const groupReq = groupResponse.data.map((item: any) => ({
+            type: "group",
+            id: item.id,
+            name: item.name,
+          }));
+
+          setUser({
+            id: response.data.id,
+            notifications: [...friendReq, ...groupReq],
+          });
         } catch (error) {
-          console.log('/login');
           if (axios.isAxiosError(error) && error.response?.status === 401) {
-            console.log('Unauthorized');
-            navigate('/login'); 
+            navigate("/login");
           }
           setUser(null);
         }
-        setInitialFetchDone(true);
       }
     };
+    fetchData();
+  }, []);
   
-    fetchUser();
-  }, [initialFetchDone, navigate]);
-
-  const userContextValue = user;
+  const userContextValue: UserContextType | null = user;
   return (
     <UserContext.Provider value={userContextValue}>
       {children}
@@ -43,8 +89,8 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   );
 };
 
-const useUserContext = () => {
+const useUserContext = (): UserContextType | null => {
   return useContext(UserContext);
 };
 
-export { UserProvider, useUserContext };
+export { UserProvider, useUserContext, socket };

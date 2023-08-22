@@ -1,7 +1,8 @@
-import  { useEffect, useState } from 'react';
-import { SearchIcon } from './Icons';
-import SugPeople from './SugPeople';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { SearchIcon } from "./Icons";
+import SugPeople from "./SugPeople";
+import axios from "axios";
+import Loader from "./Loader";
 
 interface SugPeopleData {
   id: string;
@@ -9,25 +10,33 @@ interface SugPeopleData {
   status: string;
 }
 
-const InvitePeople = () => {
+const InvitePeople: React.FC = () => {
   const [suggestedPeople, setSuggestedPeople] = useState<SugPeopleData[]>([]);
   const [searchPeople, setSearchPeople] = useState<string>("");
-  
+  const [friendRequest, setFriendRequest] = useState<boolean>(false);
+
+  const FriendRequestSent = () => {
+    setFriendRequest((prevState) => !prevState);
+  };
+
   useEffect(() => {
-    axios.get(`${process.env.SERVER_HOST}/api/v1/user/search?query=${searchPeople}`, { withCredentials: true })
+    axios
+      .get(
+        `${process.env.SERVER_HOST}/api/v1/user/search?query=${searchPeople}`,
+        { withCredentials: true }
+      )
       .then((response) => {
-        console.log(response.data);
         setSuggestedPeople(response.data);
       })
       .catch((error) => {
         if (error.response?.status === 401) {
-          window.location.href = '/login';
-          console.log('Unauthorized');
+          window.location.href = "/login";
+          console.log("Unauthorized");
         }
       });
-  }, [searchPeople]);
+  }, [searchPeople, friendRequest]);
 
-  const first20SuggestedPeople = suggestedPeople.slice(0, 20);
+  const first30SuggestedPeople = suggestedPeople.slice(0, 30);
 
   return (
     <section className="flex-1 laptop:flex-[2] flex">
@@ -45,13 +54,21 @@ const InvitePeople = () => {
               onChange={(e) => setSearchPeople(e.target.value)}
             />
             <button>
-              <SearchIcon className="fill-BordeButtomColor w-3 h-3 tablet:w-4 tablet:h-4 laptop:w-6 laptop:h-6 mr-1"/>
+              <SearchIcon className="fill-BordeButtomColor w-3 h-3 tablet:w-4 tablet:h-4 laptop:w-6 laptop:h-6 mr-1" />
             </button>
           </div>
-          <div className="flex flex-col  overflow-auto gap-3 tablet:flex-row tablet:flex-wrap tablet:justify-center mt-4 laptop:gap-12">
-            {first20SuggestedPeople.map((person) => (
-              <SugPeople key={person.id} person={person} />
-            ))}
+          <div className="flex flex-col  overflow-auto gap-3 tablet:flex-row tablet:flex-wrap tablet:justify-center mt-4 laptop:gap-12 w-full px-2">
+            {suggestedPeople.length ? (
+              first30SuggestedPeople.map((person) => (
+                <SugPeople
+                  key={person.id}
+                  person={person}
+                  FriendRequestSent={FriendRequestSent}
+                />
+              ))
+            ) : (
+              <Loader />
+            )}
           </div>
         </div>
       </div>

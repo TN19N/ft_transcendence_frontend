@@ -22,7 +22,7 @@ export default {
         buttonPlaybgColor: '#01101F',
         nberFriendsColor: '#2E8CE5',
         buttonLoginColor: '#0C5E8B',
-        NavBarroundedIcon: '#2A7FCF',
+        NavBarroundedIcon: '#2A7FCF'
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],

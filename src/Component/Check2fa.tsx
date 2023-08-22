@@ -18,9 +18,8 @@ const Check2fa = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     axios.post(`${process.env.SERVER_HOST}/api/v1/auth/2fa`, { code: password })
-      .then((response) => {
+      .then(() => {
         navigate('/')
-        console.log(response.data);
       })
       .catch((error) => {
         if (error.response.status === 401) {
