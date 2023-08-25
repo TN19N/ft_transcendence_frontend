@@ -16,7 +16,6 @@ export default function Notification() {
 
   useEffect(() => {
     socket.on("notification", (notification: any) => {
-      console.log("==>> notification: ", notification);
       setNotifications((prevNotifications) => [
         ...prevNotifications,
         notification,
@@ -33,7 +32,7 @@ export default function Notification() {
       <NotificationIcon className="iphone:w-4 iphone:h-4 tablet:w-6 tablet:h-6 laptop:w-8 laptop:h-8" />
       <div>
         {isDropdownOpen && (
-          <div className="absolute text-white rounded iphone:w-[150px] tablet:w-[202px] laptop:w-[272px] bg-background border-[1px] rounded-xl mt-2 right-0 min-h-[20px]">
+          <div className="absolute text-white rounded iphone:w-[150px] tablet:w-[206px] laptop:w-[272px] bg-background border-[1px] rounded-xl mt-2 right-0 min-h-[20px]">
             <div className="flex flex-col  cursor-pointer">
               {notifications.length ? (
                 notifications.map((notification) => (
@@ -42,6 +41,7 @@ export default function Notification() {
                       idSender={notification.id}
                       type={notification.type}
                       name={notification.name}
+                      speed={notification.speed}
                     />
                   </div>
                 ))

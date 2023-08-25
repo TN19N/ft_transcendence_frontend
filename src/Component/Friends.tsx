@@ -28,13 +28,16 @@ const Friends: React.FC = () => {
 
   return (
     <div className="flex w-full items-center text-white text-[13px] tablet:text-[18px] laptop:text-[20px] imac:text-[24px]">
-      <div className="flex iphone:[90%] tablet:w-[70%] m-auto bg-background p-3 rounded-xl items-center justify-center gap-3">
+      <div className="flex flex-col w-full items-center gap-3">
         {friends.length !== 0 ? (
           <>
             {friends.map((friend) => (
-              <div key={friend.id} className="flex items-center gap-2">
+              <div
+                key={friend.id}
+                className="flex iphone:w-[90%] tablet:w-[70%] m-auto bg-background p-3 rounded-xl items-center justify-center gap-3"
+              >
                 <ButtonAvatar id={friend.id} />
-                <span>{friend.name}</span>
+                <span className="mb-2">{friend.name}</span>
               </div>
             ))}
           </>

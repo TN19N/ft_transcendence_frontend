@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SearchIcon } from "./Icons";
 import SugPeople from "./SugPeople";
 import axios from "axios";
-import Loader from "./Loader";
+import { useNavigate } from "react-router";
 
 interface SugPeopleData {
   id: string;
@@ -14,7 +14,8 @@ const InvitePeople: React.FC = () => {
   const [suggestedPeople, setSuggestedPeople] = useState<SugPeopleData[]>([]);
   const [searchPeople, setSearchPeople] = useState<string>("");
   const [friendRequest, setFriendRequest] = useState<boolean>(false);
-
+  const navigate = useNavigate();
+  
   const FriendRequestSent = () => {
     setFriendRequest((prevState) => !prevState);
   };
@@ -30,7 +31,7 @@ const InvitePeople: React.FC = () => {
       })
       .catch((error) => {
         if (error.response?.status === 401) {
-          window.location.href = "/login";
+          navigate("/login");
           console.log("Unauthorized");
         }
       });
@@ -58,17 +59,14 @@ const InvitePeople: React.FC = () => {
             </button>
           </div>
           <div className="flex flex-col  overflow-auto gap-3 tablet:flex-row tablet:flex-wrap tablet:justify-center mt-4 laptop:gap-12 w-full px-2">
-            {suggestedPeople.length ? (
-              first30SuggestedPeople.map((person) => (
+              {first30SuggestedPeople.map((person) => (
                 <SugPeople
                   key={person.id}
                   person={person}
                   FriendRequestSent={FriendRequestSent}
                 />
-              ))
-            ) : (
-              <Loader />
-            )}
+             ))
+            }
           </div>
         </div>
       </div>

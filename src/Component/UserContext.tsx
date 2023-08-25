@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 
 interface Notification {
+  speed: string | undefined;
   type: string;
   id: string;
   name: string;
@@ -26,6 +27,16 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
+axios.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    if (error.response.status == "401")
+      
+    return Promise.reject(error);
+  }
+);
 const socket = io(`${process.env.SERVER_HOST}/user`);
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserContextType | null>({

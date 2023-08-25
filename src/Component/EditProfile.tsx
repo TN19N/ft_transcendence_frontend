@@ -60,31 +60,37 @@ const EditProfile = () => {
 
 // Username update
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewUsername(event.target.value);
-    setError("");
+    const newUsername = event.target.value;
+      setNewUsername(newUsername);
+      setError("");
   };
 
   const handleUsernameSubmit = async () => {
-    if (newUsername.length){
-      try {
-        await axios.put(
-          `${process.env.SERVER_HOST}/api/v1/user/profile`,
-          { name: newUsername },
-          { withCredentials: true }
-        );
-      } catch (error: ErrorResponse | any) {
-        if (error.response?.status === 409) {
-          setError("This username already exists");
-        } else if (error.response?.status === 401) {
-          navigate("/login");
-          console.log("Unauthorized");
-        } else {
-          console.error(error);
+    const usernameValid = /^[A-Za-z]{4}[A-Za-z0-9]*$/;
+    if (newUsername.length) {
+      if (newUsername.match(usernameValid)) {
+        try {
+          await axios.put(
+            `${process.env.SERVER_HOST}/api/v1/user/profile`,
+            { name: newUsername },
+            { withCredentials: true }
+          );
+        } catch (error: ErrorResponse | any) {
+          if (error.response?.status === 409) {
+            setError("This username already exists");
+          } else if (error.response?.status === 401) {
+            navigate("/login");
+            console.log("Unauthorized");
+          } else {
+            console.error(error);
+          }
         }
+      } else {
+        setError("Username format is not valid");
       }
+    } else {
+      navigate("/profile");
     }
-    else
-      navigate('/profile');
   };
 
   return (
@@ -118,7 +124,7 @@ const EditProfile = () => {
 
           <input
             className="w-full outline-none placeholder-gray-500 rounded-xl p-2 iphone:w-[200px] tablet:w-[200px] laptop:w-[200px]"
-            maxLength={16}
+            maxLength={10}
             type="text"
             placeholder="Enter your New Username ..."
             value={newUsername}

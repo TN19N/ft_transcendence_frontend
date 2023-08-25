@@ -15,10 +15,28 @@ interface SugPeopleProps {
 const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
   const { id, name } = person;
   const navigate = useNavigate();
-  const [WaitingAccept, setWaitingAccept] = useState<boolean>(false);
+  const [WaitingAccept, setWaitingAccept] = useState<boolean>(true);
+  const [IsFriend, setIsFriend] = useState<boolean>(true);
   const [Render, setRender] = useState<boolean>(false);
 
+
   useEffect(() => {
+         axios
+           .get(
+             `${process.env.SERVER_HOST}/api/v1/user/isFriend?otherId=${id}`,
+             {
+               withCredentials: true,
+             }
+           )
+           .then((response) => {
+             setIsFriend(response.data);
+           })
+           .catch((error) => {
+             if (error.response?.status === 401) {
+               navigate("/login");
+               console.log("Unauthorized");
+             }
+           });
     axios
       .get(
         `${process.env.SERVER_HOST}/api/v1/user/isFriendRequestSent?otherId=${id}`
@@ -61,7 +79,7 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
         />
         {name}
       </Link>
-      {!WaitingAccept && (
+      {(!WaitingAccept && !IsFriend) && (
         <button onClick={sendFriendRequest}>
           <AddIcon className="w-5 h-5 tablet:w-7 tablet:h-7" />
         </button>
