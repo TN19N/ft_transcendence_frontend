@@ -20,11 +20,9 @@ export default function Blocked() {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate('/login');
-          console.log('Unauthorized');
         }
       });
   }, []);
-
   const unblockUser = (userId: string) => {
     axios.delete(`${process.env.SERVER_HOST}/api/v1/user/unBan?userToUnBanId=${userId}`, { withCredentials: true })
       .then(() => {
@@ -34,7 +32,6 @@ export default function Blocked() {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate('/login');
-          console.log('Unauthorized');
         }
       });
   };

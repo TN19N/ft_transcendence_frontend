@@ -15,7 +15,7 @@ const InvitePeople: React.FC = () => {
   const [searchPeople, setSearchPeople] = useState<string>("");
   const [friendRequest, setFriendRequest] = useState<boolean>(false);
   const navigate = useNavigate();
-  
+
   const FriendRequestSent = () => {
     setFriendRequest((prevState) => !prevState);
   };
@@ -32,7 +32,6 @@ const InvitePeople: React.FC = () => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
-          console.log("Unauthorized");
         }
       });
   }, [searchPeople, friendRequest]);
@@ -59,14 +58,13 @@ const InvitePeople: React.FC = () => {
             </button>
           </div>
           <div className="flex flex-col  overflow-auto gap-3 tablet:flex-row tablet:flex-wrap tablet:justify-center mt-4 laptop:gap-12 w-full px-2">
-              {first30SuggestedPeople.map((person) => (
-                <SugPeople
-                  key={person.id}
-                  person={person}
-                  FriendRequestSent={FriendRequestSent}
-                />
-             ))
-            }
+            {first30SuggestedPeople.map((person) => (
+              <SugPeople
+                key={person.id}
+                person={person}
+                FriendRequestSent={FriendRequestSent}
+              />
+            ))}
           </div>
         </div>
       </div>

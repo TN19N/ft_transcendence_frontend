@@ -11,6 +11,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import MatchHistory from "./MatchHistory";
 import ProfileButton from "./ProfileButton";
 import ProfileInfo from "./ProfileInfo";
+import { useUserContext } from "./UserContext";
 
 interface Userprofile {
   id: string;
@@ -23,14 +24,14 @@ interface Userprofile {
 const Profile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const userId = useUserContext();
   const [userProfile, setUserProfile] = useState<Userprofile | null>(null);
 
   const fetchUserProfile = (id: string | undefined) => {
-      const url = id
+    const url = id
       ? `${process.env.SERVER_HOST}/api/v1/user/profile?id=${id}`
       : `${process.env.SERVER_HOST}/api/v1/user/profile`;
-    
+
     return axios.get(url, { withCredentials: true });
   };
 
@@ -42,11 +43,9 @@ const Profile = () => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
-          console.log("Unauthorized");
         }
       });
-  }, [id]);
-
+  }, []);
   return (
     <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-xl overflow-hidden w-[90%]">
       <LogoBar />
@@ -77,9 +76,7 @@ const Profile = () => {
               )}
             </div>
           </div>
-          {id &&
-            <ProfileButton id={id} />
-          }
+          {id && <ProfileButton id={id} />}
           <div className="flex-1 flex flex-col gap-2 w-full items-center iphone:flex-row laptop:flex-col">
             <Achievement />
           </div>
@@ -94,7 +91,7 @@ const Profile = () => {
                   History Match
                 </span>
                 <div className="overflow-hidden h-[51vh] laptop:[60vh]">
-                  <MatchHistory />
+                  <MatchHistory id={id} />
                 </div>
               </div>
             ) : (
@@ -115,7 +112,10 @@ const Profile = () => {
                 </TabList>
                 <TabPanels className="overflow-auto iphone:h-[38vh] table:h-[35vh] laptop:h-[49vh]">
                   <TabPanel>
-                    <MatchHistory />
+                    {
+                      ( userId?.id &&
+                    <MatchHistory id={userId.id.toString()} />)
+                    }
                   </TabPanel>
                   <TabPanel>
                     <Friends />

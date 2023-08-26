@@ -8,7 +8,6 @@ const Disable2fa: React.FC<Disableit>  = ({ Disable }) => {
       .then(() => {
 
         Disable();
-        console.log('2FA disabled successfully.');
       })
       .catch((error) => {
         console.error('Error disabling 2FA:', error);

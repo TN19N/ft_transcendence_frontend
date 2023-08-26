@@ -11,7 +11,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
   const userId = useUserContext();
   const [isFriend, setIsFriend] = useState(false);
   const [friendRequest, setFriendRequest] = useState(false);
-  const [checkButton, setCheckButton] =useState(false);
+  const [checkButton, setCheckButton] = useState(false);
   const navigate = useNavigate();
   const [render, setRender] = useState(false);
 
@@ -27,7 +27,6 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         .catch((error) => {
           if (error.response?.status === 401) {
             navigate("/login");
-            console.log("Unauthorized");
           }
         });
 
@@ -37,12 +36,11 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         )
         .then((response) => {
           setFriendRequest(response.data);
-        setCheckButton(true);
+          setCheckButton(true);
         })
         .catch((error) => {
           if (error.response?.status === 401) {
             navigate("/login");
-            console.log("Unauthorized");
           }
         });
     }
@@ -61,7 +59,6 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
-          console.log("Unauthorized");
         }
       });
   };
@@ -78,7 +75,6 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
-          console.log("Unauthorized");
         }
       });
   };
@@ -95,7 +91,6 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
-          console.log("Unauthorized");
         }
       });
   };
@@ -113,13 +108,13 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
-          console.log("Unauthorized");
         }
       });
   };
 
   return (
-    id && typeof id === 'string' &&
+    id &&
+    typeof id === "string" &&
     id !== userId?.id?.toString() && (
       <div>
         {checkButton ? (

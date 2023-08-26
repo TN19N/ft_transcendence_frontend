@@ -6,8 +6,11 @@ import Notification from './Notification';
 import axios from 'axios';
 import Disable2fa from './Disable2fa';
 import Enable2fa from './Enable2fa';
+import { useUserContext } from './UserContext';
+
 
 const LogoBar: React.FC = () => {
+  const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
   const [UserName, setUserName] = useState<string>("");
@@ -25,7 +28,6 @@ const LogoBar: React.FC = () => {
       .catch((error) => {
         if (error.response?.status === 401) {
           window.location.href = '/login';
-          console.log('Unauthorized');
         }
       });
 
@@ -36,7 +38,6 @@ const LogoBar: React.FC = () => {
       .catch((error) => {
         if (error.response?.status === 401) {
           window.location.href = '/login';
-          console.log('Unauthorized');
         }
       });
   }, [Render]);
@@ -47,12 +48,10 @@ const LogoBar: React.FC = () => {
 
   const logout = () => {
     axios.post(`${process.env.SERVER_HOST}/api/v1/auth/logout`)
-      .then((response) => {
+      .then(() => {
         window.location.href = '/login';
-        console.log(response);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
       });
   };
 
@@ -63,9 +62,12 @@ const LogoBar: React.FC = () => {
       </Link>
       <NavBar />
       <div className="flex items-center iphone:[30%] iphone:gap-2 tablet:gap-4">
-        <Notification />
+        {userId?.notifications && <Notification />}
         <div className="relative">
-          <div className="flex items-center text-white gap-1" onClick={toggleDropdown}>
+          <div
+            className="flex items-center text-white gap-1"
+            onClick={toggleDropdown}
+          >
             <img
               src={`${process.env.SERVER_HOST}/api/v1/user/avatar`}
               alt="avatar"
@@ -75,7 +77,7 @@ const LogoBar: React.FC = () => {
               {UserName}
               <ArrowIcon
                 className={`iphone:w-2 iphone:h-2 tablet:w-3 tablet:h-3 cursor-pointer ${
-                  isDropdownOpen ? 'transform rotate-180' : ''
+                  isDropdownOpen ? "transform rotate-180" : ""
                 }`}
               />
             </span>
@@ -84,15 +86,18 @@ const LogoBar: React.FC = () => {
             <div className="absolute text-white right-0 rounded bg-background border-[1px] mt-1 text-[4px] tablet:text-[12px] laptop:text-[14px] imac:text-[20px]">
               <div className="flex flex-col items-start cursor-pointer">
                 <Link to="/profile">
-                  <div onClick={() => console.log('Profile clicked!')} className="flex gap-1 items-center p-1">
+                  <div className="flex gap-1 items-center p-1">
                     <NavProfileIcon className="w-2 h-2 tablet:w-5 tablet:h-5 " />
                     Profile
                   </div>
                 </Link>
-                <div
-                  className="border-t-[0.5px] border-b-[0.5px] border-white flex gap-1 items-center p-1 iphone:w-[60px] tablet:w-[120px] laptop:w-[180px] imac:w-[180px]">
+                <div className="border-t-[0.5px] border-b-[0.5px] border-white flex gap-1 items-center p-1 iphone:w-[60px] tablet:w-[120px] laptop:w-[180px] imac:w-[180px]">
                   <AuthenIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />
-                  {is2FAEnabled ? <Disable2fa Disable={Disable} /> : <Enable2fa />}
+                  {is2FAEnabled ? (
+                    <Disable2fa Disable={Disable} />
+                  ) : (
+                    <Enable2fa />
+                  )}
                 </div>
                 <div onClick={logout} className="flex gap-1 items-center p-1">
                   <LogOutIcon className="w-2 h-2 tablet:w-5 tablet:h-5" />

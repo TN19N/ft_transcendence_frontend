@@ -19,7 +19,7 @@ const RoutesApp = () => {
       <Route path="/" element={<Home />} />
       <Route path="/chat" element={<Chat />} />
       <Route path="/play" element={<Game />} />
-      <Route path="/game/:id?/:speed?" element={<Game/>}/>
+      <Route path="/play/:id?/:speed?" element={<Game/>}/>
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile/:id" element={<Profile />} />
       <Route path="/enable2fa" element={<Authentication />} />

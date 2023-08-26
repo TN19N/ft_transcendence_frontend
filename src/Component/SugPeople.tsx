@@ -19,24 +19,19 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
   const [IsFriend, setIsFriend] = useState<boolean>(true);
   const [Render, setRender] = useState<boolean>(false);
 
-
   useEffect(() => {
-         axios
-           .get(
-             `${process.env.SERVER_HOST}/api/v1/user/isFriend?otherId=${id}`,
-             {
-               withCredentials: true,
-             }
-           )
-           .then((response) => {
-             setIsFriend(response.data);
-           })
-           .catch((error) => {
-             if (error.response?.status === 401) {
-               navigate("/login");
-               console.log("Unauthorized");
-             }
-           });
+    axios
+      .get(`${process.env.SERVER_HOST}/api/v1/user/isFriend?otherId=${id}`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setIsFriend(response.data);
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          navigate("/login");
+        }
+      });
     axios
       .get(
         `${process.env.SERVER_HOST}/api/v1/user/isFriendRequestSent?otherId=${id}`
@@ -47,7 +42,6 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
-          console.log("Unauthorized");
         }
       });
   }, [id, Render]);
@@ -58,13 +52,12 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
         `${process.env.SERVER_HOST}/api/v1/user/friendRequest?userToSendToId=${id}`
       )
       .then(() => {
-        setRender((prevState) => !prevState); 
-        FriendRequestSent(); 
+        setRender((prevState) => !prevState);
+        FriendRequestSent();
       })
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
-          console.log("Unauthorized");
         }
       });
   };
@@ -79,7 +72,7 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
         />
         {name}
       </Link>
-      {(!WaitingAccept && !IsFriend) && (
+      {!WaitingAccept && !IsFriend && (
         <button onClick={sendFriendRequest}>
           <AddIcon className="w-5 h-5 tablet:w-7 tablet:h-7" />
         </button>

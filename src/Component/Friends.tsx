@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import ButtonAvatar from './ButtonAvatar';
+import InviteGame from './InviteGame';
 
 interface Friend {
   id: string;
@@ -21,10 +22,9 @@ const Friends: React.FC = () => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate('/login');
-          console.log('Unauthorized');
         }
       });
-  }, [navigate]);
+  }, []);
 
   return (
     <div className="flex w-full items-center text-white text-[13px] tablet:text-[18px] laptop:text-[20px] imac:text-[24px]">
@@ -38,6 +38,7 @@ const Friends: React.FC = () => {
               >
                 <ButtonAvatar id={friend.id} />
                 <span className="mb-2">{friend.name}</span>
+                <InviteGame id={friend.id} />
               </div>
             ))}
           </>

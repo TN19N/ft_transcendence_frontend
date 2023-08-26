@@ -1,35 +1,40 @@
-import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import Score from "./Score";
 
-interface Record {
+export interface Match {
   id: string;
-  userId: string;
   opponentId: string;
-  userScore: number;
+  opponentName: string;
   opponentScore: number;
+  userId: string;
+  userName: string;
+  userScore: number;
+}
+interface MatchHistoryProps {
+  id: string;
 }
 
-export default function MatchHistory() {
-  const [records, setRecords] = useState<Record[]>([]);
+const MatchHistory: React.FC<MatchHistoryProps> = ({ id }) => {
+  const [records, setRecords] = useState<Match[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`${process.env.SERVER_HOST}/api/v1/game/record`, { withCredentials: true })
+      .get(`${process.env.SERVER_HOST}/api/v1/game/record?id=${id}`, {
+        withCredentials: true,
+      })
       .then((response) => {
         setRecords(response.data);
       })
       .catch((error) => {
         if (error.response?.status === 401) {
-          navigate('/login');
-          console.log('Unauthorized');
+          navigate("/login");
         }
       });
-  }, [navigate]);
-
+  }, []);
   return (
     <div className="flex flex-col gap-3 !overflow-auto">
       {records.length !== 0 ? (
@@ -45,5 +50,6 @@ export default function MatchHistory() {
       )}
     </div>
   );
-}
+};
 
+export default MatchHistory;

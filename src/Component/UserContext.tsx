@@ -1,24 +1,26 @@
-import React, {
+import {
   createContext,
-  useState,
-  useEffect,
   ReactNode,
   useContext,
+  useEffect,
+  useState,
 } from "react";
+import { io } from "socket.io-client";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
 
-interface Notification {
-  speed: string | undefined;
+export interface Notification {
   type: string;
-  id: string;
-  name: string;
+  payload: {
+    id: string;
+    name?: string;
+    speed?: string;
+  };
 }
 
 interface UserContextType {
   id: number | null;
-  notifications: Notification[];
+  notifications: Notification[] | null;
 }
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -27,21 +29,14 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-axios.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  function (error) {
-    if (error.response.status == "401")
-      
-    return Promise.reject(error);
-  }
-);
+
+
 const socket = io(`${process.env.SERVER_HOST}/user`);
+
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserContextType | null>({
     id: null,
-    notifications: [],
+    notifications: null,
   });
   const navigate = useNavigate();
 
@@ -60,11 +55,13 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
           const friendResponse = await axios.get(
             `${process.env.SERVER_HOST}/api/v1/user/friendRequest/received`,
             { withCredentials: true }
-            );
+          );
           const friendReq = friendResponse.data.map((item: any) => ({
-            type: "friend",
-            id: item.id,
-            name: item.name,
+            type: "FRIEND_REQUEST",
+            payload: {
+              id: item.id,
+              name: item.name,
+            },
           }));
 
           const groupResponse = await axios.get(
@@ -72,9 +69,11 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             { withCredentials: true }
           );
           const groupReq = groupResponse.data.map((item: any) => ({
-            type: "group",
-            id: item.id,
-            name: item.name,
+            type: "GROUP_INVITE",
+            payload: {
+              id: item.id,
+              name: item.name,
+            },
           }));
 
           setUser({
@@ -91,13 +90,12 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     };
     fetchData();
   }, []);
-  
   const userContextValue: UserContextType | null = user;
-  return (
-    <UserContext.Provider value={userContextValue}>
-      {children}
-    </UserContext.Provider>
-  );
+    return (
+      <UserContext.Provider value={userContextValue}>
+        {children}
+      </UserContext.Provider>
+    );
 };
 
 const useUserContext = (): UserContextType | null => {
@@ -105,3 +103,4 @@ const useUserContext = (): UserContextType | null => {
 };
 
 export { UserProvider, useUserContext, socket };
+

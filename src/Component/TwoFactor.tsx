@@ -17,7 +17,7 @@ const Enable2FA = () => {
       .catch((error) => {
         if (error.response.status === 401) {
           navigate('/login');
-          console.log('Unauthorized');
+          
         } else {
           console.error('Error ', error);
         }
@@ -42,7 +42,7 @@ const Enable2FA = () => {
         .catch((error) => {
           if (error.response.status === 401) {
             navigate('/login');
-            console.log('Unauthorized');
+            
           } else {
             console.error('Error ', error);
           }

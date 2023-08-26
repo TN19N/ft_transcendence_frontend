@@ -3,7 +3,6 @@ import LogoBar from "./LogoBar";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-
 interface ErrorResponse {
   response?: {
     status: number;
@@ -20,7 +19,9 @@ const EditProfile = () => {
     setCurrentImage(`${process.env.SERVER_HOST}/api/v1/user/avatar`);
   }, []);
 
-  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const selectedImage = event.target.files?.[0];
 
     if (selectedImage) {
@@ -46,7 +47,6 @@ const EditProfile = () => {
       } catch (error: ErrorResponse | any) {
         if (error.response?.status === 401) {
           navigate("/login");
-          console.log("Unauthorized");
         } else {
           console.error(error);
         }
@@ -54,15 +54,14 @@ const EditProfile = () => {
       setError("");
       const imageURL = URL.createObjectURL(selectedImage);
       setCurrentImage(imageURL);
-      
     }
   };
 
-// Username update
+  // Username update
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newUsername = event.target.value;
-      setNewUsername(newUsername);
-      setError("");
+    setNewUsername(newUsername);
+    setError("");
   };
 
   const handleUsernameSubmit = async () => {
@@ -80,7 +79,6 @@ const EditProfile = () => {
             setError("This username already exists");
           } else if (error.response?.status === 401) {
             navigate("/login");
-            console.log("Unauthorized");
           } else {
             console.error(error);
           }
@@ -100,7 +98,6 @@ const EditProfile = () => {
         <div className="bg-InboxColor rounded-xl p-10 flex flex-col gap-2 items-center">
           <h1 className="text-center text-white text-2xl">Edit Profile</h1>
           <form
-            
             encType="multipart/form-data"
             className="flex flex-col items-center gap-2"
           >
@@ -131,9 +128,12 @@ const EditProfile = () => {
             onChange={handleUsernameChange}
           />
           {error && <p className="text-red-500">{error}</p>}
-            <button onClick={handleUsernameSubmit} className="w-37 h-10 bg-blue-500 text-white rounded-xl cursor-pointer iphone:text-[12px] tablet:text-[14px] p-2">
-              Save changes
-            </button>
+          <button
+            onClick={handleUsernameSubmit}
+            className="w-37 h-10 bg-blue-500 text-white rounded-xl cursor-pointer iphone:text-[12px] tablet:text-[14px] p-2"
+          >
+            Save changes
+          </button>
         </div>
       </div>
     </div>
