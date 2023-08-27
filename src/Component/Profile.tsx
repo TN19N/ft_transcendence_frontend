@@ -78,7 +78,7 @@ const Profile = () => {
           </div>
           {id && <ProfileButton id={id} />}
           <div className="flex-1 flex flex-col gap-2 w-full items-center iphone:flex-row laptop:flex-col">
-            <Achievement />
+            {/* <Achievement /> */}
           </div>
         </div>
         <div className="flex-1 flex  flex-col gap-3 items-center  laptop:border-l-[1px] laptop:border-l-gray-600">

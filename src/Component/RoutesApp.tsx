@@ -1,25 +1,28 @@
-import { Route, Routes } from 'react-router'
-import Home from './Home'
-import Chat from './Chat'
-import Profile from './Profile'
-import Authentication from './TwoFactor'
-import Check2fa from './Check2fa'
-import Login from './Login'
-import EditProfile from './EditProfile'
-import Game from './Game'
-
+import { Route, Routes } from "react-router";
+import Home from "./Home";
+import Chat from "./Chat";
+import Profile from "./Profile";
+import Authentication from "./TwoFactor";
+import Check2fa from "./Check2fa";
+import Login from "./Login";
+import EditProfile from "./EditProfile";
+import Game from "./Game";
+import { useUserContext } from "./UserContext";
 
 const RoutesApp = () => {
-
-  return (
+  const userId = useUserContext();
+  return !userId?.id ? (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/2fa" element={<Check2fa />} />
+    </Routes>
+  ) : (
+    <Routes>
       <Route path="/home" element={<Home />} />
       <Route path="/" element={<Home />} />
       <Route path="/chat" element={<Chat />} />
       <Route path="/play" element={<Game />} />
-      <Route path="/play/:id?/:speed?" element={<Game/>}/>
+      <Route path="/play/:id?/:speed?" element={<Game />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile/:id" element={<Profile />} />
       <Route path="/enable2fa" element={<Authentication />} />
@@ -36,7 +39,6 @@ const RoutesApp = () => {
       />
     </Routes>
   );
-  }
-
+};
 
 export default RoutesApp;

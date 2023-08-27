@@ -1,44 +1,167 @@
-import { Route, Routes } from "react-router";
-import Home from "./Home";
-import Chat from "./Chat";
-import Profile from "./Profile";
-import Authentication from "./TwoFactor";
-import Check2fa from "./Check2fa";
-import Login from "./Login";
-import EditProfile from "./EditProfile";
-import Game from "./Game";
+import { useState, useEffect } from "react";
 import { useUserContext } from "./UserContext";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
-const RoutesApp = () => {
+interface ProfileButtonProps {
+  id: string;
+}
+
+export default function ProfileButton({ id }: ProfileButtonProps) {
   const userId = useUserContext();
-  return !userId?.id ? (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/2fa" element={<Check2fa />} />
-    </Routes>
-  ) : (
-    <Routes>
-      <Route path="/home" element={<Home />} />
-      <Route path="/" element={<Home />} />
-      <Route path="/chat" element={<Chat />} />
-      <Route path="/play" element={<Game />} />
-      <Route path="/play/:id?/:speed?" element={<Game />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/profile/:id" element={<Profile />} />
-      <Route path="/enable2fa" element={<Authentication />} />
-      <Route path={"/editprofile"} element={<EditProfile />} />
-      <Route
-        path="*"
-        element={
-          <div>
-            <h1 style={{ color: "white", fontSize: "25px" }}>
-              404 Page Not Found{" "}
-            </h1>
-          </div>
-        }
-      />
-    </Routes>
-  );
-};
+  const [isFriend, setIsFriend] = useState(false);
+  const [friendRequest, setFriendRequest] = useState(false);
+  const [checkButton, setCheckButton] = useState(false);
+  const navigate = useNavigate();
+  const [render, setRender] = useState(false);
 
-export default RoutesApp;
+  useEffect(() => {
+    if (id && id !== userId?.id?.toString()) {
+      axios
+        .get(`${process.env.SERVER_HOST}/api/v1/user/isFriend?otherId=${id}`, {
+          withCredentials: true,
+        })
+        .then((response) => {
+          setIsFriend(response.data);
+        })
+        .catch((error) => {
+          if (error.response?.status === 401) {
+            navigate("/login");
+          }
+        });
+
+      axios
+        .get(
+          `${process.env.SERVER_HOST}/api/v1/user/isFriendRequestSent?otherId=${id}`
+        )
+        .then((response) => {
+          setFriendRequest(response.data);
+          setCheckButton(true);
+        })
+        .catch((error) => {
+          if (error.response?.status === 401) {
+            navigate("/login");
+          }
+        });
+    }
+  }, [render]);
+
+  const handleBlock = () => {
+    axios
+      .post(
+        `${process.env.SERVER_HOST}/api/v1/user/ban?userToBanId=${id}`,
+        null,
+        { withCredentials: true }
+      )
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          navigate("/login");
+        }
+      });
+  };
+
+  const handleUnfriend = () => {
+    axios
+      .delete(
+        `${process.env.SERVER_HOST}/api/v1/user/removeFriend?friendId=${id}`,
+        { withCredentials: true }
+      )
+      .then(() => {
+        setRender((prevState) => !prevState);
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          navigate("/login");
+        }
+      });
+  };
+
+  const handleCancelRequest = () => {
+    axios
+      .delete(
+        `${process.env.SERVER_HOST}/api/v1/user/friendRequest/sent?reciverId=${id}`,
+        { withCredentials: true }
+      )
+      .then(() => {
+        setRender((prevState) => !prevState);
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          navigate("/login");
+        }
+      });
+  };
+
+  const handleAddFriend = () => {
+    axios
+      .post(
+        `${process.env.SERVER_HOST}/api/v1/user/friendRequest?userToSendToId=${id}`,
+        null,
+        { withCredentials: true }
+      )
+      .then(() => {
+        setRender((prevState) => !prevState);
+      })
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          navigate("/login");
+        }
+      });
+  };
+
+  return (
+    id &&
+    typeof id === "string" &&
+    id !== userId?.id?.toString() && (
+      <div>
+        {checkButton ? (
+          <>
+            {!isFriend ? (
+              <div className="flex gap-3 text-white iphone:text-[12px] tablet:text-[15px] laptop:text-[15px] imac:text-[15px]">
+                {friendRequest ? (
+                  <button
+                    className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px] px-2"
+                    onClick={handleCancelRequest}
+                  >
+                    Cancel Request
+                  </button>
+                ) : (
+                  <button
+                    className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px] px-2"
+                    onClick={handleAddFriend}
+                  >
+                    Add friend
+                  </button>
+                )}
+                <button
+                  className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px]"
+                  onClick={handleBlock}
+                >
+                  Block
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-3 text-white iphone:text-[12px] tablet:text-[15px] laptop:text-[18px] imac:text-[20px]">
+                <button
+                  className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px] px-2"
+                  onClick={handleUnfriend}
+                >
+                  Unfriend
+                </button>
+                <button
+                  className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px] px-2"
+                  onClick={handleBlock}
+                >
+                  Block
+                </button>
+              </div>
+            )}
+          </>
+        ) : null}
+      </div>
+    )
+  );
+}
