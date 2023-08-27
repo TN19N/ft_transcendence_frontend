@@ -18,6 +18,7 @@ export default function InviteGame({ id }: IdInvitor) {
   };
 
   const sendGameInvite = (speed: string) => {
+    setShowButtons(false);
     axios
       .post(
         `${process.env.SERVER_HOST}/api/v1/user/sendGameInvite?reciverId=${id}&speed=${speed}`
