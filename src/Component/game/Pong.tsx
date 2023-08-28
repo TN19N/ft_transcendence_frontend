@@ -7,6 +7,7 @@ import { inviteProp } from "./PongTypes"; // Assuming the type is named PongProp
 const BACK_END = `${process.env.SERVER_HOST}/game`;
 
 const Pong: React.FC<inviteProp> = (invite: inviteProp) => {
+  console.log("invite: ", invite);
   const mainPong: MainCanvas = new MainCanvas(BACK_END, invite);
 
   const setup = (p5: p5Types, canvasParentRef: Element) => 

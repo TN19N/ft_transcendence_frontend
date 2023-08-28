@@ -24,6 +24,7 @@ export default function NotificationComponent() {
   };
   useEffect(() => {
     const handleNotification = (notification: any) => {
+      console.log(notification);
       setNotifications((prevNotifications) => [
         ...prevNotifications,
         {...notification,

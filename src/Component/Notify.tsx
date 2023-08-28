@@ -19,7 +19,6 @@ const Notify: React.FC<NotifyProps> = ({
   notification,
   removeNotification,
 }) => {
-
   const navigate = useNavigate();
   
   const displayProfile = () => {

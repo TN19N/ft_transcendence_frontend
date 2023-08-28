@@ -5,6 +5,7 @@ import Pong from "./game/Pong";
 
 const Game = () => {
   const {id , speed} = useParams();
+  console.log("Params", id ," speed ", speed);
     return (
       <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-xl w-[90%]">
         <LogoBar />

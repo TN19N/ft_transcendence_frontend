@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState} from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 // import { io } from "socket.io-client";
 import { socket } from "./UserContext";
@@ -27,6 +27,7 @@ export default function InviteGame({ id }: IdInvitor) {
             console.log("Tine is done");
         }, 5000);
         const startGameListener = () => {
+            console.log("STart");
           clearTimeout(timeoutId);
           navigate("/play");
         };
@@ -51,9 +52,9 @@ export default function InviteGame({ id }: IdInvitor) {
       <button onClick={handleGameInvite}>Invite to play</button>
       {showButtons && (
         <div className="flex gap-3">
-          <button onClick={() => sendGameInvite("Slow")}>SLOW</button>
-          <button onClick={() => sendGameInvite("Meduim")}>MEDIUM</button>
-          <button onClick={() => sendGameInvite("Fast")}>FAST</button>
+          <button onClick={() => sendGameInvite("SLOW")}>SLOW</button>
+          <button onClick={() => sendGameInvite("MEDIUM")}>MEDIUM</button>
+          <button onClick={() => sendGameInvite("FAST")}>FAST</button>
         </div>
       )}
     </div>
