@@ -8,6 +8,7 @@ import {
 import { io } from "socket.io-client";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export interface Notification {
   type: string;
@@ -39,9 +40,6 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     notifications: null,
   });
   const navigate = useNavigate();
-  // const setUpdate = ()=>{
-  //   setapt(true);
-  // }
   useEffect(() => {
     const fetchData = async () => {
       if (
@@ -82,9 +80,15 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             id: response.data.id,
             notifications: [...friendReq, ...groupReq],
           });
-        } catch (error) {
+        } catch (error:any) {
           if (axios.isAxiosError(error) && error.response?.status === 401) {
-            window.location.href=("/login");
+            navigate("/login");
+          } else {
+            const errorMessage =
+              error.response?.data?.message || "An error occurred";
+            toast.error(errorMessage, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
           }
           setUser(null);
         }

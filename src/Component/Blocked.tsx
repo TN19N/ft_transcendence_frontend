@@ -3,35 +3,56 @@ import ButtonAvatar from "./ButtonAvatar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-
+import { toast } from "react-toastify";
 interface BlockedUser {
-  id: string,
-  name:string
+  id: string;
+  name: string;
 }
 
 export default function Blocked() {
   const [blockedUsers, setBlockedUsers] = useState<BlockedUser[]>([]);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`${process.env.SERVER_HOST}/api/v1/user/baned`, { withCredentials: true })
+    axios
+      .get(`${process.env.SERVER_HOST}/api/v1/user/baned`, {
+        withCredentials: true,
+      })
       .then((response) => {
         setBlockedUsers(response.data);
       })
       .catch((error) => {
         if (error.response?.status === 401) {
-          navigate('/login');
+          navigate("/login");
         }
       });
   }, []);
   const unblockUser = (userId: string) => {
-    axios.delete(`${process.env.SERVER_HOST}/api/v1/user/unBan?userToUnBanId=${userId}`, { withCredentials: true })
+    axios
+      .delete(
+        `${process.env.SERVER_HOST}/api/v1/user/unBan?userToUnBanId=${userId}`,
+        { withCredentials: true }
+      )
       .then(() => {
-        setBlockedUsers(prevBlockedUsers => prevBlockedUsers.filter(user => user.id !== userId));
-
+        setBlockedUsers((prevBlockedUsers) =>
+          prevBlockedUsers.filter((user) => user.id !== userId)
+        );
       })
       .catch((error) => {
         if (error.response?.status === 401) {
-          navigate('/login');
+          navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   };

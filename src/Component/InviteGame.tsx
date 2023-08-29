@@ -1,18 +1,17 @@
 import axios from "axios";
-import { useState} from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import "./InviteGame.css";
 import { socket } from "./UserContext";
 import { PlayIcon } from "./Icons";
-interface IdInvitor{
-    id:string
+import { toast } from "react-toastify";
+interface IdInvitor {
+  id: string;
 }
-
 export default function InviteGame({ id }: IdInvitor) {
   const navigate = useNavigate();
   const [showButtons, setShowButtons] = useState(false);
-  const Buttons = ["Slow", "Meduim", "Fast"]
-  
+  const Buttons = ["Slow", "Meduim", "Fast"];
 
   const handleGameInvite = () => {
     setShowButtons(true);
@@ -25,28 +24,39 @@ export default function InviteGame({ id }: IdInvitor) {
       )
       .then(() => {
         const timeoutId = setTimeout(() => {
-            console.log("Time is done");
+          console.log("Time is done");
         }, 5000);
         const startGameListener = () => {
-            console.log("startgame");
+          console.log("startgame");
           clearTimeout(timeoutId);
           navigate("/play");
         };
         const stopTimerListener = () => {
-            console.log("stopTimer");
+          console.log("stopTimer");
           clearTimeout(timeoutId);
           socket.once("startGame", startGameListener);
-  
         };
         socket.on("stopTimer", stopTimerListener);
       })
       .catch((error) => {
-        if (axios.isAxiosError(error) && error.response?.status === 401) {
+        if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   };
-
 
   return (
     <div>

@@ -46,13 +46,13 @@ export default function NotificationComponent() {
   return (
     <div className="relative cursor-pointer">
       <button className="flex items-center" onClick={toggleDropdown}>
-        <NotificationIcon className="w-8 h-8" />
-        <div className="absolute left-[15px] top-[-5px] w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-[12px]">
+        <NotificationIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
+        <div className="absolute flex iphone:left-[5px] iphone:w-3 iphone:h-3 iphone:text-[8px] iphone:top-[-5px] tablet:left-[10px] tablet:top-[-9px] tablet:w-5 tablet:h-5 tablet:text-[12px] laptop:left-[13px] laptop:top-[-9px] laptop:w-6 laptop:h-6 laptop:text-[14px] rounded-full bg-blue-500 text-white  items-center justify-center ">
           <span>{notifications.length}</span>
         </div>
       </button>
       {isDropdownOpen && (
-        <div className="absolute text-white rounded w-72 bg-background border-[1px] rounded-xl mt-2 right-0 min-h-[20px]">
+        <div className="absolute text-white rounded iphone:w-[150px] tablet:w-[206px] laptop:w-[272px] bg-background border-[1px] rounded-xl mt-2 right-0 min-h-[20px]">
           <div className="flex flex-col cursor-pointer">
             {notifications.length ? (
               notifications.map((notification, index) => (

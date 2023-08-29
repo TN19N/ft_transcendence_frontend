@@ -11,7 +11,6 @@ import { useUserContext } from "./UserContext";
 
 const RoutesApp = () => {
   const userId = useUserContext();
-  console.log(" USer ==+> ", userId);
   return (
     <Routes>
       {!userId?.id ? (

@@ -288,7 +288,7 @@ export const PlayingIcon = ({ className }: IconProps) => {
   return (
    <svg
     className={className}
-  viewBox="0 0 15 15"
+  viewBox="0 0 15 16"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >

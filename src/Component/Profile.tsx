@@ -12,6 +12,7 @@ import MatchHistory from "./MatchHistory";
 import ProfileButton from "./ProfileButton";
 import ProfileInfo from "./ProfileInfo";
 import { useUserContext } from "./UserContext";
+import { toast } from "react-toastify";
 
 interface Userprofile {
   id: string;
@@ -43,6 +44,19 @@ const Profile = () => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   }, [navigate]);
@@ -112,10 +126,7 @@ const Profile = () => {
                 </TabList>
                 <TabPanels className="overflow-auto iphone:h-[38vh] table:h-[35vh] laptop:h-[49vh]">
                   <TabPanel>
-                    {
-                      ( userId?.id &&
-                    <MatchHistory id={userId.id.toString()} />)
-                    }
+                    {userId?.id && <MatchHistory id={userId.id.toString()} />}
                   </TabPanel>
                   <TabPanel>
                     <Friends />

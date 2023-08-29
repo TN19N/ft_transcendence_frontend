@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useUserContext } from "./UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
 interface ProfileButtonProps {
   id: string;
 }
@@ -14,7 +16,6 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
   const [checkButton, setCheckButton] = useState(false);
   const navigate = useNavigate();
   const [render, setRender] = useState(false);
-
   useEffect(() => {
     if (id && id !== userId?.id?.toString()) {
       axios
@@ -27,6 +28,12 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         .catch((error) => {
           if (error.response?.status === 401) {
             navigate("/login");
+          } else {
+            const errorMessage =
+              error.response?.data?.message || "An error occurred";
+            toast.error(errorMessage, {
+              position: toast.POSITION.TOP_LEFT,
+            });
           }
         });
 
@@ -41,6 +48,12 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         .catch((error) => {
           if (error.response?.status === 401) {
             navigate("/login");
+          } else {
+            const errorMessage =
+              error.response?.data?.message || "An error occurred";
+            toast.error(errorMessage, {
+              position: toast.POSITION.TOP_LEFT,
+            });
           }
         });
     }
@@ -59,6 +72,12 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: toast.POSITION.TOP_LEFT,
+          });
         }
       });
   };
@@ -75,6 +94,19 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   };
@@ -91,6 +123,19 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   };
@@ -108,6 +153,19 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   };

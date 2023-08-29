@@ -41,7 +41,7 @@ export default class MainCanvas {
       pp: { rp: 0, lp: 0 },
       score: { tp: "", op: "" },
       size: { w: 50, h: 100 },
-      windowReSized: { w: window.innerWidth, h: window.innerHeight },
+      windowReSized: { w: 500, h: 500 },
       zoom: window.devicePixelRatio,
       delay: "-",
     };

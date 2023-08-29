@@ -3,6 +3,8 @@ import { AddIcon } from "./Icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 interface SugPeopleProps {
   person: {
     id: string;
@@ -30,6 +32,12 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: toast.POSITION.TOP_LEFT,
+          });
         }
       });
     axios
@@ -42,6 +50,19 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   }, [id, Render]);
@@ -58,6 +79,19 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   };

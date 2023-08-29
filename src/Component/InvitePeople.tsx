@@ -3,7 +3,7 @@ import { SearchIcon } from "./Icons";
 import SugPeople from "./SugPeople";
 import axios from "axios";
 import { useNavigate } from "react-router";
-
+import { toast } from "react-toastify";
 interface SugPeopleData {
   id: string;
   name: string;
@@ -32,6 +32,19 @@ const InvitePeople: React.FC = () => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   }, [searchPeople, friendRequest]);

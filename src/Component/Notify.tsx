@@ -3,6 +3,7 @@ import { CancelIcon, AcceptIcon, PlayingIcon } from "./Icons";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { Notification } from "./UserContext";
+import { toast } from "react-toastify";
 
 enum NotificationType {
   FRIEND_REQUEST = "FRIEND_REQUEST",
@@ -19,9 +20,8 @@ const Notify: React.FC<NotifyProps> = ({
   notification,
   removeNotification,
 }) => {
-
   const navigate = useNavigate();
-  
+
   const displayProfile = () => {
     navigate(`/profile/${notification.payload.id}`);
   };
@@ -39,21 +39,42 @@ const Notify: React.FC<NotifyProps> = ({
         .catch((error) => {
           if (error.response?.status === 401) {
             navigate("/login");
+          } else {
+            const errorMessage =
+              error.response?.data?.message || "An error occurred";
+            toast.error(errorMessage, {
+              position: toast.POSITION.TOP_LEFT,
+            });
           }
         });
     } else {
-      axios.post(
-        `${process.env.SERVER_HOST}/api/v1/user/acceptGameInvite?reciverId=${notification.payload.id}`
-      ).then(()=>{
-        navigate(
-        `/play/${notification.payload.id}/${notification.payload.speed}`
-      );
-      }).catch((error)=>{
-        if (axios.isAxiosError(error) && error.response?.status === 401) {
-          navigate("/login");
-        }
-      })
-      
+      axios
+        .post(
+          `${process.env.SERVER_HOST}/api/v1/user/acceptGameInvite?reciverId=${notification.payload.id}`
+        )
+        .then(() => {
+          navigate(
+            `/play/${notification.payload.id}/${notification.payload.speed}`
+          );
+        })
+        .catch((error) => {
+          if (error.response?.status === 401) {
+            navigate("/login");
+          } else {
+            const errorMessage =
+              error.response?.data?.message || "An error occurred";
+            toast.error(errorMessage, {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+          }
+        });
     }
     removeNotification(notification);
   };
@@ -73,39 +94,42 @@ const Notify: React.FC<NotifyProps> = ({
         .catch((error) => {
           if (error.response?.status === 401) {
             navigate("/login");
+          } else {
+            const errorMessage =
+              error.response?.data?.message || "An error occurred";
+            toast.error(errorMessage, {
+              position: toast.POSITION.TOP_LEFT,
+            });
           }
         });
     }
     removeNotification(notification);
   };
-return (
-  <div className="flex w-full items-center pl-[2px] iphone:text-[6px] tablet:text-[9px] laptop:text-[13px] iphone:gap-1 iphone:m-[3px] tablet:m-[4px] laptop:m-[6px]">
-    <button onClick={displayProfile}>
-      <img
-        src={`${process.env.SERVER_HOST}/api/v1/user/avatar?id=${notification.payload.id}`}
-        alt="avatar"
-        className="w-8 h-8 rounded-full"
-      />
-    </button>
-    <span className="break-words laptop:max-w-[165px]">
-      {notification.payload.name} sent {notification.type}
-    </span>
-    <button onClick={handleAccept}>
-      {notification.type === NotificationType.FRIEND_REQUEST ||
-      notification.type === NotificationType.GROUP_INVITE ? (
-        <AcceptIcon className="w-5 h-5" />
-      ) : (
-        <PlayingIcon className="w-5 h-5" />
-      )}
-    </button>
-    <button onClick={handleReject}>
-      <CancelIcon className="w-5 h-5" />
-    </button>
-  </div>
-);
- 
+  return (
+    <div className="flex w-full items-center pl-[2px] iphone:text-[6px] tablet:text-[9px] laptop:text-[13px] iphone:gap-1 iphone:m-[3px] tablet:m-[4px] laptop:m-[6px]">
+      <button onClick={displayProfile}>
+        <img
+          src={`${process.env.SERVER_HOST}/api/v1/user/avatar?id=${notification.payload.id}`}
+          alt="avatar"
+          className="iphone:w-5 iphone:h-5 tablet:w-8 tablet:h-8 rounded-full"
+        />
+      </button>
+      <span className="break-words iphone:max-w-[82px] tablet:max-w-[107px] laptop:max-w-[165px]">
+        {notification.payload.name} sent {notification.type}
+      </span>
+      <button onClick={handleAccept}>
+        {notification.type === NotificationType.FRIEND_REQUEST ||
+        notification.type === NotificationType.GROUP_INVITE ? (
+          <AcceptIcon className="iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-6 laptop:h-6" />
+        ) : (
+          <PlayingIcon className="phone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-6 laptop:h-6" />
+        )}
+      </button>
+      <button onClick={handleReject}>
+        <CancelIcon className="phone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-6 laptop:h-6" />
+      </button>
+    </div>
+  );
 };
-
-
 
 export default Notify;

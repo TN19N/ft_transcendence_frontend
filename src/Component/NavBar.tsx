@@ -27,7 +27,7 @@ const NavBar = () => {
       >
         <Link to="/home">
           <div className="flex items-center justify-center">
-            <NavHomeIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
+            <NavHomeIcon className="iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
           </div>
         </Link>
         </button>
@@ -39,7 +39,7 @@ const NavBar = () => {
       >
         <NavLink to="/play">
           <div className="flex items-center justify-center">
-            <NavPlayIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
+            <NavPlayIcon className="iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
           </div>
         </NavLink>
       </button>
@@ -51,7 +51,7 @@ const NavBar = () => {
       >
         <Link to="/chat">
           <div className="flex items-center justify-center">
-            <ChatIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
+            <ChatIcon className="iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
           </div>
         </Link>
       </button>
@@ -65,7 +65,7 @@ const NavBar = () => {
       >
         <Link to={`/profile`}>
           <div className="flex items-center justify-center">
-            <NavProfileIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
+            <NavProfileIcon className="iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
           </div>
         </Link>
       </button>

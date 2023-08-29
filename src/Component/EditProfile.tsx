@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import LogoBar from "./LogoBar";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 interface ErrorResponse {
   response?: {
@@ -48,7 +49,18 @@ const EditProfile = () => {
         if (error.response?.status === 401) {
           navigate("/login");
         } else {
-          console.error(error);
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       }
       setError("");
@@ -66,29 +78,33 @@ const EditProfile = () => {
 
   const handleUsernameSubmit = async () => {
     const usernameValid = /^[A-Za-z0-9]+$/;
-      if (newUsername.match(usernameValid)) {
-        try {
-          await axios.put(
+    if (newUsername.match(usernameValid)) {
+      try {
+        await axios
+          .put(
             `${process.env.SERVER_HOST}/api/v1/user/profile`,
             { name: newUsername },
             { withCredentials: true }
-          ).then(()=>{
+          )
+          .then(() => {
             navigate("/profile");
           });
-        } catch (error: ErrorResponse | any) {
-          if (error.response?.status === 409) {
-            setError("This username already exists");
-          } else if (error.response?.status === 401) {
-            navigate("/login");
-          } else {
-            console.error(error);
-          }
+      } catch (error: ErrorResponse | any) {
+        if (error.response?.status === 409) {
+          setError("This username already exists");
+        } else if (error.response?.status === 401) {
+          navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: toast.POSITION.TOP_LEFT,
+          });
         }
-      } else {
-        setError("Username format is not valid");
       }
-
-    
+    } else {
+      setError("Username format is not valid");
+    }
   };
 
   return (

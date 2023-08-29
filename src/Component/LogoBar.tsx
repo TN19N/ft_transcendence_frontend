@@ -1,15 +1,23 @@
-import React, { useEffect, useState, memo } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowIcon, AuthenIcon, LogOutIcon, LogoIcon, NavProfileIcon } from './Icons';
-import NavBar from './NavBar';
-import Notification from './Notification';
-import axios from 'axios';
-import Disable2fa from './Disable2fa';
-import Enable2fa from './Enable2fa';
-import { useUserContext } from './UserContext';
-
+import React, { useEffect, useState, memo } from "react";
+import { Link } from "react-router-dom";
+import {
+  ArrowIcon,
+  AuthenIcon,
+  LogOutIcon,
+  LogoIcon,
+  NavProfileIcon,
+} from "./Icons";
+import NavBar from "./NavBar";
+import Notification from "./Notification";
+import axios from "axios";
+import Disable2fa from "./Disable2fa";
+import Enable2fa from "./Enable2fa";
+import { useUserContext } from "./UserContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const LogoBar: React.FC = () => {
+  const navigate = useNavigate();
   const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [is2FAEnabled, setIs2FAEnabled] = useState<boolean>(false);
@@ -21,23 +29,55 @@ const LogoBar: React.FC = () => {
   };
 
   useEffect(() => {
-    axios.get(`${process.env.SERVER_HOST}/api/v1/user/preferences`, { withCredentials: true })
+    axios
+      .get(`${process.env.SERVER_HOST}/api/v1/user/preferences`, {
+        withCredentials: true,
+      })
       .then((response) => {
         setIs2FAEnabled(response.data.isTwoFactorAuthenticationEnabled);
       })
       .catch((error) => {
         if (error.response?.status === 401) {
-          window.location.href = '/login';
+          navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
 
-    axios.get(`${process.env.SERVER_HOST}/api/v1/user/profile`, { withCredentials: true })
+    axios
+      .get(`${process.env.SERVER_HOST}/api/v1/user/profile`, {
+        withCredentials: true,
+      })
       .then((response) => {
         setUserName(response.data.name);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         if (error.response?.status === 401) {
-          window.location.href = '/login';
+          navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   }, [Render]);
@@ -47,11 +87,28 @@ const LogoBar: React.FC = () => {
   };
 
   const logout = () => {
-    axios.post(`${process.env.SERVER_HOST}/api/v1/auth/logout`)
+    axios
+      .post(`${process.env.SERVER_HOST}/api/v1/auth/logout`)
       .then(() => {
-        window.location.href = '/login';
+        window.location.href = "/login";
       })
-      .catch(() => {
+      .catch((error) => {
+        if (error.response?.status === 401) {
+          navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        }
       });
   };
 

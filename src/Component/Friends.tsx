@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router';
-import ButtonAvatar from './ButtonAvatar';
-import InviteGame from './InviteGame';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router";
+import ButtonAvatar from "./ButtonAvatar";
+import InviteGame from "./InviteGame";
+import { toast } from "react-toastify";
 
 interface Friend {
   id: string;
@@ -15,13 +16,29 @@ const Friends: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${process.env.SERVER_HOST}/api/v1/user/friends`, { withCredentials: true })
+    axios
+      .get(`${process.env.SERVER_HOST}/api/v1/user/friends`, {
+        withCredentials: true,
+      })
       .then((response) => {
         setFriends(response.data);
       })
       .catch((error) => {
         if (error.response?.status === 401) {
-          navigate('/login');
+          navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   }, []);

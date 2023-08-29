@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import ButtonAvatar from "./ButtonAvatar";
+import { toast } from "react-toastify";
 
 export interface TopScore {
   id: string;
@@ -25,8 +26,21 @@ const TopScoreComponent = () => {
         setTopScores(response.data);
       })
       .catch((error) => {
-        if (error.response?.status === 401) {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   }, []);
@@ -42,15 +56,18 @@ const TopScoreComponent = () => {
       </div>
       <div className="flex flex-col gap-2 overflow-auto h-full">
         {Top10.length !== 0 ? (
-          Top10.map((top) => (
-            ((top.wins > 0) && (<div
-              key={top.id}
-              className="flex gap-3 items-center text-white iphone:text-[10px] tablet:text-[16px] ml-2 bg-background rounded-xl p-2 w-[90%]"
-            >
-              <ButtonAvatar id={top.id} />
-              {top.name}
-            </div>))
-          ))
+          Top10.map(
+            (top) =>
+              top.wins > 0 && (
+                <div
+                  key={top.id}
+                  className="flex gap-3 items-center text-white iphone:text-[10px] tablet:text-[16px] ml-2 bg-background rounded-xl p-2 w-[90%]"
+                >
+                  <ButtonAvatar id={top.id} />
+                  {top.name}
+                </div>
+              )
+          )
         ) : (
           <div className="flex justify-center items-center text-white iphone:text-[10px] tablet:text-[16px] laptop:text-[24px] m-auto bg-background rounded-xl p-2 w-[90%] iphone:h-[20vh]">
             <span>No Matches Yet</span>
