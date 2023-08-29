@@ -87,7 +87,14 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             const errorMessage =
               error.response?.data?.message || "An error occurred";
             toast.error(errorMessage, {
-              position: toast.POSITION.TOP_RIGHT,
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
             });
           }
           setUser(null);
