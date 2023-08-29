@@ -23,6 +23,15 @@ export default function InviteGame({ id }: IdInvitor) {
         `${process.env.SERVER_HOST}/api/v1/user/sendGameInvite?reciverId=${id}&speed=${speed}`
       )
       .then(() => {
+	toast.info("Waiting Accept game", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         const timeoutId = setTimeout(() => {
           console.log("Time is done");
         }, 5000);
