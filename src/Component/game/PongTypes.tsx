@@ -1,25 +1,24 @@
-
 export type size = {
-  w: number,
-  h: number,
-}
+  w: number;
+  h: number;
+};
 
 export type Position = {
-  x: number,
-  y: number,
-}
+  x: number;
+  y: number;
+};
 
 export type paddelPair = {
-  rp: number,
-  lp: number,
-}
+  rp: number;
+  lp: number;
+};
 
 export type scorePair = {
-  tp: string,
-  op: string,
-}
+  tp: string;
+  op: string;
+};
 
-export type inviteProp = Partial<{
-  id: string,
-  speed: string,
-}>
+export type param = {
+  id: string;
+  speed: string;
+};

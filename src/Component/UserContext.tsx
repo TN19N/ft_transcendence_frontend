@@ -39,7 +39,9 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     notifications: null,
   });
   const navigate = useNavigate();
-
+  // const setUpdate = ()=>{
+  //   setapt(true);
+  // }
   useEffect(() => {
     const fetchData = async () => {
       if (
@@ -82,14 +84,14 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
           });
         } catch (error) {
           if (axios.isAxiosError(error) && error.response?.status === 401) {
-            navigate("/login");
+            window.location.href=("/login");
           }
           setUser(null);
         }
       }
     };
     fetchData();
-  }, []);
+  }, [navigate]);
   const userContextValue: UserContextType | null = user;
     return (
       <UserContext.Provider value={userContextValue}>

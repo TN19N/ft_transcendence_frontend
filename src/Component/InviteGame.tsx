@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useNavigate } from "react-router";
-// import { io } from "socket.io-client";
+import "./InviteGame.css";
 import { socket } from "./UserContext";
+import { PlayIcon } from "./Icons";
 interface IdInvitor{
     id:string
 }
@@ -10,7 +11,7 @@ interface IdInvitor{
 export default function InviteGame({ id }: IdInvitor) {
   const navigate = useNavigate();
   const [showButtons, setShowButtons] = useState(false);
-  
+  const Buttons = ["Slow", "Meduim", "Fast"]
   
 
   const handleGameInvite = () => {
@@ -24,18 +25,18 @@ export default function InviteGame({ id }: IdInvitor) {
       )
       .then(() => {
         const timeoutId = setTimeout(() => {
-            console.log("Tine is done");
+            console.log("Time is done");
         }, 5000);
         const startGameListener = () => {
-            console.log("STart");
+            console.log("startgame");
           clearTimeout(timeoutId);
           navigate("/play");
         };
         const stopTimerListener = () => {
-            console.log("STop");
+            console.log("stopTimer");
           clearTimeout(timeoutId);
           socket.once("startGame", startGameListener);
-          console.log("Start game");
+  
         };
         socket.on("stopTimer", stopTimerListener);
       })
@@ -49,12 +50,32 @@ export default function InviteGame({ id }: IdInvitor) {
 
   return (
     <div>
-      <button onClick={handleGameInvite}>Invite to play</button>
+      <button onClick={handleGameInvite}>
+        <PlayIcon className="w-6 h-6" />
+      </button>
       {showButtons && (
-        <div className="flex gap-3">
-          <button onClick={() => sendGameInvite("SLOW")}>SLOW</button>
-          <button onClick={() => sendGameInvite("MEDIUM")}>MEDIUM</button>
-          <button onClick={() => sendGameInvite("FAST")}>FAST</button>
+        <div className="popup-container">
+          <div className=" flex flex-col popup-body bg-InboxColor items-center justify-center rounded-xl gap-6">
+            <div className="flex gap-3 w-full justify-center ">
+              {Buttons.map((button, index) => (
+                <button
+                  key={index}
+                  onClick={() => sendGameInvite(button)}
+                  className="bg-NavBarroundedIcon p-2 rounded-xl"
+                >
+                  {button}
+                </button>
+              ))}
+            </div>
+            <div
+              className="items-end cursur-pointer"
+              onClick={() => {
+                setShowButtons(false);
+              }}
+            >
+              Close
+            </div>
+          </div>
         </div>
       )}
     </div>

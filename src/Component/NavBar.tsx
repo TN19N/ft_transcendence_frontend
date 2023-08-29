@@ -10,16 +10,16 @@ const NavBar = () => {
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
   };
-
   useEffect(() => {
     const currentPath = location;
     setActiveButton(currentPath);
-  }, [location]);
+  }, [location, activeButton]);
+
   return (
     <div className="flex items-center justify-around bg-InboxColor rounded-xl w-[40%] p-[3px] iphone:w-[45%] tablet:w-[40%] tablet:p-[5px]">
       <button
         className={`rounded-full  p-1 ${
-          activeButton === "/home" || activeButton === "/"
+          (activeButton === "/home" || activeButton === "/")
             ? "bg-NavBarroundedIcon"
             : "bg-transparent"
         }`}
@@ -55,16 +55,6 @@ const NavBar = () => {
           </div>
         </Link>
       </button>
-      {/* <button
-          className={`rounded-full p-1 ${activeButton === '/createRoom' ? 'bg-NavBarroundedIcon' : 'bg-transparent'}`}
-          onClick={() => handleButtonClick('CreateRoom')}
-        >
-          <Link to="/createRoom">
-          <div className="flex items-center justify-center">
-            <NavCreatRoomIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
-          </div>
-          </Link>
-        </button> */}
       <button
         className={`rounded-full  p-1 ${
           activeButton === `/profile`

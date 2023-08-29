@@ -65,15 +65,16 @@ const EditProfile = () => {
   };
 
   const handleUsernameSubmit = async () => {
-    const usernameValid = /^[A-Za-z]{4}[A-Za-z0-9]*$/;
-    if (newUsername.length) {
+    const usernameValid = /^[A-Za-z0-9]+$/;
       if (newUsername.match(usernameValid)) {
         try {
           await axios.put(
             `${process.env.SERVER_HOST}/api/v1/user/profile`,
             { name: newUsername },
             { withCredentials: true }
-          );
+          ).then(()=>{
+            navigate("/profile");
+          });
         } catch (error: ErrorResponse | any) {
           if (error.response?.status === 409) {
             setError("This username already exists");
@@ -86,9 +87,8 @@ const EditProfile = () => {
       } else {
         setError("Username format is not valid");
       }
-    } else {
-      navigate("/profile");
-    }
+
+    
   };
 
   return (

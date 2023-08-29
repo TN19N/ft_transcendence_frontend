@@ -23,7 +23,6 @@ const TopScoreComponent = () => {
       })
       .then((response) => {
         setTopScores(response.data);
-        console.log("top ", topScores);
       })
       .catch((error) => {
         if (error.response?.status === 401) {

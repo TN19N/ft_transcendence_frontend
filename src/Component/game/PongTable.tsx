@@ -1,10 +1,9 @@
-import { Socket, io } from "socket.io-client";
+import { Socket } from "socket.io-client";
 import Ball from "./PongBall";
 import Paddel from "./PongPaddel";
-import Ui from "./PongUi";
 import p5Types from "p5";
 import { displayDelay, drowNet, drowScore, keyDown } from "./PongTable-func";
-import { Position, inviteProp, paddelPair, scorePair, size } from "./PongTypes";
+import { Position, param, paddelPair, scorePair, size } from "./PongTypes";
 import isEqual from "lodash/isEqual";
 
 const FPS = 60;
@@ -14,7 +13,7 @@ export default class MainCanvas {
   private p5?: p5Types;
   private ball?: Ball;
   private paddel?: Paddel;
-  private ui?: Ui;
+  // private ui?: Ui;
   private size: size;
   private score: scorePair;
   private ballPosition: Position;
@@ -30,9 +29,8 @@ export default class MainCanvas {
     zoom: number;
     delay: string;
   };
-  private invite: Boolean;
 
-  constructor(back_end: string, invitation: inviteProp) {
+  constructor(prop: param, soc: Socket) {
     this.score = { tp: "", op: "" };
     this.size = { w: 50, h: 100 };
     this.delay = "-";
@@ -47,21 +45,19 @@ export default class MainCanvas {
       zoom: window.devicePixelRatio,
       delay: "-",
     };
-    if (invitation.id) {
-      this.socket = io(back_end, {
-        withCredentials: true,
-        query: {
-          userId: invitation.id,
-          speed: invitation.speed,
-        },
-      });
+    this.socket = soc;
+    if (prop.id && prop.speed) {
+      const data = {
+        id: prop.id,
+        speed: prop.speed,
+      };
+      this.socket.emit("start", data);
       this.delay = "Wait Please...";
-      this.invite = true;
+    } else if (!prop.id && prop.speed) {
+      this.socket.emit("start");
+      this.socket.emit("game-speed", prop.speed);
     } else {
-      this.invite = false;
-      this.socket = io(back_end, {
-        withCredentials: true,
-      });
+      this.socket.emit("start");
     }
     this.socketHandler();
   }
@@ -70,7 +66,7 @@ export default class MainCanvas {
     this.p5 = p5;
     this.ball = new Ball(p5);
     this.paddel = new Paddel(p5);
-    if (!this.invite) this.ui = new Ui(p5, canvasRef, this.size, this.socket);
+    // if (!this.invite) this.ui = new Ui(p5, canvasRef, this.size, this.socket);
     this.resize();
     p5.createCanvas(this.size.w, this.size.h).parent(canvasRef);
     p5.frameRate(FPS);
@@ -143,7 +139,7 @@ export default class MainCanvas {
       { x: this.size.w / 2, y: this.size.h / 2 },
       this.size.w
     );
-    if (!this.invite) this.ui?.resize(this.size);
+    // if (!this.invite) this.ui?.resize(this.size);
   }
 
   socketHandler() {

@@ -45,7 +45,7 @@ const Profile = () => {
           navigate("/login");
         }
       });
-  }, []);
+  }, [navigate]);
   return (
     <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-xl overflow-hidden w-[90%]">
       <LogoBar />
