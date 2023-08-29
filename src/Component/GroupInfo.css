@@ -1,0 +1,125 @@
+#add_icon
+{
+    transform: rotateY(0deg) rotate(0deg); /* needs Y at 0 deg to behave properly*/
+    transition: transform 0.7s;
+}
+#add_icon_click
+{
+    transform: rotateY(0deg) rotate(45deg); /* needs Y at 0 deg to behave properly*/
+    transition: transform 0.7s;
+}
+#scrollbar {
+    scrollbar-width: none;
+}
+#parent
+{
+    position: relative;
+}
+
+#fade_right
+{
+    position: relative;
+    right: 100%;
+    transition: right 0.7s;
+}
+#fade_normal_r
+{
+    position: relative;
+    right: 0%;
+    transition: right 0.7s;
+}
+#fade_left
+{
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    transition: left 0.7s
+}
+#fade_normal_l
+{
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 100%;
+    transition: left 0.7s
+}
+
+
+input[type="radio"]{
+    appearance: none;
+    border: 1px solid #d3d3d3;
+    width: 15px;
+    height: 15px;
+    content: none;
+    outline: none;
+    border-radius:100%;
+    margin: 0;
+ }
+ 
+input[type="radio"]:checked {
+   border-radius:100%;
+   width: 15px;
+   height: 15px;
+   outline: none;
+   padding: 0;
+   content: none;
+   border: none;
+ }
+#password_prompt
+{
+    visibility: hidden;
+}
+
+input[type="radio"]:checked::before{
+   position: absolute;
+   background:#0c1332 ;
+   border-radius:100%;
+   color: white;
+   content: "\00A0\2713\00A0";
+   border: 1px solid #d3d3d3;
+   font-weight: bolder;
+   font-size: 10px;
+ }
+ 
+ #expand
+{
+    height:30vh;
+    transition: height 1s;
+    overflow: auto;
+}
+#shrink
+{
+    height: 0px;
+    padding-top: 0px;
+    margin-top: 0px;
+    overflow: hidden;
+    transition: height 1s,padding-top 1s;
+    border:0;
+    color: black;
+}
+
+#icon:hover
+{
+    transform: scale(1.2);
+}
+.input
+{
+    background-color: #303245;
+    border-radius: 12px;
+    color: #eee;
+    width: 10rem;
+    height: 4vh;
+    outline: 0;
+    text-align: center;
+}
+.pass_input
+{
+    background-color: #303245;
+    border-radius: 12px;
+    color: #eee;
+    width: 90%;
+    height: 2vh;
+    max-width: 7em;
+    text-align: center;
+}
