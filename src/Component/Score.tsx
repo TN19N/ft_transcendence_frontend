@@ -22,7 +22,7 @@ const Score = ({record}:ScoreRecord) => {
           <ButtonAvatar id={record.userId} />
           {record.userName}
         </div>
-        <span className="flex-2 flex iphone:text-[14px] tablet:text-[18px] imac:text-[22px] justify-center w-[]">
+        <span className="flex-2 flex iphone:text-[14px] tablet:text-[18px] imac:text-[22px] justify-center">
           VS
         </span>
         <div className="flex-1 flex  gap-3 iphone:text-[10px] tablet:text-[15px] imac:text-[24px] w-[40%]">

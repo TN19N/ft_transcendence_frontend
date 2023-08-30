@@ -13,7 +13,7 @@ export default class Paddel {
   private size: size;
   private p5: p5Types;
 
-  public BLUE: string = 'rgb(255,70,70)';
+  public BLUE: string = 'rgb(255,70,10)';
   public RED: string = 'rgb(0,128,255)';
 
   constructor(p5: p5Types) {

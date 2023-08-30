@@ -4,7 +4,7 @@ import { socket, useUserContext } from "./UserContext";
 import Notify from "./Notify";
 import { Notification } from "./UserContext";
 
-export default function NotificationComponent() {
+const NotificationComponent= ()=> {
   const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -72,3 +72,4 @@ export default function NotificationComponent() {
     </div>
   );
 }
+export default NotificationComponent;

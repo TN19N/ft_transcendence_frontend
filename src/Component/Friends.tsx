@@ -60,7 +60,11 @@ const Friends: React.FC = () => {
             ))}
           </>
         ) : (
+          <div
+                className="flex iphone:w-[90%] tablet:w-[70%] m-auto bg-background p-3 rounded-xl items-center justify-center gap-3"
+              >
           <span>No Friends Yet</span>
+          </div>
         )}
       </div>
     </div>

@@ -43,8 +43,8 @@ const TopScoreComponent = () => {
           });
         }
       });
-  }, []);
-  const Top10 = topScores.slice(0, 10);
+  }, [navigate]);
+  const Top10 = topScores.filter((top:TopScore) => top.wins > 0).slice(0, 10);
   return (
     <div className="flex-1 tablet:flex-2 flex flex-col gap-4 bg-InboxColor rounded-2xl pb-3">
       <div className="flex justify-between text-white text-[8px] w-[95%] p-2 tablet:text-[16px] laptop:text-[18px] imac:text-[22px]">
@@ -55,7 +55,7 @@ const TopScoreComponent = () => {
         <span>Wins</span>
       </div>
       <div className="flex flex-col gap-2 overflow-auto h-full">
-        {Top10.length !== 0 ? (
+        {Top10.length ? (
           Top10.map(
             (top) =>
               top.wins > 0 && (

@@ -23,6 +23,7 @@ export default function InviteGame({ id }: IdInvitor) {
         `${process.env.SERVER_HOST}/api/v1/user/sendGameInvite?reciverId=${id}&speed=${speed}`
       )
       .then(() => {
+        setShowButtons(false);
         toast.info("Waiting Accept game", {
           position: "top-right",
           autoClose: 5000,
@@ -38,7 +39,7 @@ export default function InviteGame({ id }: IdInvitor) {
         const startGameListener = () => {
           console.log("startgame");
           clearTimeout(timeoutId);
-          navigate("/play");
+          navigate("/play/invitor");
         };
         const stopTimerListener = () => {
           console.log("stopTimer");

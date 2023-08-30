@@ -2,14 +2,13 @@ import { Position } from "./PongTypes";
 import p5Types from "p5";
 import { mapRange, scale } from "./PongUtils";
 
-const BALL_COLOR = 'yellow'
-const BALL_SCALE = 2
+const BALL_COLOR = "yellow";
+const BALL_SCALE = 2;
 
 export default class Ball {
-
   public position: Position = { x: 0, y: 0 };
   public color: string = BALL_COLOR;
-  private radious: number = 0
+  private radious: number = 0;
   private p5: p5Types;
 
   constructor(p5: p5Types) {
@@ -22,7 +21,7 @@ export default class Ball {
   }
 
   update(pos: Position, size: number) {
-    const x = scale(pos.x, size * 2);
+    const x = scale(pos.x, size * 1.4);
     const y = scale(pos.y, size);
     const r = this.radious / 2;
     this.position.x = mapRange(x, r, size * 2, this.radious, size * 2 - r);
@@ -33,5 +32,4 @@ export default class Ball {
   resize(r: number) {
     this.radious = scale(r, BALL_SCALE);
   }
-
 }

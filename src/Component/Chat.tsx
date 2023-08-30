@@ -12,7 +12,7 @@ import Iadd from '../assets/add.png'
 import { io } from 'socket.io-client';
 
 
-export const socket = io("${process.env.SERVER_HOST}/chat");
+export const socket = io(`${process.env.SERVER_HOST}/chat`);
 
 export let myName;
 export let myId;

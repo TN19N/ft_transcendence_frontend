@@ -7,7 +7,7 @@ import { Position, param, paddelPair, scorePair, size } from "./PongTypes";
 import isEqual from "lodash/isEqual";
 
 const FPS = 60;
-const BG_COLOR = "#121212";
+const BG_COLOR = "#002B71";
 
 export default class MainCanvas {
   private p5?: p5Types;
@@ -115,11 +115,11 @@ export default class MainCanvas {
         h: window.innerHeight,
       })
     ) {
-      this.resize();
       Object.assign(this.updates.windowReSized, {
         w: window.innerWidth,
         h: window.innerHeight,
       });
+      this.resize();
       res = true;
     }
     if (!(this.delay === this.updates.delay)) {
@@ -131,8 +131,11 @@ export default class MainCanvas {
 
   // TODO: zoom is not handeled
   resize() {
-    const size = Math.min(window.innerHeight, window.innerWidth);
-    this.size = { w: size, h: size / 2 };
+    let size = Math.min(window.innerHeight, window.innerWidth);
+    if (size === window.innerWidth) {
+      size = size * 0.8;
+    }
+    this.size = { w: size, h: size / 1.4 };
     this.p5?.resizeCanvas(this.size.w, this.size.h);
     this.ball?.resize(this.size.w);
     this.paddel?.resize(
