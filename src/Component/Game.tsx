@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import  { useState, useEffect, memo } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import LogoBar from "./LogoBar";
 import Pong from "./game/Pong";
