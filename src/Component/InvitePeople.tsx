@@ -3,7 +3,7 @@ import { SearchIcon } from "./Icons";
 import SugPeople from "./SugPeople";
 import axios from "axios";
 import { useNavigate } from "react-router";
-
+import { errorMsg } from "./Poperror";
 interface SugPeopleData {
   id: string;
   name: string;
@@ -32,6 +32,10 @@ const InvitePeople: React.FC = () => {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          errorMsg(errorMessage);
         }
       });
   }, [searchPeople, friendRequest]);

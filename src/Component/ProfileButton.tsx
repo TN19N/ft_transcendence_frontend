@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useUserContext } from "./UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { errorMsg } from "./Poperror";
 
+import "react-toastify/dist/ReactToastify.css";
 interface ProfileButtonProps {
   id: string;
 }
@@ -14,7 +16,6 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
   const [checkButton, setCheckButton] = useState(false);
   const navigate = useNavigate();
   const [render, setRender] = useState(false);
-
   useEffect(() => {
     if (id && id !== userId?.id?.toString()) {
       axios
@@ -27,6 +28,10 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         .catch((error) => {
           if (error.response?.status === 401) {
             navigate("/login");
+          } else {
+            const errorMessage =
+              error.response?.data?.message || "An error occurred";
+            errorMsg(errorMessage);
           }
         });
 
@@ -41,6 +46,10 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         .catch((error) => {
           if (error.response?.status === 401) {
             navigate("/login");
+          } else {
+            const errorMessage =
+              error.response?.data?.message || "An error occurred";
+            errorMsg(errorMessage);
           }
         });
     }
@@ -59,6 +68,10 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          errorMsg(errorMessage);
         }
       });
   };
@@ -75,6 +88,10 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+         errorMsg(errorMessage);
         }
       });
   };
@@ -91,6 +108,10 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          errorMsg(errorMessage);
         }
       });
   };
@@ -108,6 +129,10 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
       .catch((error) => {
         if (error.response?.status === 401) {
           navigate("/login");
+        } else {
+          const errorMessage =
+            error.response?.data?.message || "An error occurred";
+          errorMsg(errorMessage);
         }
       });
   };
@@ -120,7 +145,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         {checkButton ? (
           <>
             {!isFriend ? (
-              <div className="flex gap-3 text-white iphone:text-[12px] tablet:text-[15px] laptop:text-[15px] imac:text-[15px]">
+              <div className="flex gap-3 text-white iphone:text-[10px] tablet:text-[13px] laptop:text-[15px] imac:text-[18px]">
                 {friendRequest ? (
                   <button
                     className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px] px-2"
@@ -144,7 +169,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
                 </button>
               </div>
             ) : (
-              <div className="flex gap-3 text-white iphone:text-[12px] tablet:text-[15px] laptop:text-[18px] imac:text-[20px]">
+              <div className="flex gap-3 text-white iphone:text-[10px] tablet:text-[13px] laptop:text-[15px] imac:text-[18px]">
                 <button
                   className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px] px-2"
                   onClick={handleUnfriend}

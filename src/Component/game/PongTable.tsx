@@ -1,20 +1,19 @@
-import { Socket, io } from "socket.io-client";
+import { Socket } from "socket.io-client";
 import Ball from "./PongBall";
 import Paddel from "./PongPaddel";
-import Ui from "./PongUi";
 import p5Types from "p5";
 import { displayDelay, drowNet, drowScore, keyDown } from "./PongTable-func";
-import { Position, inviteProp, paddelPair, scorePair, size } from "./PongTypes";
+import { Position, param, paddelPair, scorePair, size } from "./PongTypes";
 import isEqual from "lodash/isEqual";
 
 const FPS = 60;
-const BG_COLOR = "#121212";
+const BG_COLOR = "#002B71";
 
 export default class MainCanvas {
   private p5?: p5Types;
   private ball?: Ball;
   private paddel?: Paddel;
-  private ui?: Ui;
+  // private ui?: Ui;
   private size: size;
   private score: scorePair;
   private ballPosition: Position;
@@ -30,9 +29,8 @@ export default class MainCanvas {
     zoom: number;
     delay: string;
   };
-  private invite: Boolean;
 
-  constructor(back_end: string, invitation: inviteProp) {
+  constructor(prop: param, soc: Socket) {
     this.score = { tp: "", op: "" };
     this.size = { w: 50, h: 100 };
     this.delay = "-";
@@ -43,25 +41,22 @@ export default class MainCanvas {
       pp: { rp: 0, lp: 0 },
       score: { tp: "", op: "" },
       size: { w: 50, h: 100 },
-      windowReSized: { w: window.innerWidth, h: window.innerHeight },
+      windowReSized: { w: 500, h: 500 },
       zoom: window.devicePixelRatio,
       delay: "-",
     };
-    if (invitation.id) {
-      this.socket = io(back_end, {
-        withCredentials: true,
-        query: {
-          userId: invitation.id,
-          speed: invitation.speed,
-        },
-      });
+    this.socket = soc;
+    if (prop.id && prop.speed) {
+      const data = {
+        id: prop.id,
+        speed: prop.speed,
+      };
+      this.socket.emit("start", data);
       this.delay = "Wait Please...";
-      this.invite = true;
+    } else if (!prop.id && prop.speed) {
+      this.socket.emit("game-speed", prop.speed);
     } else {
-      this.invite = false;
-      this.socket = io(back_end, {
-        withCredentials: true,
-      });
+      this.socket.emit("start");
     }
     this.socketHandler();
   }
@@ -70,7 +65,7 @@ export default class MainCanvas {
     this.p5 = p5;
     this.ball = new Ball(p5);
     this.paddel = new Paddel(p5);
-    if (!this.invite) this.ui = new Ui(p5, canvasRef, this.size, this.socket);
+    // if (!this.invite) this.ui = new Ui(p5, canvasRef, this.size, this.socket);
     this.resize();
     p5.createCanvas(this.size.w, this.size.h).parent(canvasRef);
     p5.frameRate(FPS);
@@ -119,11 +114,11 @@ export default class MainCanvas {
         h: window.innerHeight,
       })
     ) {
-      this.resize();
       Object.assign(this.updates.windowReSized, {
         w: window.innerWidth,
         h: window.innerHeight,
       });
+      this.resize();
       res = true;
     }
     if (!(this.delay === this.updates.delay)) {
@@ -135,15 +130,18 @@ export default class MainCanvas {
 
   // TODO: zoom is not handeled
   resize() {
-    const size = Math.min(window.innerHeight, window.innerWidth);
-    this.size = { w: size, h: size / 2 };
+    let size = Math.min(window.innerHeight, window.innerWidth);
+    if (size === window.innerWidth) {
+      size = size * 0.8;
+    }
+    this.size = { w: size, h: size / 1.4 };
     this.p5?.resizeCanvas(this.size.w, this.size.h);
     this.ball?.resize(this.size.w);
     this.paddel?.resize(
       { x: this.size.w / 2, y: this.size.h / 2 },
       this.size.w
     );
-    if (!this.invite) this.ui?.resize(this.size);
+    // if (!this.invite) this.ui?.resize(this.size);
   }
 
   socketHandler() {

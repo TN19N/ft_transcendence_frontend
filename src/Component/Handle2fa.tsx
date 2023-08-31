@@ -2,8 +2,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { errorMsg } from "./Poperror";
-
-const Check2fa = () => {
+const Handle2fa = () => {
   const [password, setPassword] = useState<string>("");
   const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -28,6 +27,7 @@ const Check2fa = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
+          
           errorMsg(errorMessage);
         }
       });
@@ -67,4 +67,4 @@ const Check2fa = () => {
   );
 };
 
-export default Check2fa;
+export default Handle2fa;

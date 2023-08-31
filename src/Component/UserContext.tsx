@@ -8,6 +8,7 @@ import {
 import { io } from "socket.io-client";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { errorMsg } from "./Poperror";
 
 export interface Notification {
   type: string;
@@ -39,8 +40,8 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     notifications: null,
   });
   const navigate = useNavigate();
-
   useEffect(() => {
+    socket.on("error", errorMsg);
     const fetchData = async () => {
       if (
         window.location.pathname !== "/login" &&
@@ -80,16 +81,20 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             id: response.data.id,
             notifications: [...friendReq, ...groupReq],
           });
-        } catch (error) {
+        } catch (error:any) {
           if (axios.isAxiosError(error) && error.response?.status === 401) {
             navigate("/login");
+          } else {
+            const errorMessage =
+              error.response?.data?.message || "An error occurred";
+              errorMsg(errorMessage);
           }
           setUser(null);
         }
       }
     };
     fetchData();
-  }, []);
+  }, [navigate]);
   const userContextValue: UserContextType | null = user;
     return (
       <UserContext.Provider value={userContextValue}>

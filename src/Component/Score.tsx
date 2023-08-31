@@ -15,17 +15,25 @@ const Score = ({record}:ScoreRecord) => {
           }
         }, [record.userScore, record.opponentScore]);
     return (
-        <div className={`flex w-full bg-background rounded-xl py-2 items-center text-white relative score-container ${Winner}`}>
-            <div className='flex-1 flex items-center justify-center gap-3 iphone:text-[10px] tablet:text-[15px] imac:text-[24px]'>
-            <ButtonAvatar id={record.userId}/>
-                {record.userName}
-            </div>
-            <span className='flex-2 flex iphone:text-[14px] tablet:text-[18px] imac:text-[22px] justify-center'>VS</span>
-            <div className='flex-1 flex items-center justify-center gap-3 iphone:text-[10px] tablet:text-[15px] imac:text-[24px]'>
-                <ButtonAvatar id={record.opponentId} />
-                {record.opponentName}
-            </div>
+      <div
+        className={`flex w-full bg-background rounded-xl py-2 items-center text-white relative score-container ${Winner}`}
+      >
+        <div className="flex-1 flex justify-evenly items-center iphone:text-[12px] tablet:text-[15px] imac:text-[24px] w-[40%]">
+          <ButtonAvatar id={record.userId} />
+          <span className="iphone:min-w-[40px]  tablet:min-w-[140px] laptop:min-w-[180px]">
+            {record.userName}
+          </span>
         </div>
+        <span className="flex-2 flex iphone:text-[9px] tablet:text-[18px] imac:text-[22px] justify-center">
+          VS
+        </span>
+        <div className="flex-1 flex  justify-evenly items-center iphone:text-[12px] tablet:text-[15px] imac:text-[24px] w-[40%]">
+          <ButtonAvatar id={record.opponentId} />
+          <span className="iphone:min-w-[40px]  tablet:min-w-[140px] laptop:min-w-[180px]">
+            {record.opponentName}
+          </span>
+        </div>
+      </div>
     );
 }
 

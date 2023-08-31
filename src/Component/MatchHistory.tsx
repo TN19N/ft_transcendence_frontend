@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import Score from "./Score";
+import { errorMsg } from "./Poperror";
+
 
 export interface Match {
   id: string;
@@ -31,8 +33,11 @@ const MatchHistory: React.FC<MatchHistoryProps> = ({ id }) => {
       })
       .catch((error) => {
         if (error.response?.status === 401) {
-          navigate("/login");
-        }
+  navigate("/login");
+} else {
+  const errorMessage = error.response?.data?.message || "An error occurred";
+  errorMsg(errorMessage);
+}
       });
   }, []);
   return (
