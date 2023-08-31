@@ -5,7 +5,9 @@ import MainCanvas from "./PongTable";
 import { param } from "./PongTypes"; // Assuming the type is named PongProps
 import { useEffect, memo } from "react";
 import { Socket, io } from "socket.io-client";
+
 import { errorMsg } from "../Poperror";
+
 
 const BACK_END = `${process.env.SERVER_HOST}/game`;
 

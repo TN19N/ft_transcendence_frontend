@@ -3,7 +3,7 @@ import { NotificationIcon } from "./Icons";
 import { socket, useUserContext } from "./UserContext";
 import Notify from "./Notify";
 import { Notification } from "./UserContext";
-
+import  { errorMsg } from "./Poperror"
 const NotificationComponent = () => {
   const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -30,6 +30,8 @@ const NotificationComponent = () => {
       ]);
     };
     socket.on("notification", handleNotification);
+    socket.on("error", errorMsg);
+
     return () => {
       socket.off("notification", handleNotification);
       socket.disconnect(true);
