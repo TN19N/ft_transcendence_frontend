@@ -81,16 +81,7 @@ const LogoBar: React.FC = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   };
@@ -111,7 +102,7 @@ const LogoBar: React.FC = () => {
             <img
               src={`${process.env.SERVER_HOST}/api/v1/user/avatar`}
               alt="avatar"
-              className="rounded-full iphone:w-5 iphone:h-5 tablet:w-7 tablet:h-7 laptop:w-9 laptop:h-9"
+              className="rounded-full w-2 h-2 iphone:w-5 iphone:h-5 tablet:w-7 tablet:h-7 laptop:w-9 laptop:h-9"
             />
             <span className="flex items-center gap-1 iphone:text-[10px] tablet:text-[12px] laptop:text-[16px]">
               {UserName}

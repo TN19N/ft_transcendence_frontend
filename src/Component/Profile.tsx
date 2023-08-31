@@ -65,7 +65,7 @@ const Profile = () => {
                   : `${process.env.SERVER_HOST}/api/v1/user/avatar`
               }
               alt="avatar"
-              className="iphone:w-10 iphone:h-10 tablet:w-14 tablet:h-14 laptop:w-20 laptop:h-20  imac:w-28 imac:h-28 rounded-full"
+              className=" w-5 h-5 iphone:w-10 iphone:h-10 tablet:w-14 tablet:h-14 laptop:w-20 laptop:h-20  imac:w-28 imac:h-28 rounded-full"
             />
             <div className="flex gap-2 iphone:text-[18px] imac:text-[24px]">
               {userProfile && (

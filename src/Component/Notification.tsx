@@ -26,14 +26,7 @@ const NotificationComponent = () => {
     const handleNotification = (notification: any) => {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
-        {
-          ...notification,
-          payload: {
-            ...notification.payload,
-            id: notification.payload.senderId,
-            senderId: undefined,
-          },
-        },
+        notification,
       ]);
     };
     socket.on("notification", handleNotification);

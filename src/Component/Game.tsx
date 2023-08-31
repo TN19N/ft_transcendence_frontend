@@ -38,8 +38,6 @@ const Game = () => {
                   {button}
                 </button>
               ))}
-            {console.log("random")}
-
             {draw && <Pong id="" speed={yourSpeed || ""} />}
           </>
         ) : (

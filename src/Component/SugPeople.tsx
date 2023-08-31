@@ -77,14 +77,14 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
   };
 
   return (
-    <div className="flex gap-2 items-center justify-between text-white iphonet:w-[90%] tablet:w-[40%] laptop:w-[25%] max-w-[300px] iphone:text-[8px] tablet:text-[10px] laptop:text-[18px] bg-background rounded-xl p-2 laptop:gap-4">
+    <div className="flex gap-2 items-center justify-between text-white iphonet:w-[90%] tablet:w-[40%] laptop:w-[25%] max-w-[300px] iphone:text-[8px] tablet:text-[10px] laptop:text-[16px] imac:text-[18px] bg-background rounded-xl p-2 laptop:gap-4">
       <Link to={`/profile/${id}`}>
         <img
           src={`${process.env.SERVER_HOST}/api/v1/user/avatar?id=${id}`}
           alt="avatar of user"
           className="w-6 h-6 rounded-full tablet:w-8 tablet:h-8 laptop:w-12 laptop:h-12"
         />
-        {name}
+        <span>{name}</span>
       </Link>
       {!WaitingAccept && !IsFriend && (
         <button onClick={sendFriendRequest}>

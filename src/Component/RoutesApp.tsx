@@ -28,7 +28,6 @@ const RoutesApp = () => {
             <Route path=":id?/:speed?" element={<Game />} />
             <Route path="invitor" element={<Game />} />
           </Route>
-          
           <Route path="/profile">
             <Route index element={<Profile />} />
             <Route path=":id" element={<Profile />} />
