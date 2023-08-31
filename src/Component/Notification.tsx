@@ -33,6 +33,7 @@ const NotificationComponent = () => {
     socket.on("error", errorMsg);
     return () => {
       socket.off("notification", handleNotification);
+      socket.disconnect(true);
     };
   }, [notifications]);
 

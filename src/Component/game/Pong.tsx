@@ -14,7 +14,7 @@ const Pong: React.FC<param> = (prop: param) => {
   });
   useEffect(() => {
     return () => {
-      soc.emit("dis");
+      soc.disconnect(true);
     };
   }, []);
 
