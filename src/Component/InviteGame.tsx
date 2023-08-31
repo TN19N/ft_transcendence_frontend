@@ -5,13 +5,15 @@ import "./InviteGame.css";
 import { socket } from "./UserContext";
 import { PlayIcon } from "./Icons";
 import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
+
 interface IdInvitor {
   id: string;
 }
 export default function InviteGame({ id }: IdInvitor) {
   const navigate = useNavigate();
   const [showButtons, setShowButtons] = useState(false);
-  const Buttons = ["Slow", "Meduim", "Fast"];
+  const Buttons = ["Slow", "Medium", "Fast"];
 
   const handleGameInvite = () => {
     setShowButtons(true);
@@ -54,16 +56,7 @@ export default function InviteGame({ id }: IdInvitor) {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   };
@@ -71,24 +64,24 @@ export default function InviteGame({ id }: IdInvitor) {
   return (
     <div>
       <button onClick={handleGameInvite}>
-        <PlayIcon className="w-6 h-6" />
+        <PlayIcon className="w-3 h-3 iphone:w-6 iphone:h-6 tablet:w-8 tablet:h-8 laptop:w-10 laptop:h-10" />
       </button>
       {showButtons && (
-        <div className="popup-container">
-          <div className=" flex flex-col popup-body bg-InboxColor items-center justify-center rounded-xl gap-6">
+        <div className="popup-container ">
+          <div className=" flex flex-col popup-body  bg-InboxColor items-center justify-center rounded-xl gap-4 iphone:left-[20%] iphone:w-[60%] tablet:w-[40%] tablet:left-[30%] laptop:left-[35%] laptop:w-[30%]">
             <div className="flex gap-3 w-full justify-center ">
               {Buttons.map((button, index) => (
                 <button
                   key={index}
                   onClick={() => sendGameInvite(button)}
-                  className="bg-NavBarroundedIcon p-2 rounded-xl"
+                  className="bg-NavBarroundedIcon p-2 rounded-xl iphone:w-[48px] iphone:text-[8px] tablet:w-[74px] tablet:text-[14px] laptop:w-[84px] laptop:text-[18px]"
                 >
                   {button}
                 </button>
               ))}
             </div>
             <div
-              className="items-end cursur-pointer"
+              className="items-end cursor-pointer"
               onClick={() => {
                 setShowButtons(false);
               }}

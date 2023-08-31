@@ -3,8 +3,8 @@ import { NotificationIcon } from "./Icons";
 import { socket, useUserContext } from "./UserContext";
 import Notify from "./Notify";
 import { Notification } from "./UserContext";
-
-const NotificationComponent= ()=> {
+import  { errorMsg } from "./Poperror"
+const NotificationComponent = () => {
   const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -26,18 +26,18 @@ const NotificationComponent= ()=> {
     const handleNotification = (notification: any) => {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
-        {...notification,
+        {
+          ...notification,
           payload: {
             ...notification.payload,
             id: notification.payload.senderId,
             senderId: undefined,
-          }
+          },
         },
       ]);
     };
-
     socket.on("notification", handleNotification);
-   
+    socket.on("error", errorMsg);
     return () => {
       socket.off("notification", handleNotification);
     };
@@ -71,5 +71,5 @@ const NotificationComponent= ()=> {
       )}
     </div>
   );
-}
+};
 export default NotificationComponent;

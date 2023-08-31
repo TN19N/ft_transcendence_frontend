@@ -8,7 +8,7 @@ import {
 import { io } from "socket.io-client";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
 
 export interface Notification {
   type: string;
@@ -86,16 +86,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
           } else {
             const errorMessage =
               error.response?.data?.message || "An error occurred";
-            toast.error(errorMessage, {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            });
+              errorMsg(errorMessage);
           }
           setUser(null);
         }

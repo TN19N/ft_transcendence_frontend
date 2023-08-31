@@ -3,8 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import ButtonAvatar from "./ButtonAvatar";
 import InviteGame from "./InviteGame";
-import { toast } from "react-toastify";
-
+import { errorMsg } from "./Poperror";
 interface Friend {
   id: string;
   name: string;
@@ -29,23 +28,15 @@ const Friends: React.FC = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          
+          errorMsg(errorMessage);
         }
       });
   }, []);
 
   return (
     <div className="flex w-full items-center text-white text-[13px] tablet:text-[18px] laptop:text-[20px] imac:text-[24px]">
-      <div className="flex flex-col w-[60%] items-center gap-3">
+      <div className="flex flex-col w-full items-center gap-3">
         {friends.length !== 0 ? (
           <>
             {friends.map((friend) => (
@@ -54,16 +45,16 @@ const Friends: React.FC = () => {
                 className="flex iphone:w-[90%] tablet:w-[70%] m-auto bg-background p-3 rounded-xl items-center justify-center gap-3"
               >
                 <ButtonAvatar id={friend.id} />
-                <span className="mb-2">{friend.name}</span>
+                <span className="iphone:min-w-[80px] tablet:min-w-[140px] laptop:min-w-[180px]">
+                  {friend.name}
+                </span>
                 <InviteGame id={friend.id} />
               </div>
             ))}
           </>
         ) : (
-          <div
-                className="flex iphone:w-[90%] tablet:w-[70%] m-auto bg-background p-3 rounded-xl items-center justify-center gap-3"
-              >
-          <span>No Friends Yet</span>
+          <div className="flex iphone:w-[90%] tablet:w-[70%] m-auto bg-background p-3 rounded-xl items-center justify-center gap-3">
+            <span>No Friends Yet</span>
           </div>
         )}
       </div>

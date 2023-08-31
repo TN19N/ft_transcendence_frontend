@@ -3,7 +3,7 @@ import { AddIcon } from "./Icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
 
 interface SugPeopleProps {
   person: {
@@ -35,9 +35,7 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: toast.POSITION.TOP_LEFT,
-          });
+         errorMsg(errorMessage);
         }
       });
     axios
@@ -53,16 +51,7 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   }, [id, Render]);
@@ -82,16 +71,7 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   };

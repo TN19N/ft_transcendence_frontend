@@ -13,8 +13,9 @@ import axios from "axios";
 import Disable2fa from "./Disable2fa";
 import Enable2fa from "./Enable2fa";
 import { useUserContext } from "./UserContext";
-import { toast } from "react-toastify";
+
 import { useNavigate } from "react-router-dom";
+import { errorMsg } from "./Poperror";
 
 const LogoBar: React.FC = () => {
   const navigate = useNavigate();
@@ -42,16 +43,7 @@ const LogoBar: React.FC = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
 
@@ -68,16 +60,7 @@ const LogoBar: React.FC = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   }, [Render]);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LogoBar from "./LogoBar";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
 
 interface ErrorResponse {
   response?: {
@@ -51,16 +51,7 @@ const EditProfile = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       }
       setError("");
@@ -97,9 +88,7 @@ const EditProfile = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: toast.POSITION.TOP_LEFT,
-          });
+         errorMsg(errorMessage);
         }
       }
     } else {
