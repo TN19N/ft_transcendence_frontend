@@ -45,7 +45,7 @@ const Friends: React.FC = () => {
 
   return (
     <div className="flex w-full items-center text-white text-[13px] tablet:text-[18px] laptop:text-[20px] imac:text-[24px]">
-      <div className="flex flex-col w-full items-center gap-3">
+      <div className="flex flex-col w-[60%] items-center gap-3">
         {friends.length !== 0 ? (
           <>
             {friends.map((friend) => (

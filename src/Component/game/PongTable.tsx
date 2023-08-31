@@ -54,7 +54,6 @@ export default class MainCanvas {
       this.socket.emit("start", data);
       this.delay = "Wait Please...";
     } else if (!prop.id && prop.speed) {
-      this.socket.emit("start");
       this.socket.emit("game-speed", prop.speed);
     } else {
       this.socket.emit("start");
