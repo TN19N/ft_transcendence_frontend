@@ -28,10 +28,10 @@ export default function InviteGame({ id }: IdInvitor) {
         setShowButtons(false);
         toast.info("Waiting Accept game", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           pauseOnHover: true,
-          draggable: true,
+          draggable: false,
           progress: undefined,
           theme: "dark",
         });

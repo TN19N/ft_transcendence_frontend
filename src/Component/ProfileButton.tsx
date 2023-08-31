@@ -145,7 +145,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         {checkButton ? (
           <>
             {!isFriend ? (
-              <div className="flex gap-3 text-white iphone:text-[12px] tablet:text-[15px] laptop:text-[15px] imac:text-[15px]">
+              <div className="flex gap-3 text-white iphone:text-[12px] tablet:text-[15px] laptop:text-[18px] imac:text-[20px]">
                 {friendRequest ? (
                   <button
                     className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px] px-2"

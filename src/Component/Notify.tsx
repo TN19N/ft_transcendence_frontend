@@ -1,4 +1,4 @@
-// import {useEffect } from "react";
+import {useEffect } from "react";
 import { CancelIcon, AcceptIcon, PlayingIcon } from "./Icons";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -92,6 +92,18 @@ const Notify: React.FC<NotifyProps> = ({
     }
     removeNotification(notification);
   };
+  const removeInvite = () => {
+    if (notification.type === NotificationType.GAME_INVITE) {
+      setTimeout(() => {
+        console.log("Remove it");
+        removeNotification(notification);
+      }, 5000);
+    }
+  };
+
+  useEffect(() => {
+    removeInvite();
+  }, []);
   return (
     <div className="flex w-full items-center pl-[2px] iphone:text-[6px] tablet:text-[9px] laptop:text-[13px] iphone:gap-1 iphone:m-[3px] tablet:m-[4px] laptop:m-[6px]">
       {notification.type !== NotificationType.GROUP_INVITE ? (
@@ -109,7 +121,7 @@ const Notify: React.FC<NotifyProps> = ({
           className="iphone:w-5 iphone:h-5 tablet:w-8 tablet:h-8 rounded-full"
         />
       )}
-      <span className="break-words iphone:max-w-[82px] tablet:max-w-[107px] laptop:max-w-[165px]">
+      <span className="break-words iphone:w-[55%] tablet:w-[107px] laptop:w-[60%]">
         {notification.payload.name} sent {notification.type}
       </span>
       <button onClick={handleAccept}>
