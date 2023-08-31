@@ -22,9 +22,7 @@ const AchievementsComponent = () => {
         withCredentials: true,
       })
       .then((response) => {
-        setAchievements(response.data);
-        console.log("Response ", response.data);
-        
+        setAchievements(response.data); 
       })
       .catch((error) => {
         if (error.response?.status === 401) {
@@ -36,7 +34,6 @@ const AchievementsComponent = () => {
         }
       });
   }, [navigate]);
-console.log("Achiev 1",achievements);
   return (
     <div className="flex laptop:flex-col items-center gap-3 text-white">
       <span className=" iphone:text-[12px] tablet:text-[16px] tablet:self-center imac:text-[25px]">
