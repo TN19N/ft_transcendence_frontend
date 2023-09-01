@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
 const Handle2fa = () => {
   const [password, setPassword] = useState<string>("");
   const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
@@ -27,16 +27,8 @@ const Handle2fa = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          
+          errorMsg(errorMessage);
         }
       });
   };

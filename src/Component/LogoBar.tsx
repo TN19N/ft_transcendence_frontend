@@ -12,9 +12,10 @@ import Notification from "./Notification";
 import axios from "axios";
 import Disable2fa from "./Disable2fa";
 import Enable2fa from "./Enable2fa";
-import { useUserContext } from "./UserContext";
-import { toast } from "react-toastify";
+import { socket, useUserContext } from "./UserContext";
+
 import { useNavigate } from "react-router-dom";
+import { errorMsg } from "./Poperror";
 
 const LogoBar: React.FC = () => {
   const navigate = useNavigate();
@@ -42,16 +43,7 @@ const LogoBar: React.FC = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
 
@@ -68,16 +60,7 @@ const LogoBar: React.FC = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   }, [Render]);
@@ -98,18 +81,10 @@ const LogoBar: React.FC = () => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
+      socket && socket.disconnect();
   };
 
   return (
@@ -128,7 +103,7 @@ const LogoBar: React.FC = () => {
             <img
               src={`${process.env.SERVER_HOST}/api/v1/user/avatar`}
               alt="avatar"
-              className="rounded-full iphone:w-5 iphone:h-5 tablet:w-7 tablet:h-7 laptop:w-9 laptop:h-9"
+              className="rounded-full w-2 h-2 iphone:w-5 iphone:h-5 tablet:w-7 tablet:h-7 laptop:w-9 laptop:h-9"
             />
             <span className="flex items-center gap-1 iphone:text-[10px] tablet:text-[12px] laptop:text-[16px]">
               {UserName}

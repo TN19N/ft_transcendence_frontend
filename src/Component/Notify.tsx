@@ -1,10 +1,10 @@
-import React from "react";
+import {useEffect } from "react";
 import { CancelIcon, AcceptIcon, PlayingIcon } from "./Icons";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { Notification } from "./UserContext";
-import { toast } from "react-toastify";
-
+import { errorMsg } from "./Poperror";
+import Groupavatar from "../assets/playerIcon.svg";
 enum NotificationType {
   FRIEND_REQUEST = "FRIEND_REQUEST",
   GROUP_INVITE = "GROUP_INVITE",
@@ -30,7 +30,7 @@ const Notify: React.FC<NotifyProps> = ({
     const location =
       notification.type === NotificationType.FRIEND_REQUEST
         ? `/api/v1/user/acceptFriendRequest?userToFriendId=${notification.payload.id}`
-        : `/api/v1/chat/group/{groupId}/acceptInvite?groupId=${notification.payload.id}`;
+        : `/api/v1/chat/group/${notification.payload.id}/acceptInvite`;
 
     if (notification.type !== NotificationType.GAME_INVITE) {
       axios
@@ -42,9 +42,7 @@ const Notify: React.FC<NotifyProps> = ({
           } else {
             const errorMessage =
               error.response?.data?.message || "An error occurred";
-            toast.error(errorMessage, {
-              position: toast.POSITION.TOP_LEFT,
-            });
+           errorMsg(errorMessage);
           }
         });
     } else {
@@ -63,16 +61,7 @@ const Notify: React.FC<NotifyProps> = ({
           } else {
             const errorMessage =
               error.response?.data?.message || "An error occurred";
-            toast.error(errorMessage, {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            });
+            errorMsg(errorMessage);
           }
         });
     }
@@ -97,24 +86,42 @@ const Notify: React.FC<NotifyProps> = ({
           } else {
             const errorMessage =
               error.response?.data?.message || "An error occurred";
-            toast.error(errorMessage, {
-              position: toast.POSITION.TOP_LEFT,
-            });
+            errorMsg(errorMessage);
           }
         });
     }
     removeNotification(notification);
   };
+  const removeInvite = () => {
+    if (notification.type === NotificationType.GAME_INVITE) {
+      setTimeout(() => {
+        console.log("Remove it");
+        removeNotification(notification);
+      }, 5000);
+    }
+  };
+
+  useEffect(() => {
+    removeInvite();
+  }, []);
   return (
     <div className="flex w-full items-center pl-[2px] iphone:text-[6px] tablet:text-[9px] laptop:text-[13px] iphone:gap-1 iphone:m-[3px] tablet:m-[4px] laptop:m-[6px]">
-      <button onClick={displayProfile}>
+      {notification.type !== NotificationType.GROUP_INVITE ? (
+        <button onClick={displayProfile}>
+          <img
+            src={`${process.env.SERVER_HOST}/api/v1/user/avatar?id=${notification.payload.id}`}
+            alt="avatar"
+            className="iphone:w-5 iphone:h-5 tablet:w-8 tablet:h-8 rounded-full"
+          />
+        </button>
+      ) : (
         <img
-          src={`${process.env.SERVER_HOST}/api/v1/user/avatar?id=${notification.payload.id}`}
+          src={Groupavatar}
           alt="avatar"
           className="iphone:w-5 iphone:h-5 tablet:w-8 tablet:h-8 rounded-full"
         />
-      </button>
-      <span className="break-words iphone:max-w-[82px] tablet:max-w-[107px] laptop:max-w-[165px]">
+      )}
+      <span className="break-words iphone:w-[55%] tablet:w-[107px] laptop:w-[60%]">
         {notification.payload.name} sent {notification.type}
       </span>
       <button onClick={handleAccept}>

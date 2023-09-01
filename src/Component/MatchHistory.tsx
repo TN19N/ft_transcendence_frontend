@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import Score from "./Score";
-import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
+
 
 export interface Match {
   id: string;
@@ -35,9 +36,7 @@ const MatchHistory: React.FC<MatchHistoryProps> = ({ id }) => {
   navigate("/login");
 } else {
   const errorMessage = error.response?.data?.message || "An error occurred";
-  toast.error(errorMessage, {
-    position: toast.POSITION.TOP_LEFT,
-  });
+  errorMsg(errorMessage);
 }
       });
   }, []);

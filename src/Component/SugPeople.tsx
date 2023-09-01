@@ -3,7 +3,7 @@ import { AddIcon } from "./Icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
 
 interface SugPeopleProps {
   person: {
@@ -35,9 +35,7 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: toast.POSITION.TOP_LEFT,
-          });
+         errorMsg(errorMessage);
         }
       });
     axios
@@ -53,16 +51,7 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   }, [id, Render]);
@@ -82,29 +71,20 @@ const SugPeople: React.FC<SugPeopleProps> = ({ person, FriendRequestSent }) => {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   };
 
   return (
-    <div className="flex gap-2 items-center justify-between text-white iphonet:w-[90%] tablet:w-[40%] laptop:w-[25%] max-w-[300px] iphone:text-[8px] tablet:text-[10px] laptop:text-[18px] bg-background rounded-xl p-2 laptop:gap-4">
+    <div className="flex gap-2 items-center justify-between text-white iphonet:w-[90%] tablet:w-[40%] laptop:w-[25%] max-w-[300px] iphone:text-[8px] tablet:text-[10px] laptop:text-[16px] imac:text-[18px] bg-background rounded-xl p-2 laptop:gap-4">
       <Link to={`/profile/${id}`}>
         <img
           src={`${process.env.SERVER_HOST}/api/v1/user/avatar?id=${id}`}
           alt="avatar of user"
           className="w-6 h-6 rounded-full tablet:w-8 tablet:h-8 laptop:w-12 laptop:h-12"
         />
-        {name}
+        <span>{name}</span>
       </Link>
       {!WaitingAccept && !IsFriend && (
         <button onClick={sendFriendRequest}>

@@ -5,10 +5,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
 
 export interface Notification {
   type: string;
@@ -30,9 +30,10 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-
-
-const socket = io(`${process.env.SERVER_HOST}/user`);
+const socket: Socket | null =
+  window.location.pathname !== "/login" && window.location.pathname !== "/2fa"
+    ? io(`${process.env.SERVER_HOST}/user`)
+    : null;
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserContextType | null>({
@@ -41,12 +42,15 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   });
   const navigate = useNavigate();
   useEffect(() => {
+    
     const fetchData = async () => {
       if (
         window.location.pathname !== "/login" &&
         window.location.pathname !== "/2fa"
       ) {
         try {
+          
+          socket && socket.on("error", errorMsg);
           const response = await axios.get(
             `${process.env.SERVER_HOST}/api/v1/user`,
             { withCredentials: true }
@@ -86,16 +90,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
           } else {
             const errorMessage =
               error.response?.data?.message || "An error occurred";
-            toast.error(errorMessage, {
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            });
+              errorMsg(errorMessage);
           }
           setUser(null);
         }

@@ -3,8 +3,8 @@ import { NotificationIcon } from "./Icons";
 import { socket, useUserContext } from "./UserContext";
 import Notify from "./Notify";
 import { Notification } from "./UserContext";
-
-const NotificationComponent= ()=> {
+import  { errorMsg } from "./Poperror"
+const NotificationComponent = () => {
   const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -26,20 +26,14 @@ const NotificationComponent= ()=> {
     const handleNotification = (notification: any) => {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
-        {...notification,
-          payload: {
-            ...notification.payload,
-            id: notification.payload.senderId,
-            senderId: undefined,
-          }
-        },
+        notification,
       ]);
     };
+    socket && socket.on("notification", handleNotification);
+    socket && socket.on("error", errorMsg);
 
-    socket.on("notification", handleNotification);
-   
     return () => {
-      socket.off("notification", handleNotification);
+      socket && socket.off("notification", handleNotification);
     };
   }, [notifications]);
 
@@ -71,5 +65,5 @@ const NotificationComponent= ()=> {
       )}
     </div>
   );
-}
+};
 export default NotificationComponent;

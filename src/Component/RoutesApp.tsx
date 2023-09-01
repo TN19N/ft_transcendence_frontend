@@ -23,14 +23,11 @@ const RoutesApp = () => {
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/chat" element={<Chat />} />
-          {/* <Route path="/play">
+          <Route path="/play">
             <Route index element={<Game />} />
             <Route path=":id?/:speed?" element={<Game />} />
             <Route path="invitor" element={<Game />} />
-          </Route> */}
-          <Route path="/play" element={<Game />} />
-          <Route path="/play/:id?/:speed?" element={<Game />} />
-          <Route path="/play/invitor" element={<Game />} />
+          </Route>
           <Route path="/profile">
             <Route index element={<Profile />} />
             <Route path=":id" element={<Profile />} />
@@ -54,3 +51,7 @@ const RoutesApp = () => {
 };
 
 export default RoutesApp;
+
+/* <Route path="/play" element={<Game />} />
+          <Route path="/play/:id?/:speed?" element={<Game />} />
+          <Route path="/play/invitor" element={<Game />} /> */

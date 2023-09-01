@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useUserContext } from "./UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
 
 import "react-toastify/dist/ReactToastify.css";
 interface ProfileButtonProps {
@@ -31,9 +31,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
           } else {
             const errorMessage =
               error.response?.data?.message || "An error occurred";
-            toast.error(errorMessage, {
-              position: toast.POSITION.TOP_LEFT,
-            });
+            errorMsg(errorMessage);
           }
         });
 
@@ -51,9 +49,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
           } else {
             const errorMessage =
               error.response?.data?.message || "An error occurred";
-            toast.error(errorMessage, {
-              position: toast.POSITION.TOP_LEFT,
-            });
+            errorMsg(errorMessage);
           }
         });
     }
@@ -75,9 +71,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: toast.POSITION.TOP_LEFT,
-          });
+          errorMsg(errorMessage);
         }
       });
   };
@@ -97,16 +91,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+         errorMsg(errorMessage);
         }
       });
   };
@@ -126,16 +111,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   };
@@ -156,16 +132,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   };
@@ -178,7 +145,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
         {checkButton ? (
           <>
             {!isFriend ? (
-              <div className="flex gap-3 text-white iphone:text-[12px] tablet:text-[15px] laptop:text-[15px] imac:text-[15px]">
+              <div className="flex gap-3 text-white iphone:text-[10px] tablet:text-[13px] laptop:text-[15px] imac:text-[18px]">
                 {friendRequest ? (
                   <button
                     className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px] px-2"
@@ -202,7 +169,7 @@ export default function ProfileButton({ id }: ProfileButtonProps) {
                 </button>
               </div>
             ) : (
-              <div className="flex gap-3 text-white iphone:text-[12px] tablet:text-[15px] laptop:text-[18px] imac:text-[20px]">
+              <div className="flex gap-3 text-white iphone:text-[10px] tablet:text-[13px] laptop:text-[15px] imac:text-[18px]">
                 <button
                   className="bg-NavBarroundedIcon rounded-xl iphone:w-[100px] laptop:w-[150px] px-2"
                   onClick={handleUnfriend}

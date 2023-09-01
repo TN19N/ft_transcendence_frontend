@@ -6,6 +6,9 @@ import { param } from "./PongTypes"; // Assuming the type is named PongProps
 import { useEffect, memo } from "react";
 import { Socket, io } from "socket.io-client";
 
+import { errorMsg } from "../Poperror";
+
+
 const BACK_END = `${process.env.SERVER_HOST}/game`;
 
 const Pong: React.FC<param> = (prop: param) => {
@@ -13,8 +16,9 @@ const Pong: React.FC<param> = (prop: param) => {
     withCredentials: true,
   });
   useEffect(() => {
+    soc.on("error", errorMsg);
     return () => {
-      soc.emit("dis");
+      soc.disconnect();
     };
   }, []);
 

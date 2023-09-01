@@ -27,7 +27,7 @@ const ButtonAvatar: React.FC<ButtonAvatarProps> = ({ id }) => {
             : `${process.env.SERVER_HOST}/api/v1/user/avatar`
         }
         alt="avatar"
-        className="w-2 h-2 iphone:w-7 iphone:h-7 tablet:w-12 tablet:h-12 laptop:w-12 laptop:h-12 rounded-full"
+        className="w-2 h-2 iphone:w-5 iphone:h-5 tablet:w-12 tablet:h-12 laptop:w-12 laptop:h-12 rounded-full"
       />
     </button>
   );

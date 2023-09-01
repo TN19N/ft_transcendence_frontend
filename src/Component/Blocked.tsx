@@ -3,7 +3,7 @@ import ButtonAvatar from "./ButtonAvatar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
+import { errorMsg } from "./Poperror";
 interface BlockedUser {
   id: string;
   name: string;
@@ -43,16 +43,7 @@ export default function Blocked() {
         } else {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          errorMsg(errorMessage);
         }
       });
   };
@@ -67,13 +58,15 @@ export default function Blocked() {
           >
             <div className="flex items-center gap-2">
               <ButtonAvatar id={blockedUser.id} />
-              <span>{blockedUser.name}</span>
+              <span className="iphone:min-w-[80px] tablet:min-w-[140px] laptop:min-w-[180px]">
+                {blockedUser.name}
+              </span>
             </div>
             <button
               className="bg-buttonPlaybgColor rounded-[50%]"
               onClick={() => unblockUser(blockedUser.id)}
             >
-              <UnblockIcon className="w-8 h-6 tablet:w-8 tablet:h-8 laptop:w-10 laptop:h-10" />
+              <UnblockIcon className="w-6 h-6 tablet:w-8 tablet:h-8 laptop:w-10 laptop:h-10" />
             </button>
           </div>
         ))
