@@ -4,6 +4,7 @@ import { socket, useUserContext } from "./UserContext";
 import Notify from "./Notify";
 import { Notification } from "./UserContext";
 import  { errorMsg } from "./Poperror"
+import { OutsideClick } from "outsideclick-react";
 const NotificationComponent = () => {
   const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -11,9 +12,6 @@ const NotificationComponent = () => {
   const [notifications, setNotifications] = useState<Notification[]>(
     userId?.notifications ?? []
   );
-  const clickedoutside = () => {
-    setIsDropdownOpen(false);
-  };
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
@@ -33,14 +31,17 @@ const NotificationComponent = () => {
     };
     socket && socket.on("notification", handleNotification);
     socket && socket.on("error", errorMsg);
-    document.addEventListener("mousedown", clickedoutside);
     return () => {
-    document.removeEventListener("mousedown", clickedoutside)
       socket && socket.off("notification", handleNotification);
     };
   }, [notifications]);
 
   return (
+    <OutsideClick
+          onOutsideClick={() => {
+            setIsDropdownOpen(false);
+          }}
+        >
     <div className="relative cursor-pointer">
       <button className="flex items-center" onClick={toggleDropdown}>
         <NotificationIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
@@ -66,7 +67,7 @@ const NotificationComponent = () => {
           </div>
         </div>
       )}
-    </div>
+    </div></OutsideClick>
   );
 };
 export default NotificationComponent;
