@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { errorMsg } from "./Poperror";
@@ -30,9 +30,10 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-
-
-const socket = io(`${process.env.SERVER_HOST}/user`);
+const socket: Socket | null =
+  window.location.pathname !== "/login" && window.location.pathname !== "/2fa"
+    ? io(`${process.env.SERVER_HOST}/user`)
+    : null;
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserContextType | null>({
@@ -41,13 +42,15 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   });
   const navigate = useNavigate();
   useEffect(() => {
-    socket.on("error", errorMsg);
+    
     const fetchData = async () => {
       if (
         window.location.pathname !== "/login" &&
         window.location.pathname !== "/2fa"
       ) {
         try {
+          
+          socket.on("error", errorMsg);
           const response = await axios.get(
             `${process.env.SERVER_HOST}/api/v1/user`,
             { withCredentials: true }
