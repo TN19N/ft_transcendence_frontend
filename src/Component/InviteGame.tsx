@@ -46,9 +46,9 @@ export default function InviteGame({ id }: IdInvitor) {
         const stopTimerListener = () => {
           console.log("stopTimer");
           clearTimeout(timeoutId);
-          socket.once("startGame", startGameListener);
+          socket && socket.once("startGame", startGameListener);
         };
-        socket.on("stopTimer", stopTimerListener);
+        socket && socket.on("stopTimer", stopTimerListener);
       })
       .catch((error) => {
         if (error.response?.status === 401) {

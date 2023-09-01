@@ -18,7 +18,7 @@ const Pong: React.FC<param> = (prop: param) => {
   useEffect(() => {
     soc.on("error", errorMsg);
     return () => {
-      soc.disconnect(true);
+      soc.disconnect();
     };
   }, []);
 

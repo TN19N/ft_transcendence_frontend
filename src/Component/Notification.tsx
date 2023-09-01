@@ -29,11 +29,11 @@ const NotificationComponent = () => {
         notification,
       ]);
     };
-    socket.on("notification", handleNotification);
-    socket.on("error", errorMsg);
+    socket && socket.on("notification", handleNotification);
+    socket && socket.on("error", errorMsg);
 
     return () => {
-      socket.off("notification", handleNotification);
+      socket && socket.off("notification", handleNotification);
     };
   }, [notifications]);
 

@@ -1,7 +1,7 @@
 import InvitePeople from './InvitePeople';
 import LogoBar from './LogoBar';
 import TopScore from './TopScore';
-
+import {memo} from "react"
 const Home = () => {
 
   return (
@@ -16,4 +16,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default memo(Home);

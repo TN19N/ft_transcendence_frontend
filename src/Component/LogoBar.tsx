@@ -84,7 +84,7 @@ const LogoBar: React.FC = () => {
           errorMsg(errorMessage);
         }
       });
-      socket.disconnect(true);
+      socket && socket.disconnect();
   };
 
   return (

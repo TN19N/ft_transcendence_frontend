@@ -50,7 +50,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       ) {
         try {
           
-          socket.on("error", errorMsg);
+          socket && socket.on("error", errorMsg);
           const response = await axios.get(
             `${process.env.SERVER_HOST}/api/v1/user`,
             { withCredentials: true }
