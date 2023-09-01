@@ -63,8 +63,16 @@ const LogoBar: React.FC = () => {
           errorMsg(errorMessage);
         }
       });
+      document.addEventListener("mousedown", clickedoutside);
+
+      return () => {
+        document.removeEventListener("mousedown", clickedoutside);
+      };
   }, [Render]);
 
+  const clickedoutside = () => {
+    setIsDropdownOpen(false);
+  };
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };

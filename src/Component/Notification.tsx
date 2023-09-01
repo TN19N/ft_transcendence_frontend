@@ -11,7 +11,9 @@ const NotificationComponent = () => {
   const [notifications, setNotifications] = useState<Notification[]>(
     userId?.notifications ?? []
   );
-
+  const clickedoutside = () => {
+    setIsDropdownOpen(false);
+  };
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
@@ -31,8 +33,9 @@ const NotificationComponent = () => {
     };
     socket && socket.on("notification", handleNotification);
     socket && socket.on("error", errorMsg);
-
+    document.addEventListener("mousedown", clickedoutside);
     return () => {
+    document.removeEventListener("mousedown", clickedoutside)
       socket && socket.off("notification", handleNotification);
     };
   }, [notifications]);
