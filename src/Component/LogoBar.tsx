@@ -12,7 +12,7 @@ import Notification from "./Notification";
 import axios from "axios";
 import Disable2fa from "./Disable2fa";
 import Enable2fa from "./Enable2fa";
-import { useUserContext } from "./UserContext";
+import { socket, useUserContext } from "./UserContext";
 
 import { useNavigate } from "react-router-dom";
 import { errorMsg } from "./Poperror";
@@ -84,6 +84,7 @@ const LogoBar: React.FC = () => {
           errorMsg(errorMessage);
         }
       });
+      socket.disconnect(true);
   };
 
   return (
