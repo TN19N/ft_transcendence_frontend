@@ -52,7 +52,7 @@ function Box(props)
     const change_status = (status) => 
     {
       console.log(status);
-      var elements = document.querySelectorAll("." + status.userId);
+      var elements = document.querySelectorAll(".user" + status.userId);
       for (var i = 0; i < elements.length; i++) {
           if (status.status == "ONLINE")
             elements[i].style.backgroundColor = "green";

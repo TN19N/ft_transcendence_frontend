@@ -43,7 +43,7 @@ const FriendsOnline = (props : any) => {
                             <div className="flex gap-2 px-3">
                             <div className='icon-container'>
                                 <img src={`/api/v1/user/avatar?id=${obj.id}`} alt="avatar" className="w-10 h-10 rounded-full" />
-                                {!props.type && <div className={obj.id + " status-circle " + status}></div>}
+                                {!props.type && <div className={"user" + obj.id + " status-circle " + status}></div>}
                             </div>
                             <p className="text-msgColorOn text-[12px]">{obj.name}</p>
                             <div className=" ml-auto">

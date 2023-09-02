@@ -192,7 +192,7 @@ function GroupInfo(props) {
                         <div className="flex gap-3 px-3">
                             <div className='icon-container m-auto'>
                                 <img src={"/api/v1/user/avatar?id=" + obj.id} alt="avatar" className="w-10 h-10 rounded-full" />
-                                <div className={obj.id + " status-circle " + status}></div>
+                                <div className={"user" + obj.id + " status-circle " + status}></div>
                             </div>
                             <div className="flex flex-col flex-3 gap-2 m-auto justify-center items-center">
                                 <p className="text-msgColorOn text-[0.75rem] whitespace-nowrap">{obj.name}</p>
