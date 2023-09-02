@@ -31,10 +31,13 @@ const FriendsOnline = (props : any) => {
                     Friends.map((obj, i) => (
                         <button className="hover:bg-blue-900 rounded-lg" key={i} onClick={() => {props.setChatId(obj.id);props.setName(obj.name)}}>
                             <div className="flex gap-2 px-3">
+                            <div className='icon-container'>
                                 <img src={`/api/v1/user/avatar?id=${obj.id}`} alt="avatar" className="w-10 h-10 rounded-full" />
-                                    <p className="text-msgColorOn text-[12px]">{obj.name}</p>
-                                    <div className=" ml-auto">
-                                    </div>
+                                {!props.type && <div id='status-circle' className={`${obj.id}`}></div>}
+                            </div>
+                            <p className="text-msgColorOn text-[12px]">{obj.name}</p>
+                            <div className=" ml-auto">
+                            </div>
                             </div>
                         </button>
                     ))

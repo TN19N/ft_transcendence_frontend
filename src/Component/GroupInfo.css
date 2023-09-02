@@ -105,21 +105,35 @@ input[type="radio"]:checked::before{
 }
 .input
 {
-    background-color: #303245;
     border-radius: 12px;
-    color: #eee;
-    width: 10rem;
+    color: #000000;
+    width: 14vw;
     height: 4vh;
     outline: 0;
+    max-width: 10em;
     text-align: center;
 }
 .pass_input
 {
     background-color: #303245;
     border-radius: 12px;
-    color: #eee;
+    color: #000000;
     width: 90%;
     height: 2vh;
     max-width: 7em;
     text-align: center;
 }
+
+.popup-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    width: 20%;
+    border-radius: 0.7rem;
+  }
+  .popup-arrow {
+    color: rgb(255, 255, 255);
+  }
+  
+  .popup-overlay {
+    background: rgba(0, 0, 0, 0.8);
+  }

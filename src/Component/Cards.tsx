@@ -1,8 +1,14 @@
 // @ts-nocheck
+import './icon.css';
 const Cards = (props :any) => {
+    console.log(props);
+    
     return (
-    <div className={`flex gap-2 ${props.chosen ? "bg-[#01101F]" : ""} border-b-[0.2px] py-1 px-2 border-b-ButtomMsgColor hover:bg-blue-600`} onClick={() => {props.setChatId(props.id);props.setName(props.name)}}>
-        <img src={props.avatar} alt="avatar" className="w-10 h-10 rounded-full"/>
+    <div className={`flex h-fit gap-2 ${props.chosen ? "bg-[#01101F]" : ""} border-b-[0.2px] py-1 px-2 border-b-ButtomMsgColor hover:bg-blue-600`} onClick={() => {props.setChatId(props.id);props.setName(props.name);props.setGtype(props.type)}}>
+        <div className='icon-container'>
+            <img src={props.avatar} alt="avatar" className="w-10 h-10 rounded-full" />
+            {!props.Itype && <div id='status-circle' className={`${props.id}`}></div>}
+        </div>
         <div className="flex flex-col gap-1 justify-center">
             <p className="text-msgColorOn text-[12px] imac:text-[16px]">{props.name}</p>
             <p className="text-msgColorOff text-[10px] imac:text-[14px] mb-2 w-[12em] truncate overflow-hidden">{props.message}</p>

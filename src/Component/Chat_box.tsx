@@ -5,7 +5,6 @@ import { useEffect,useState} from "react";
 import axios from 'axios';
 import { flushSync } from 'react-dom';
 import Avatar from '../assets/playerIcon.svg';
-import {socket} from './Chat'
 import { myId } from './Chat';
 
 function Messages(props)
