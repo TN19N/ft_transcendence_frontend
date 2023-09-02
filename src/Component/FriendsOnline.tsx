@@ -18,6 +18,7 @@ const FriendsOnline = (props : any) => {
     )
     if (!Friends)
         return null;
+
     return (
         <div className='flex flex-col gap-2 bar-chat overflow-hidden px-3'>
             <div className="flex justify-between py-5">
@@ -28,19 +29,29 @@ const FriendsOnline = (props : any) => {
             </div>
             <div className="flex flex-col gap-2 overflow-auto h-[71vh] item-center" style={{ maxHeight: '80vh' }}>
                 {
-                    Friends.map((obj, i) => (
+                    Friends.map((obj, i) =>
+                    {
+                        let status;
+                        if (obj.status == "OFFLINE")
+                            status = "bg-[black]";
+                        else if (obj.status == "ONLINE")
+                            status = "bg-[green]";
+                        else
+                            status = "bg-[red]";
+                        return(
                         <button className="hover:bg-blue-900 rounded-lg" key={i} onClick={() => {props.setChatId(obj.id);props.setName(obj.name)}}>
                             <div className="flex gap-2 px-3">
                             <div className='icon-container'>
                                 <img src={`/api/v1/user/avatar?id=${obj.id}`} alt="avatar" className="w-10 h-10 rounded-full" />
-                                {!props.type && <div id='status-circle' className={`${obj.id}`}></div>}
+                                {!props.type && <div className={obj.id + " status-circle " + status}></div>}
                             </div>
                             <p className="text-msgColorOn text-[12px]">{obj.name}</p>
                             <div className=" ml-auto">
                             </div>
                             </div>
-                        </button>
-                    ))
+                        </button>)
+                    }
+                    )
                 }
             </div>
         </div>

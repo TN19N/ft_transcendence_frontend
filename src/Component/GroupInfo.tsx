@@ -177,6 +177,13 @@ function GroupInfo(props) {
         (
         <div className={"overflow-x-hidden flex flex-col flex-1 gap-2 overflow-auto item-center"} style={{ maxHeight: '80vh' }}>
             {members.map((obj,index) => {
+                let status;
+                if (obj.status == "OFFLINE")
+                    status = "bg-[black]";
+                else if (obj.status == "ONLINE")
+                    status = "bg-[green]";
+                else
+                    status = "bg-[red]";
                 let icon = Ic_owner;
                 if (obj.role != "OWNER")
                     icon = (obj.role == "ADMIN") ? Imoderate : Iunmoderate;
@@ -185,7 +192,7 @@ function GroupInfo(props) {
                         <div className="flex gap-3 px-3">
                             <div className='icon-container m-auto'>
                                 <img src={"/api/v1/user/avatar?id=" + obj.id} alt="avatar" className="w-10 h-10 rounded-full" />
-                                <div id='status-circle' className={obj.id}></div>
+                                <div className={obj.id + " status-circle " + status}></div>
                             </div>
                             <div className="flex flex-col flex-3 gap-2 m-auto justify-center items-center">
                                 <p className="text-msgColorOn text-[0.75rem] whitespace-nowrap">{obj.name}</p>

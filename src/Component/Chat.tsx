@@ -45,8 +45,28 @@ function Box(props)
       setChats(response.data);
     }
     )
-},[props.type]
-)
+  },[props.type]
+  )
+  useEffect (() =>
+  {
+    const change_status = (status) => 
+    {
+      console.log(status);
+      var elements = document.querySelectorAll("." + status.userId);
+      for (var i = 0; i < elements.length; i++) {
+          if (status.status == "ONLINE")
+            elements[i].style.backgroundColor = "green";
+          else if (status.status == "OFFLINE")
+            elements[i].style.backgroundColor = "black";
+          else
+            elements[i].style.backgroundColor = "red";
+      }
+    }
+    socket.on('status',change_status);
+    return () => {
+      socket.off('status',change_status);
+    }
+  },[])
   useEffect(() => {
     const recieve = (s_msg) =>
     {
@@ -98,7 +118,6 @@ function Box(props)
 
     const action = (act) =>
     {
-      console.log(act);
       setChats((chats) =>
       {
         let index = chats.findIndex((chat) =>
@@ -138,8 +157,7 @@ function Box(props)
       })
     }
     socket.on('message',recieve);
-    if (props.type)
-      socket.on('action',action);
+    socket.on('action',action);
     return () => {
       socket.off('message',recieve);
       socket.off('action',action);
@@ -160,7 +178,7 @@ function Box(props)
 const Chat = () => {
     const [name,setName] = useState("");
     const [chatId, setChatId] = useState("");
-    const [type,setType] = useState(1);
+    const [type,setType] = useState(0);
     const [myId,setMyId] = useState("");
     const [Gtype,setGtype] = useState("");
     console.log(type);
