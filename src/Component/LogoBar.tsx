@@ -12,12 +12,13 @@ import Notification from "./Notification";
 import axios from "axios";
 import Disable2fa from "./Disable2fa";
 import Enable2fa from "./Enable2fa";
-import { socket, useUserContext } from "./UserContext";
+import { useUserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 import { errorMsg } from "./Poperror";
 import { useOutsideClick } from "./useOutsideClick";
-
+import { getSocket } from "./InitializeSocket";
 const LogoBar: React.FC = () => {
+  const socket = getSocket();
   const navigate = useNavigate();
   const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

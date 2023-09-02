@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import "./InviteGame.css";
-import { socket } from "./UserContext";
+import {  getSocket } from "./InitializeSocket";
 import { PlayIcon } from "./Icons";
 import { toast } from "react-toastify";
 import { errorMsg } from "./Poperror";
@@ -11,6 +11,7 @@ interface IdInvitor {
   id: string;
 }
 export default function InviteGame({ id }: IdInvitor) {
+  const socket = getSocket();
   const navigate = useNavigate();
   const [showButtons, setShowButtons] = useState(false);
   const Buttons = ["Slow", "Medium", "Fast"];

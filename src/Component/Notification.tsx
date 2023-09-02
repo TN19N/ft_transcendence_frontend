@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { NotificationIcon } from "./Icons";
-import { socket, useUserContext } from "./UserContext";
+import {  useUserContext } from "./UserContext";
 import Notify from "./Notify";
 import { Notification } from "./UserContext";
 import { errorMsg } from "./Poperror";
 import { useOutsideClick } from "./useOutsideClick";
-
+import { getSocket } from "./InitializeSocket";
 const NotificationComponent = () => {
+  const socket = getSocket();
   const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const ref = useOutsideClick(() => {

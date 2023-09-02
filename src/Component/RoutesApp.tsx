@@ -20,6 +20,7 @@ const RoutesApp = () => {
         </>
       ) : (
         <>
+        //Create Socket function here
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/chat" element={<Chat />} />

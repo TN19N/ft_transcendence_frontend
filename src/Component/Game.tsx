@@ -16,7 +16,6 @@ const Game = () => {
   };
 
   useEffect(() => {
-    console.log("draw:", draw);
   }, [draw, navigate]);
   return (
     <div className="flex flex-col gap-4 bg-background ring ring-white ring-opacity-10 rounded-xl w-[90%]">

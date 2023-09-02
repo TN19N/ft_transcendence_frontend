@@ -20,7 +20,7 @@ const Check2fa = () => {
     axios
       .post(`${process.env.SERVER_HOST}/api/v1/auth/2fa`, { code: password })
       .then(() => {
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         if (error.response?.status === 401) {
