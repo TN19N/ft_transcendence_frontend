@@ -13,9 +13,9 @@ import axios from "axios";
 import Disable2fa from "./Disable2fa";
 import Enable2fa from "./Enable2fa";
 import { socket, useUserContext } from "./UserContext";
-import { OutsideClick } from "outsideclick-react";
 import { useNavigate } from "react-router-dom";
 import { errorMsg } from "./Poperror";
+import { useOutsideClick } from "./useOutsideClick";
 
 const LogoBar: React.FC = () => {
   const navigate = useNavigate();
@@ -25,6 +25,9 @@ const LogoBar: React.FC = () => {
   const [UserName, setUserName] = useState<string>("");
   const [Render, setRender] = useState<boolean>(false); // Fixed the typo "flase" to "false"
 
+const ref = useOutsideClick(() => {
+  setIsDropdownOpen(false);
+});
   const Disable = () => {
     setRender((prevState) => !prevState);
   };
@@ -94,12 +97,7 @@ const LogoBar: React.FC = () => {
       <NavBar />
       <div className="flex items-center iphone:[30%] iphone:gap-2 tablet:gap-4">
         {userId?.notifications && <Notification />}
-        <OutsideClick
-          onOutsideClick={() => {
-            setIsDropdownOpen(false);
-          }}
-        >
-          <div className="relative">
+          <div className="relative" ref={ref}>
             <div
               className="flex items-center text-white gap-1"
               onClick={toggleDropdown}
@@ -143,7 +141,6 @@ const LogoBar: React.FC = () => {
               </div>
             )}
           </div>
-        </OutsideClick>
       </div>
     </div>
   );
