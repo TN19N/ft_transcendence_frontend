@@ -24,8 +24,7 @@ axios.get("/api/v1/user/profile").then((response)=>
 {
   myName = response.data.name;
   myId = response.data.id;
-})
-
+}).catch((error) => {})
 
 const expand_box = (who) =>
 {
@@ -70,28 +69,15 @@ const expand_box = (who) =>
       current = 0;
     else
       current = 2;
-    iterate(boxs[who],before);
-    iterate(buttons[who],before_btn);
-    iterate(boxs[current],after);
-    iterate(buttons[current],after_btn);
-    add(boxs[who],after);
-    add(buttons[who],after_btn);
-    add(boxs[current],before);
-    add(buttons[current],before_btn);
   }
-  if (visible == 2)//swap
-  {
-    iterate(boxs[who],before);
-    iterate(buttons[who],before_btn);
-    iterate(boxs[current],after);
-    iterate(buttons[current],after_btn);
-    add(boxs[who],after);
-    add(buttons[who],after_btn);
-    add(boxs[current],before);
-    add(buttons[current],before_btn);
-  }
-  console.log(before);
-  console.log(before_btn);
+  iterate(boxs[who],before);
+  iterate(buttons[who],before_btn);
+  iterate(boxs[current],after);
+  iterate(buttons[current],after_btn);
+  add(boxs[who],after);
+  add(buttons[who],after_btn);
+  add(boxs[current],before);
+  add(buttons[current],before_btn);
 }
 
 
@@ -257,13 +243,19 @@ const Chat = () => {
     const [type,setType] = useState(0);
     const [myId,setMyId] = useState("");
     const [Gtype,setGtype] = useState("");
-    console.log(type);
+    useEffect(() =>
+    {
+      return () =>
+      {
+        socket.disconnect();
+      }
+    },[])
     return (
     <div className="flex flex-col gap-4 bg-[#01101F] ring ring-white ring-opacity-10 rounded-lg w-[90%]">
       <LogoBar />
       <section className='flex gap-1 w-[90%] mb-6 m-auto'>
         <Box setMyId={setMyId} setChatId={setChatId} chatId={chatId} setType={setType} type={type} setName={setName} name={name} setGtype={setGtype}/>
-        <div id="info" className='flex-1 bar-chat block max-tablet:hidden min-w-[13%] max-h-[75vh] h-[75vh] w-fit overflow-y-auto overflow-x-hidden '>
+        <div id="info" className='flex-1 bar-chat block max-tablet:hidden min-w-[13%] max-h-[75vh] h-[75vh] w-fit max-w-[200px] overflow-y-auto overflow-x-hidden '>
           {type ? (
             <div id="scrollbar" className='flex flex-col gap-2 bar-chat overflow-x-hidden overflow-y-auto px-3 max-h-[75vh] h-[75vh]'>
             <Channels/>

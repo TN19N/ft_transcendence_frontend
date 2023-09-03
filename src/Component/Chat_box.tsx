@@ -82,7 +82,7 @@ const Chat_box = (props) => {
             <div className="flex w-full">
                 <div className="flex gap-2 p-4">
                     <button onClick={props.type ? undefined : (() => {navigate("/profile/" + props.chatId)})} className='icon-container iphone:w-7 iphone:h-7 tablet:w-10 tablet:h-10 '>
-                        <img src={props.avatar} alt="avatar" className="w-10 h-10 rounded-full" />
+                        <img src={avatar} alt="avatar" className="w-10 h-10 rounded-full" />
                     </button>
                     <div className="flex flex-col gap-1">
                         <p className="text-msgColorOn text-[12px]">{name}</p>
@@ -91,7 +91,7 @@ const Chat_box = (props) => {
                     </div>
                 </div>
                 <div className="flex gap-3 ml-auto items-center">
-                    {!props.type && <InviteGame id={props.chatId} />}
+                    {!props.type && <InviteGame id={props.chatId} className={"h-8 w-8"}/>}
                 </div>
             </div>
             <div className="flex flex-col gap-1 overflow-auto h-[67vh] item-center ">
