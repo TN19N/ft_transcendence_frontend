@@ -9,8 +9,9 @@ import { errorMsg } from "./Poperror";
 
 interface IdInvitor {
   id: string;
+  className:string;
 }
-export default function InviteGame({ id }: IdInvitor) {
+export default function InviteGame({ id, className }: IdInvitor) {
   const socket = getSocket();
   const navigate = useNavigate();
   const [showButtons, setShowButtons] = useState(false);
@@ -65,7 +66,7 @@ export default function InviteGame({ id }: IdInvitor) {
   return (
     <div>
       <button onClick={handleGameInvite}>
-        <PlayIcon className="w-3 h-3 iphone:w-6 iphone:h-6 tablet:w-8 tablet:h-8 laptop:w-10 laptop:h-10" />
+        <PlayIcon className={className} />
       </button>
       {showButtons && (
         <div className="popup-container ">

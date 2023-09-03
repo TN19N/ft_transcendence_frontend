@@ -118,7 +118,7 @@ const ref = useOutsideClick(() => {
               </span>
             </div>
             {isDropdownOpen && (
-              <div className="absolute text-white right-0 rounded bg-background border-[1px] mt-1 text-[4px] tablet:text-[12px] laptop:text-[14px] imac:text-[20px]">
+              <div className="absolute z-10 text-white right-0 rounded bg-background border-[1px] mt-1 text-[4px] tablet:text-[12px] laptop:text-[14px] imac:text-[20px]">
                 <div className="flex flex-col items-start cursor-pointer">
                   <Link to="/profile">
                     <div className="flex gap-1 items-center p-1">

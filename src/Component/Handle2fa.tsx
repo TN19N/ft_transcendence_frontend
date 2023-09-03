@@ -46,6 +46,7 @@ const Handle2fa = () => {
             className="flex flex-col gap-3 items-center"
           >
             <input
+              autoFocus
               className={`w-full outline-none placeholder:text-msgColorOff iphone:text-[8px] iphone:w-[70%] tablet:w-[60%] laptop:w-[45%] imac:w-[80%] tablet:text-[10px] imac:text-[14px] rounded-xl iphone:p-[10px] ${
                 isValidPassword ? "" : "text-red-500"
               }`}

@@ -48,7 +48,7 @@ const Friends: React.FC = () => {
                 <span className="iphone:min-w-[80px] tablet:min-w-[140px] laptop:min-w-[180px]">
                   {friend.name}
                 </span>
-                <InviteGame id={friend.id} />
+                <InviteGame id={friend.id} className="w-3 h-3 iphone:w-6 iphone:h-6 tablet:w-8 tablet:h-8 laptop:w-10 laptop:h-10"/>
               </div>
             ))}
           </>

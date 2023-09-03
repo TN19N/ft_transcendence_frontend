@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { errorMsg } from "./Poperror";
@@ -32,7 +32,6 @@ const Check2fa = () => {
         }
       });
   };
-
   return (
     <div className="flex flex-col bg-background ring ring-white ring-opacity-10 rounded-lg w-[90%]">
       <div className="h-[78vh] self-center m-5 flex flex-col justify-center">
@@ -46,6 +45,7 @@ const Check2fa = () => {
             className="flex flex-col gap-3 items-center"
           >
             <input
+              autoFocus
               className={`w-full outline-none placeholder:text-msgColorOff iphone:text-[8px] iphone:w-[70%] tablet:w-[60%] laptop:w-[45%] imac:w-[80%] tablet:text-[10px] imac:text-[14px] rounded-xl iphone:p-[10px] ${
                 isValidPassword ? "" : "text-red-500"
               }`}
