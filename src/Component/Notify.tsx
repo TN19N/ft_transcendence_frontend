@@ -95,7 +95,6 @@ const Notify: React.FC<NotifyProps> = ({
   const removeInvite = () => {
     if (notification.type === NotificationType.GAME_INVITE) {
       setTimeout(() => {
-        console.log("Remove it");
         removeNotification(notification);
       }, 5000);
     }

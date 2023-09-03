@@ -38,15 +38,12 @@ export default function InviteGame({ id, className }: IdInvitor) {
           theme: "dark",
         });
         const timeoutId = setTimeout(() => {
-          console.log("Time is done");
         }, 5000);
         const startGameListener = () => {
-          console.log("startgame");
           clearTimeout(timeoutId);
           navigate("/play/invitor");
         };
         const stopTimerListener = () => {
-          console.log("stopTimer");
           clearTimeout(timeoutId);
           socket && socket.once("startGame", startGameListener);
         };

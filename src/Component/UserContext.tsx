@@ -49,7 +49,6 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             `${process.env.SERVER_HOST}/api/v1/user`,
             { withCredentials: true }
           );
-            console
           const friendResponse = await axios.get(
             `${process.env.SERVER_HOST}/api/v1/user/friendRequest/received`,
             { withCredentials: true }
