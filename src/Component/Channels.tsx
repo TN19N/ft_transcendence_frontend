@@ -9,6 +9,7 @@ import Iadd from '../assets/add.png';
 import Avatar from '../assets/playerIcon.svg';
 import { ManageIcon} from './Icons';
 import Popup from 'reactjs-popup';
+import { errorMsg } from "./Poperror";
 
 const join_group = (e,info,channels,setChannels,index) =>
 {
@@ -21,9 +22,11 @@ const join_group = (e,info,channels,setChannels,index) =>
         let arr = [...channels];
         arr.splice(index,1);
         setChannels(arr);
-    }).catch((err) => {
-      if (info.type == "PROTECTED")
-        doc.style.border = "2px solid red";
+    }).catch((error) => {
+        const errorMessage = error.response?.data?.message || "An error occurred";
+        errorMsg(errorMessage);
+        if (info.type == "PROTECTED")
+            doc.style.border = "2px solid red";
     });
 }
 function Channels(props)
@@ -44,7 +47,7 @@ function Channels(props)
         event.preventDefault();
         console.log(event.target[1].disabled);
         let obj = {name: event.target[0].value,type: type};
-        if (type=="PROTECTED")
+        if (type == "PROTECTED")
             obj.password = event.target[1].value;
         axios.post("/api/v1/chat/group/create",obj).then(res => {
             document.getElementById("error_msg").innerHTML = "";
@@ -74,7 +77,7 @@ function Channels(props)
         return (null);
     return (<>
     <div className="flex flex-col justify-center">
-        <div className="flex justify-between pt-4 align-center">
+        <div className="flex justify-between pt-4 z-[0] align-center">
             <h3 className="text-white m-auto text-xl">Channels</h3>
             <button id={create ? "add_icon_click" : "add_icon"} className="h-8 w-8 flex item-center m-auto" onClick={() => {setCreate(create == 0)}}><img src={Iadd}/></button>
         </div>

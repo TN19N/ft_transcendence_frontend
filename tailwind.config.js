@@ -6,10 +6,8 @@ export default {
   ],
   theme: {
     screens: {
-      'iphone': '320px',
-      'tablet': '768px',
-      'laptop': '1024px',
-      'imac': '1440px',
+      'tablet': '1000px',
+      'iphone': '650px'
     },
     extend: {
       colors:{

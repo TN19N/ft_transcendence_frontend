@@ -20,14 +20,14 @@ const FriendsOnline = (props : any) => {
         return null;
 
     return (
-        <div className='flex flex-col gap-2 bar-chat overflow-hidden px-3'>
+        <div className='flex flex-col gap-2 bar-chat overflow-hidden px-3 max-h-[75vh] h-[75vh]'>
             <div className="flex justify-between py-5">
                 <h3 className="text-white text-xl">Friends</h3>
                 <div className=" bg-nberFriendsColor rounded-[50%] p-1">
                     <p className="text-white">{Friends.length}</p>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 overflow-auto h-[71vh] item-center" style={{ maxHeight: '80vh' }}>
+            <div className="flex flex-col gap-2 overflow-auto h-[75vh] item-center" style={{ maxHeight: '75vh' }}>
                 {
                     Friends.map((obj, i) =>
                     {

@@ -6,6 +6,9 @@ import axios from 'axios';
 import { flushSync } from 'react-dom';
 import Avatar from '../assets/playerIcon.svg';
 import { myId } from './Chat';
+import { errorMsg } from "./Poperror";
+import { useNavigate } from 'react-router';
+import InviteGame from "./InviteGame";
 
 function Messages(props)
 {
@@ -32,6 +35,7 @@ function Messages(props)
 const Chat_box = (props) => {
     if (props.chatId == "")
         return null;
+    const navigate = useNavigate();
     let avatar = "/api/v1/user/avatar?id=" + props.chatId;
     if (props.type)
         avatar = Avatar;
@@ -67,16 +71,19 @@ const Chat_box = (props) => {
         ).then(() => {
             event.target.message.value = "";
         }
-        );
-    }
-    const leave = (event) => {
-        axios.patch(`/api/v1/chat/group/${props.chatId}/leave`);
+        ).catch(error =>
+        {
+            const errorMessage = error.response?.data?.message || "An error occurred";
+            errorMsg(errorMessage);
+        });
     }
     return (
         <div className='flex flex-col gap-2 bar-chat px-3 overflow-hidden w-full'>
             <div className="flex w-full">
                 <div className="flex gap-2 p-4">
-                    <img src={avatar} alt="avatar" className="iphone:w-7 iphone:h-7 tablet:w-10 tablet:h-10 rounded-full" />
+                    <button onClick={props.type ? undefined : (() => {navigate("/profile/" + props.chatId)})} className='icon-container iphone:w-7 iphone:h-7 tablet:w-10 tablet:h-10 '>
+                        <img src={props.avatar} alt="avatar" className="w-10 h-10 rounded-full" />
+                    </button>
                     <div className="flex flex-col gap-1">
                         <p className="text-msgColorOn text-[12px]">{name}</p>
                         <div className="flex gap-1">
@@ -84,11 +91,7 @@ const Chat_box = (props) => {
                     </div>
                 </div>
                 <div className="flex gap-3 ml-auto items-center">
-                    {!props.type ? (<><button className='bg-buttonPlaybgColor p-2 rounded-[50%]'><PlayIcon className="w-6 h-6" /></button>
-                    <button className='bg-buttonPlaybgColor p-2 rounded-[50%]'><BlockIcon className="w-6 h-6" /></button></>)
-                    :
-                    (<button onClick={leave} className='bg-buttonPlaybgColor p-2 rounded-[50%]'><LeaveIcon className="w-6 h-6"/></button>)
-                }
+                    {!props.type && <InviteGame id={props.chatId} />}
                 </div>
             </div>
             <div className="flex flex-col gap-1 overflow-auto h-[67vh] item-center ">

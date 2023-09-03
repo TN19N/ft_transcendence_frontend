@@ -11,6 +11,8 @@ import Avatar from '../assets/playerIcon.svg';
 import './GroupInfo.css';
 import Iadd from '../assets/add.png'
 import { io } from 'socket.io-client';
+import { errorMsg } from "./Poperror";
+import { useNavigate } from 'react-router';
 
 
 export const socket = io(`${process.env.SERVER_HOST}/chat`);
@@ -25,6 +27,74 @@ axios.get("/api/v1/user/profile").then((response)=>
 })
 
 
+const expand_box = (who) =>
+{
+  let names = ["inbox","chat_box","info"]
+  let buttons = [];
+  let boxs = [];
+  let visible = 0;
+  let current = 0;
+  for (let i = 0;i < 3;i++)
+  {
+    buttons[i] = document.getElementById(names[i] + "_button");
+    boxs[i] = document.getElementById(names[i]);
+    if (getComputedStyle(boxs[i]).display == 'none')
+      visible += 1;
+    else
+      current = i;
+  }
+  let before = [];
+  let before_btn = [];
+  let after = [];
+  let after_btn = [];
+  const iterate = (element,array) => 
+  {
+    element?.classList.forEach(
+      function(value,index) {
+        if (value.startsWith("max-t") || value.startsWith("max-i"))
+        {
+          array.push(value);
+          element?.classList.remove(value);
+        }
+      }
+    );
+  }
+  const add = (element,array) =>
+  {
+    for (let i = 0; i < array.length;i++)
+      element?.classList.add(array);
+  }
+  if (visible == 1)
+  {
+    if (who == 2)
+      current = 0;
+    else
+      current = 2;
+    iterate(boxs[who],before);
+    iterate(buttons[who],before_btn);
+    iterate(boxs[current],after);
+    iterate(buttons[current],after_btn);
+    add(boxs[who],after);
+    add(buttons[who],after_btn);
+    add(boxs[current],before);
+    add(buttons[current],before_btn);
+  }
+  if (visible == 2)//swap
+  {
+    iterate(boxs[who],before);
+    iterate(buttons[who],before_btn);
+    iterate(boxs[current],after);
+    iterate(buttons[current],after_btn);
+    add(boxs[who],after);
+    add(buttons[who],after_btn);
+    add(boxs[current],before);
+    add(buttons[current],before_btn);
+  }
+  console.log(before);
+  console.log(before_btn);
+}
+
+
 function Box(props)
 {
   const [chats,setChats] = useState(null);
@@ -37,10 +107,6 @@ function Box(props)
       url = "/api/v1/chat/group/joined";
     axios.get(url).then( (response) =>
     {
-      if (props.type && response.data.length)
-      {
-        props.setMyId(response.data[0].myId);
-      }
       props.setChatId("");
       setChats(response.data);
     }
@@ -131,7 +197,6 @@ function Box(props)
           return ([{name:act.payload.groupName,type:act.payload.type,ownerId:"",id:act.payload.groupId,myId:myId},...chats])
         if (index == -1)
           return chats;
-
         let arr = [...chats];
         if (act.actionType == "GROUP_DELETED" || ((act.actionType == "USER_LEAVED" || act.actionType == "USER_BANNED") && myId == act.payload.userId))
         {
@@ -145,12 +210,17 @@ function Box(props)
         }
         else if (act.actionType == "GROUP_UPDATED")
         {
-          props.setName((name) => {
-            if (chats[index].name == name)
-              return act.payload.name;
-            return name;
-          })
-          arr[index].name = act.payload.name;
+          if (act.payload.name)
+          {
+            props.setName((name) => {
+              if (chats[index].name == name)
+                return act.payload.name;
+              return name;
+            })
+            arr[index].name = act.payload.name;
+          }
+          if (act.payload.type)
+            arr[index].type = act.payload.type;
           arr[index].id = act.payload.groupId;
         }
         return arr;
@@ -165,12 +235,18 @@ function Box(props)
 }, []);
   return (
     <>
-      <div className='flex-1 max-w-fit'>
+      <div id="inbox" className='flex-1 block max-iphone:hidden max-h-[75vh] h-[75vh] max-w-fit'>
         <Inbox {...props} chats={chats}/>
       </div>
-      <div className='flex-[2] bar-chat h-[78vh] iphone:hidden tablet:block'>
+      <button onClick={() => {expand_box(0)}} id="inbox_button" className='bar-chat h-[78vh] max-h-[75vh] h-[75vh] hidden max-iphone:block  w-[10%]'>
+        {"<>"}
+      </button>
+      <div id="chat_box" className='flex-[2] bar-chat max-h-[75vh] h-[75vh] block'>
         <Chat_box name={props.name} chatId={props.chatId} type={props.type} messages={messages} setMessages={setMessages}/>
       </div>
+      <button onClick={() => {expand_box(1)}} id="chat_box_button" className='bar-chat max-h-[75vh] h-[75vh] hidden max-iphone:hidden w-[10%]'>
+        {"<>"}
+      </button>
     </>
   );
 }
@@ -187,15 +263,18 @@ const Chat = () => {
       <LogoBar />
       <section className='flex gap-1 w-[90%] mb-6 m-auto'>
         <Box setMyId={setMyId} setChatId={setChatId} chatId={chatId} setType={setType} type={type} setName={setName} name={name} setGtype={setGtype}/>
-        <div className='flex-1 bar-chat iphone:hidden min-w-[13%] max-w-fit laptop:block overflow-y-auto overflow-x-hidden '>
+        <div id="info" className='flex-1 bar-chat block max-tablet:hidden min-w-[13%] max-h-[75vh] h-[75vh] w-fit overflow-y-auto overflow-x-hidden '>
           {type ? (
-            <div id="scrollbar" className='flex flex-col gap-2 bar-chat overflow-x-hidden overflow-y-auto px-3 max-h-[71vh]'>
+            <div id="scrollbar" className='flex flex-col gap-2 bar-chat overflow-x-hidden overflow-y-auto px-3 max-h-[75vh] h-[75vh]'>
             <Channels/>
             <GroupInfo myId={myId} chatId={chatId} type={Gtype}/>
             </div>
           ) : 
           (<FriendsOnline setChatId={setChatId} setName={setName}/>)}
         </div>
+        <button onClick={() => {expand_box(2)}} id="info_button" className='flex bar-chat hidden max-tablet:block max-h-[75vh] h-[75vh] w-[10%]'>
+          {"<>"}
+        </button>
       </section>
     </div>
   );

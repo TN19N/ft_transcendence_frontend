@@ -20,6 +20,7 @@ const roles = ["MEMBER_MUTED","MEMBER","ADMIN","OWNER"];
 const actions = ["","","",""]
 import Manage from './Manage';
 import {myId} from './Chat';
+import { errorMsg } from "./Poperror";
 
 function Actions(props)
 {
@@ -30,10 +31,16 @@ function Actions(props)
             name += "Member";
         if (name == "transfer")
             name += "Ownership"
-        axios.patch(`/api/v1/chat/group/${props.gid}/${name}?userTo${query}Id=${props.id}`)
+        axios.patch(`/api/v1/chat/group/${props.gid}/${name}?userTo${query}Id=${props.id}`).then(() => {}).catch(error =>
+        {
+            const errorMessage = error.response?.data?.message || "An error occurred";
+            errorMsg(errorMessage);
+        });
     }
     let own = (props.my_role == "OWNER");
+    
     let higher = (roles.indexOf(props.my_role) > roles.indexOf(props.member_role));
+    let can_mod = (props.my_role == "ADMIN") && higher;
     let muted = (props.member_role == "MEMBER_MUTED");
     let mod = (props.member_role == "ADMIN");
         
@@ -43,6 +50,7 @@ function Actions(props)
         <button onClick={() => {action(muted ? "unMute" : "mute")}} title={muted ? "unMute" : "mute"}><img id="icon" className="w-4 h-4 rounded-full" src={muted ? Iunmute : Imute}/></button>
         <button onClick={() => {action("ban")}} title="ban"><img id="icon" className="w-4 h-4" src={Ikick}/></button>
         {own ? (<button onClick={() => {action(mod ? "downgrade" : "upgrade")}} title={mod ? "unmod" : "mod"}><img id="icon" className="w-4 h-4 rounded-full" src={mod ? Iunmoderate : Imoderate}/></button>) : null}
+        {can_mod ? (<button onClick={() => {action("upgrade")}} title={"mod"}><img id="icon" className="w-4 h-4 rounded-full" src={Imoderate}/></button>) : null}
         {own ? (<button onClick={() => {action("transfer")}} title="GiveOwnership"><img id="icon" className="w-4 h-4 rounded-full" src={Iowner}/></button>) : null}
     </>)
 }
@@ -55,7 +63,11 @@ const invite=(gid,uid,canInvite,setCanInvite,index,blocked) => {
             let arr = [...canInvite];
             arr[index].isInvited = 1;
             setCanInvite(arr);
-        })
+        }).catch(error =>
+        {
+            const errorMessage = error.response?.data?.message || "An error occurred";
+            errorMsg(errorMessage);
+        });
         return;
     }
     axios.post(`/api/v1/chat/group/${gid}/invite?userToInviteId=${uid}`).then((response) =>
@@ -63,7 +75,11 @@ const invite=(gid,uid,canInvite,setCanInvite,index,blocked) => {
         let arr = [...canInvite];
         arr[index].isInvited = 1;
         setCanInvite(arr);
-    })
+    }).catch(error =>
+    {
+        const errorMessage = error.response?.data?.message || "An error occurred";
+        errorMsg(errorMessage);
+    });
 }
 const uninvite=(gid,uid,canInvite,setCanInvite,index) => {
     axios.delete(`/api/v1/chat/group/${gid}/invite?reciverId=${uid}`).then((response) =>
@@ -71,7 +87,11 @@ const uninvite=(gid,uid,canInvite,setCanInvite,index) => {
         let arr = [...canInvite];
         arr[index].isInvited = 0;
         setCanInvite(arr);
-    })
+    }).catch(error =>
+    {
+        const errorMessage = error.response?.data?.message || "An error occurred";
+        errorMsg(errorMessage);
+    });
 }
 
 
@@ -92,7 +112,11 @@ function GroupInfo(props) {
             response.data.sort((a,b) => {return (roles.indexOf(b.role) - roles.indexOf(a.role))});
             console.log(response.data);
             setMembers(response.data);
-        })
+        }).catch(error =>
+        {
+            const errorMessage = error.response?.data?.message || "An error occurred";
+            errorMsg(errorMessage);
+        });
     },[props.chatId])
     useEffect(() =>
     {
@@ -101,7 +125,11 @@ function GroupInfo(props) {
         axios.get(`/api/v1/chat/group/${props.chatId}/friendsToJoin`).then((response) =>
         {
             setCanInvite(response.data);
-        })
+        }).catch(error =>
+        {
+            const errorMessage = error.response?.data?.message || "An error occurred";
+            errorMsg(errorMessage);
+        });
     },[clicked])
     useEffect(()=>
     {
@@ -175,7 +203,7 @@ function GroupInfo(props) {
     <div id="parent">
         {!clicked ?
         (
-        <div className={"overflow-x-hidden flex flex-col flex-1 gap-2 overflow-auto item-center"} style={{ maxHeight: '80vh' }}>
+        <div className={"overflow-x-hidden flex flex-col flex-1 gap-2 overflow-auto item-center"} style={{ maxHeight: '75vh' }}>
             {members.map((obj,index) => {
                 let status;
                 if (obj.status == "OFFLINE")
@@ -209,7 +237,7 @@ function GroupInfo(props) {
         </div>
         )
         :
-        (<div className={"overflow-x-hidden flex flex-col flex-1 gap-2 overflow-auto item-center"} style={{ maxHeight: '80vh' }} >
+        (<div className={"overflow-x-hidden flex flex-col flex-1 gap-2 overflow-auto item-center"} style={{ maxHeight: '75vh' }} >
             {canInvite ? (canInvite.map((obj,index) => {
             return (<div key={index} className="flex flex-col rounded-lg hover:bg-blue-900 p-1">
                 <div className="flex flex-col rounded-lg">

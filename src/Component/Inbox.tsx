@@ -32,7 +32,7 @@ const Inbox = (props) => {
         list=null;
     
     return (
-        <div className= 'flex flex-col gap-4 px-3 bg-InboxColor rounded-xl overflow-hidden h-[78vh]'>
+        <div className= 'flex flex-col gap-4 px-3 bg-InboxColor rounded-xl overflow-hidden max-h-[75vh] h-[75vh]'>
             <div className="flex justify-between">
                 <button className={` w-full p-4 text-msgColorOff ${!props.type ? "active" : ""} text-center`} onClick={() => {props.setType(0);props.setChatId("")}}>Chat</button>
                 <button className={`w-full p-4 text-msgColorOff ${props.type ? "active" : ""} text-center `} onClick={() => {props.setType(1);props.setChatId("")}}>Channel</button>
