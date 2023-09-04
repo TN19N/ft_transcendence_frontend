@@ -2,11 +2,10 @@
     position: relative;
   }
 
-#status-circle {
-    width: 30%;
-    height: 30%;
+.status-circle {
+    width: 0.7em;
+    height: 0.7em;
     border-radius: 50%;
-    background-color: black;
     border: 2px solid white;
     bottom: 0;
     right: 0;

@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import { NotificationIcon } from "./Icons";
-import { socket, useUserContext } from "./UserContext";
+import {  useUserContext } from "./UserContext";
 import Notify from "./Notify";
 import { Notification } from "./UserContext";
-import  { errorMsg } from "./Poperror"
+import { errorMsg } from "./Poperror";
+import { useOutsideClick } from "./useOutsideClick";
+import { getSocket } from "./InitializeSocket";
 const NotificationComponent = () => {
+  const socket = getSocket();
   const userId = useUserContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const ref = useOutsideClick(() => {
+    setIsDropdownOpen(false);
+  });
   const [notifications, setNotifications] = useState<Notification[]>(
     userId?.notifications ?? []
   );
-
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
@@ -31,14 +35,13 @@ const NotificationComponent = () => {
     };
     socket && socket.on("notification", handleNotification);
     socket && socket.on("error", errorMsg);
-
     return () => {
       socket && socket.off("notification", handleNotification);
     };
   }, [notifications]);
 
   return (
-    <div className="relative cursor-pointer">
+    <div className="relative cursor-pointer" ref={ref}>
       <button className="flex items-center" onClick={toggleDropdown}>
         <NotificationIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
         <div className="absolute flex iphone:left-[5px] iphone:w-3 iphone:h-3 iphone:text-[8px] iphone:top-[-5px] tablet:left-[10px] tablet:top-[-9px] tablet:w-5 tablet:h-5 tablet:text-[12px] laptop:left-[13px] laptop:top-[-9px] laptop:w-6 laptop:h-6 laptop:text-[14px] rounded-full bg-blue-500 text-white  items-center justify-center ">
