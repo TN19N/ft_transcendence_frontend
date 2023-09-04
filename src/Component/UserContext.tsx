@@ -44,11 +44,12 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         window.location.pathname !== "/2fa"
       ) {
         try {
-            initializeSocket();
+            
           const response = await axios.get(
             `${process.env.SERVER_HOST}/api/v1/user`,
             { withCredentials: true }
           );
+          initializeSocket();
           const friendResponse = await axios.get(
             `${process.env.SERVER_HOST}/api/v1/user/friendRequest/received`,
             { withCredentials: true }
