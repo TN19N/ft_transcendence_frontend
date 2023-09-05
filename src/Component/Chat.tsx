@@ -126,6 +126,7 @@ function Box(props : any)
               createdAt: s_msg.payload.createdAt,
               senderId: s_msg.payload.senderId,
               receiverId: "",
+              senderName: s_msg.payload.senderName,
               message: s_msg.payload.message
             }
           if (!prev)

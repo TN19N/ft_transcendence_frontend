@@ -29,7 +29,7 @@ const Box_msg = (props: any) => {
         {
           props.text ?
             <p
-              className="max-w-[35vw] w-[fit-content] text-msgColorOn text-[12px] p-3 break-words overflow-hidden"
+              className="max-w-[35vw] w-[fit-content] text-msgColorOn whitespace-pre-wrap text-[12px] p-3 break-words overflow-hidden"
               style={{
                 backgroundColor: "#01101F",
                 borderRadius: props.reduis,
