@@ -142,9 +142,15 @@ function GroupInfo(props : any) {
                 {
                     return (memb.id == obj.payload.userId);
                 })
-                let ob : any = {name:obj.payload.name,id:obj.payload.userId,role:"MEMBER"};
+                let ob : any = {name:obj.payload.name,id:obj.payload.userId, role:"MEMBER"};
+                if (index != -1) {
+                    ob.status = m[index].status;
+                }
                 if (obj.actionType == 'USER_JOINED' && index == -1)
+                {
+                    ob.status = "ONLINE";
                     arr = [...arr,ob];
+                }
                 else if (obj.actionType == 'OWNERSHIP_TRANSFERMED')
                 {
                     index = m.findIndex((memb) => 
