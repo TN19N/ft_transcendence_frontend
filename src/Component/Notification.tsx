@@ -41,7 +41,7 @@ const NotificationComponent = () => {
   }, [notifications]);
 
   return (
-    <div className="relative cursor-pointer" ref={ref}>
+    <div className="relative cursor-pointer z-10" ref={ref}>
       <button className="flex items-center" onClick={toggleDropdown}>
         <NotificationIcon className="w-2 h-2 iphone:w-3 iphone:h-3 tablet:w-5 tablet:h-5 laptop:w-7 laptop:h-7" />
         <div className="absolute flex iphone:left-[5px] iphone:w-3 iphone:h-3 iphone:text-[8px] iphone:top-[-5px] tablet:left-[10px] tablet:top-[-9px] tablet:w-5 tablet:h-5 tablet:text-[12px] laptop:left-[13px] laptop:top-[-9px] laptop:w-6 laptop:h-6 laptop:text-[14px] rounded-full bg-blue-500 text-white  items-center justify-center ">

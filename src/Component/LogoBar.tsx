@@ -98,7 +98,7 @@ const ref = useOutsideClick(() => {
       <NavBar />
       <div className="flex items-center iphone:[30%] iphone:gap-2 tablet:gap-4">
         {userId?.notifications && <Notification />}
-          <div className="relative" ref={ref}>
+          <div className="relative z-10" ref={ref}>
             <div
               className="flex items-center text-white gap-1"
               onClick={toggleDropdown}

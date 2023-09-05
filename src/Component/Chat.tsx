@@ -1,4 +1,3 @@
-
 import LogoBar from './LogoBar'
 import Inbox from './Inbox'
 import Chat_box from './Chat_box'
@@ -9,8 +8,6 @@ import { useEffect,useState, useRef} from "react";
 import axios from "axios"
 import './GroupInfo.css';
 import { io } from 'socket.io-client';
-
-
 
 const expand_box = (who : any) =>
 {
@@ -72,6 +69,7 @@ function Box(props : any)
   const [messages,setMessages] = useState<any[] | null>(null);
   useEffect( () => {
     let url;
+    props.typeRef.current = props.type;
     if (!props.type)
       url = "/api/v1/chat/dms";
     else
@@ -151,8 +149,8 @@ function Box(props : any)
     {
       setChats((chats) =>
       {
-        if (!chats)
-          return;
+        if (!chats || !props.typeRef.current )
+          return chats;
         let index = chats.findIndex((chat) =>
         {
           return (chat.id == act.payload.groupId);
@@ -231,6 +229,7 @@ const Chat = () => {
     const [Gtype,setGtype] = useState<string>("");
     const [socket,setSocket] = useState<any | null>(null);
     const socketRef = useRef(socket);
+    const typeRef = useRef(type);
     useEffect(() =>
     {
       socketRef.current = io(`${process.env.SERVER_HOST}/chat`);
@@ -252,7 +251,7 @@ const Chat = () => {
     <div className="flex flex-col gap-4 bg-[#01101F] ring ring-white ring-opacity-10 rounded-lg w-[90%]">
       <LogoBar />
       <section className='flex gap-1 w-[90%] mb-6 m-auto'>
-        <Box socket={socket} myId={myIdRef} myName={myNameRef} setChatId={setChatId} chatId={chatId} setType={setType} type={type} setName={setName} name={name} setGtype={setGtype}/>
+        <Box socket={socket} typeRef={typeRef} myId={myIdRef} myName={myNameRef} setChatId={setChatId} chatId={chatId} setType={setType} type={type} setName={setName} name={name} setGtype={setGtype}/>
         <div id="info" className='flex-1 bar-chat block max-tablet-chat:hidden min-w-[13%] max-h-[75vh] h-[75vh] w-fit max-w-[200px] overflow-y-auto overflow-x-hidden '>
           {type ? (
             <>
