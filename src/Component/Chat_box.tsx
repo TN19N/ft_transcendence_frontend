@@ -1,30 +1,33 @@
-// @ts-nocheck
-import { OnlineIcon, PlayIcon, BlockIcon, SendIcon ,LeaveIcon} from './Icons';
+import { SendIcon} from './Icons';
 import Box_message from './BoxMsg';
 import { useEffect,useState} from "react";
 import axios from 'axios';
-import { flushSync } from 'react-dom';
 import Avatar from '../assets/playerIcon.svg';
-import { myId } from './Chat';
 import { errorMsg } from "./Poperror";
 import { useNavigate } from 'react-router';
 import InviteGame from "./InviteGame";
 
-function Messages(props)
+function Messages(props : any)
 {
     if (!props.messages)
         return null;
-    let a = props.messages.map((obj,i) =>
+    let index = -1;
+    let a = props.messages.map((obj : any,i : number) =>
     {
-        let me = (obj.senderId != myId);
-        return <Box_message key={i} 
-        name={props.type ? obj.senderName : props.name}
-        reduis={me ? '20px 20px 20px 0px' : '20px 20px 0px'}
-        alignSelf={me ? 'flex-start' : 'flex-end'} text={obj.message}
-        id={obj.senderId}
-        direction={me ? 'row' : 'row-reverse'} 
-        side={me ? 'mr-auto' : 'ml-auto'}
-        me={me}/>
+        if (i > props.messages.length - props.amount)
+        {
+            index += 1;
+            let me = (obj.senderId != props.myId);
+            return <Box_message key={i} createdAt={obj.createdAt}
+            name={props.type ? obj.senderName : props.name}
+            reduis={me ? '20px 20px 20px 0px' : '20px 20px 0px'}
+            alignSelf={me ? 'flex-start' : 'flex-end'} text={obj.message}
+            id={obj.senderId}
+            direction={me ? 'row' : 'row-reverse'} 
+            side={me ? 'mr-auto' : 'ml-auto'}
+            me={me}
+            msgid={"msg-" + index}/>
+        }
     }
     );
     return a;
@@ -32,15 +35,16 @@ function Messages(props)
 
 
 
-const Chat_box = (props) => {
+const Chat_box = (props : any) => {
     if (props.chatId == "")
         return null;
+    const [amount,setAmount] = useState(100);
     const navigate = useNavigate();
     let avatar = "/api/v1/user/avatar?id=" + props.chatId;
     if (props.type)
         avatar = Avatar;
-    let name = props.name;
-    useEffect( () => {
+    let name : string = props.name;
+    useEffect( () => {20
         let url;
         if (!props.type)
             url = `/api/v1/chat/dm?pairId=${props.chatId}`;
@@ -53,14 +57,31 @@ const Chat_box = (props) => {
         )
     },[props.chatId]
     )
-
+    const  handleScroll = (e : any) => {
+        let element = e.target;
+        if (element.scrollTop===0 && amount < props.messages.length) {
+          setAmount(e => {return e * 2});
+        }
+     }
+    useEffect( ()=>{
+        if (!props.messages)
+            return;
+        let a
+        if (amount > props.messages.length)
+            a  = document.getElementById("msg-" + (props.messages.length - (amount / 2)));
+        else
+            a = document.getElementById("msg-" + (amount / 2))
+        if (a)
+            a.scrollIntoView();
+     },[amount])
     useEffect ( ()=>
     {
         let a = document.getElementById("scroll");
-        a.scrollIntoView();
+        if (a)
+            a.scrollIntoView();
     },[props.messages])
 
-    const sendMsg = (event) => {
+    const sendMsg = (event : any) => {
         event.preventDefault();
         let url;
         if (!props.type)
@@ -94,17 +115,15 @@ const Chat_box = (props) => {
                     {!props.type && <InviteGame id={props.chatId} className={"h-8 w-8"}/>}
                 </div>
             </div>
-            <div className="flex flex-col gap-1 overflow-auto h-[67vh] item-center ">
+            <div className="flex flex-col gap-1 overflow-auto h-[58vh] item-center " onScroll={ handleScroll}>
                 {
-                    <Messages id={props.chatId} type={props.type} messages={props.messages} name={name}/>    
+                    <Messages id={props.chatId} myId={props.myId} type={props.type} messages={props.messages} name={name} amount={amount}/>    
                 }
                 <div id="scroll"></div>
             </div>
             <form className='flex rounded-xl bg-msgColorOn p-2 mb-2' onSubmit={sendMsg}>
-                <input id="message" className="w-full text-[12px] placeholder-text-[12px] bg-transparent outline-none" type="text" placeholder="Type your message..." />
-                <label htmlFor="submit">
-                    <SendIcon />
-                </label>
+                <input id="message" className="w-full text-[12px] placeholder-text-[12px] bg-transparent outline-none" title="text limit exceeded" pattern=".{1,1000}" type="text" required placeholder="Type your message..." />
+                <button type="submit"><SendIcon /></button>
             </form>
 
         </div>

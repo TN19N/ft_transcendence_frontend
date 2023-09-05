@@ -1,4 +1,3 @@
-// @ts-nocheck
 import './icon.css';
 import { useNavigate } from 'react-router';
 

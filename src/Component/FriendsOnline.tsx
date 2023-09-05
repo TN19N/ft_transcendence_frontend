@@ -1,11 +1,8 @@
-// @ts-nocheck
-import { OnlineIcon } from "./Icons"
-import avatar from '../assets/ahmaidi.png'
 import { useEffect,useState} from "react";
 import axios from "axios"
 
 const FriendsOnline = (props : any) => {
-    const [Friends,setFriends] = useState(null);
+    const [Friends,setFriends] = useState<any | null>(null);
     useEffect( () => {
         let url = `/api/v1/user/friends`;
         console.log(url);
@@ -29,7 +26,7 @@ const FriendsOnline = (props : any) => {
             </div>
             <div className="flex flex-col gap-2 overflow-auto h-[75vh] item-center" style={{ maxHeight: '75vh' }}>
                 {
-                    Friends.map((obj, i) =>
+                    Friends.map((obj : any, i : number) =>
                     {
                         let status;
                         if (obj.status == "OFFLINE")

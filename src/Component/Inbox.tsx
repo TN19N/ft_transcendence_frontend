@@ -1,19 +1,18 @@
-// @ts-nocheck
+
 import { SearchIcon } from "./Icons"
 import Cards from "./Cards"
-import axios from "axios"
-import { useEffect,useState} from "react";
+import { useState} from "react";
 import Avatar from '../assets/playerIcon.svg';
 
 
 
 
-const Inbox = (props) => {
+const Inbox = (props : any) => {
     let list;
     const [search,setSearch] = useState("");
     if (props.chats)
     {
-        list = props.chats.map((chat,index) => {
+        list = props.chats.map((chat : any,index : number) => {
             if (!chat.name.toLowerCase().includes(search.toLowerCase()))
                 return null;
             if (props.type)
@@ -21,7 +20,7 @@ const Inbox = (props) => {
             else
                 chat.avatar = `/api/v1/user/avatar?id=${chat.id}`;
             return (
-                        <div key={chat.index}>
+                        <div key={index}>
                 <Cards {...chat} Itype={props.type} setGtype={props.setGtype} setChatId={props.setChatId} chosen={(chat.id == props.chatId)} setName={props.setName}/>
             </div>
         )

@@ -1,6 +1,5 @@
-// @ts-nocheck
+
 import './icon.css';
-import { DeleteIcon, LeaveIcon, OnlineIcon } from "./Icons"
 import { useEffect,useState} from "react";
 import './GroupInfo.css';
 import axios from "axios"
@@ -12,19 +11,14 @@ import Imute from '../assets/mute.png'
 import Iunmute from '../assets/unmute.png'
 import Ic_owner from '../assets/current_owner.png'
 import Iadd from '../assets/add.png'
-import Avatar from '../assets/playerIcon.svg';
-import { ManageIcon} from './Icons';
-import Popup from 'reactjs-popup';
-import {socket} from './Chat'
 const roles = ["MEMBER_MUTED","MEMBER","ADMIN","OWNER"];
-const actions = ["","","",""]
 import Manage from './Manage';
-import {myId} from './Chat';
 import { errorMsg } from "./Poperror";
+import { useNavigate } from 'react-router';
 
-function Actions(props)
+function Actions(props : any)
 {
-    const action = (name) =>
+    const action = (name : string) =>
     {
         let query = name[0].toUpperCase() + name.slice(1); 
         if (name == "upgrade" || name == "downgrade")
@@ -55,10 +49,10 @@ function Actions(props)
     </>)
 }
 
-const invite=(gid,uid,canInvite,setCanInvite,index,blocked) => {
+const invite=(gid : string,uid : string,canInvite : any[],setCanInvite : any,index : number,blocked : number) => {
     if (blocked)
     {
-        axios.put(`/api/v1/chat/group/${gid}/unBanAndInvite?userId=${uid}`).then((response) =>
+        axios.put(`/api/v1/chat/group/${gid}/unBanAndInvite?userId=${uid}`).then(() =>
         {
             let arr = [...canInvite];
             arr[index].isInvited = 1;
@@ -70,7 +64,7 @@ const invite=(gid,uid,canInvite,setCanInvite,index,blocked) => {
         });
         return;
     }
-    axios.post(`/api/v1/chat/group/${gid}/invite?userToInviteId=${uid}`).then((response) =>
+    axios.post(`/api/v1/chat/group/${gid}/invite?userToInviteId=${uid}`).then(() =>
     {
         let arr = [...canInvite];
         arr[index].isInvited = 1;
@@ -81,8 +75,8 @@ const invite=(gid,uid,canInvite,setCanInvite,index,blocked) => {
         errorMsg(errorMessage);
     });
 }
-const uninvite=(gid,uid,canInvite,setCanInvite,index) => {
-    axios.delete(`/api/v1/chat/group/${gid}/invite?reciverId=${uid}`).then((response) =>
+const uninvite=(gid : string,uid : string,canInvite : any[],setCanInvite : any,index : number) => {
+    axios.delete(`/api/v1/chat/group/${gid}/invite?reciverId=${uid}`).then(() =>
     {
         let arr = [...canInvite];
         arr[index].isInvited = 0;
@@ -97,19 +91,19 @@ const uninvite=(gid,uid,canInvite,setCanInvite,index) => {
 
 
 
-function GroupInfo(props) {
-    console.log(props.chatId);
+function GroupInfo(props : any) {
     if (!props.chatId)
         return null
-    const [members,setMembers] = useState(null);
-    const [canInvite,setCanInvite] = useState(null);
-    const [clicked,setClick] = useState(0);
+    const [members,setMembers] = useState<any[] | null | undefined>(null);
+    const [canInvite,setCanInvite] = useState<any[] | null | undefined>(null);
+    const [clicked,setClick] = useState<boolean | number>(0);
+    let navigate = useNavigate();
     useEffect(() =>
     {
         axios.get(`/api/v1/chat/group/${props.chatId}/members`).then((response) =>
         {
             console.log(response.data);
-            response.data.sort((a,b) => {return (roles.indexOf(b.role) - roles.indexOf(a.role))});
+            response.data.sort((a : any,b : any) => {return (roles.indexOf(b.role) - roles.indexOf(a.role))});
             console.log(response.data);
             setMembers(response.data);
         }).catch(error =>
@@ -133,21 +127,24 @@ function GroupInfo(props) {
     },[clicked])
     useEffect(()=>
     {
-        const change = (obj) =>
+        if (!props.socket)
+            return;
+        const change = (obj : any) =>
         {
-            console.log(obj);
             if (props.chatId != obj.payload.groupId)
                 return;
             setMembers((m) => {
-                let arr = [...m];
+                if (!m)
+                    return;
+                let arr : any[]= [...m];
 
                 let index = m.findIndex((memb) => 
                 {
                     return (memb.id == obj.payload.userId);
                 })
-                console.log(obj);
+                let ob : any = {name:obj.payload.name,id:obj.payload.userId,role:"MEMBER"};
                 if (obj.actionType == 'USER_JOINED' && index == -1)
-                    arr = [...arr,{name:obj.payload.name,id:obj.payload.userId,role:"MEMBER"}];
+                    arr = [...arr,ob];
                 else if (obj.actionType == 'OWNERSHIP_TRANSFERMED')
                 {
                     index = m.findIndex((memb) => 
@@ -175,22 +172,21 @@ function GroupInfo(props) {
                     arr[index].role = "ADMIN"
                 if (obj.actionType == 'USER_DOWNGRADED')
                     arr[index].role = "MEMBER"
-                if (obj.actionType == 'USER_LEAVED' && arr[index].id != myId)
+                if (obj.actionType == 'USER_LEAVED' && arr[index].id != props.myId.current)
                     arr.splice(index,1);
                 arr.sort((a,b) => {return (roles.indexOf(b.role) - roles.indexOf(a.role))});
                 return (arr);
             });
         }
-        socket.off('action',change);
-        socket.on('action',change);
+        props.socket.off('action',change);
+        props.socket.on('action',change);
         return () => {
-          socket.off('action',change);
+          props.socket.off('action',change);
         }
-    },[])
-    
+    },[props.socket])
     if (!members)
         return null
-    let myIndex = members.findIndex((obj) => {return (obj.id == myId)});
+    let myIndex = members.findIndex((obj) => {return (obj.id == props.myId.current)});
     if (myIndex == -1)
         return;
     let invite_perm = (members[myIndex].role == "OWNER" || members[myIndex].role == "ADMIN");
@@ -218,10 +214,10 @@ function GroupInfo(props) {
                 return (<div key={index} className="flex flex-col rounded-lg hover:bg-blue-900 p-1">
                     <div className="flex flex-col align-center rounded-lg">
                         <div className="flex gap-3 px-3">
-                            <div className='icon-container m-auto'>
+                            <button onClick={() => {navigate("/profile/" + obj.id)}} className='icon-container iphone:w-7 iphone:h-7 tablet:w-10 tablet:h-10 '>
                                 <img src={"/api/v1/user/avatar?id=" + obj.id} alt="avatar" className="w-10 h-10 rounded-full" />
                                 <div className={"user" + obj.id + " status-circle " + status}></div>
-                            </div>
+                            </button>
                             <div className="flex flex-col flex-3 gap-2 m-auto justify-center items-center">
                                 <p className="text-msgColorOn text-[0.75rem] whitespace-nowrap">{obj.name}</p>
                                 <div className="flex flex-row gap-[0.3rem]">
@@ -238,11 +234,11 @@ function GroupInfo(props) {
         )
         :
         (<div className={"overflow-x-hidden flex flex-col flex-1 gap-2 overflow-auto item-center"} style={{ maxHeight: '75vh' }} >
-            {canInvite ? (canInvite.map((obj,index) => {
+            {canInvite ? (canInvite.map((obj : any,index : number) => {
             return (<div key={index} className="flex flex-col rounded-lg hover:bg-blue-900 p-1">
                 <div className="flex flex-col rounded-lg">
                     <div className="flex gap-1 px-3">
-                        <div class='icon-container '>
+                        <div className='icon-container '>
                             <img src={"/api/v1/user/avatar?id=" + obj.id} alt="avatar" className="w-10 h-10 rounded-full" />
                         </div>
                         <div className="flex flex-1 flex-col">

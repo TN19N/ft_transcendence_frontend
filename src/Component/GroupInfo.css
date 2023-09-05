@@ -107,10 +107,10 @@ input[type="radio"]:checked::before{
 {
     border-radius: 12px;
     color: #000000;
-    width: 14vw;
+    width: 12vw;
     height: 4vh;
     outline: 0;
-    max-width: 10em;
+    max-width: 8em;
     text-align: center;
 }
 .pass_input
