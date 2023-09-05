@@ -1,11 +1,7 @@
-
 import { SearchIcon } from "./Icons"
 import Cards from "./Cards"
 import { useState} from "react";
 import Avatar from '../assets/playerIcon.svg';
-
-
-
 
 const Inbox = (props : any) => {
     let list;
