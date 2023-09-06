@@ -123,8 +123,6 @@ function GroupInfo(props : any) {
     },[clicked])
     useEffect(()=>
     {
-        if (!props.socket)
-            return;
         const change = (obj : any) =>
         {
             if (props.chatId != obj.payload.groupId)
@@ -179,11 +177,15 @@ function GroupInfo(props : any) {
                 arr.sort((a,b) => {return (roles.indexOf(b.role) - roles.indexOf(a.role))});
                 return (arr);
             });
+        }        
+        if (props.socket)
+        {
+            props.socket.off('action',change);
+            props.socket.on('action',change);
         }
-        props.socket.off('action',change);
-        props.socket.on('action',change);
         return () => {
-          props.socket.off('action',change);
+            if (props.socket)
+                props.socket.off('action',change);
         }
     },[props.socket])
     if (!members)
