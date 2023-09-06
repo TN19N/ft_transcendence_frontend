@@ -5,7 +5,6 @@ const FriendsOnline = (props : any) => {
     const [Friends,setFriends] = useState<any | null>(null);
     useEffect( () => {
         let url = `/api/v1/user/friends`;
-        console.log(url);
         axios.get(url).then( (response) =>
         {
             setFriends(response.data);

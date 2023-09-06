@@ -9,7 +9,6 @@ const Background = () => {
     }, []);
 
     const particlesLoaded = useCallback(async (container: Container | undefined) => {
-        await console.log('Particles' + container);
     }, []);
     return (
         <div className="z-[-1] absolute ">

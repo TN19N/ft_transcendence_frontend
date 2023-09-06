@@ -30,9 +30,6 @@ export default class Paddel {
     this.p5.fill(this.RED);
     this.p5.rect(this.rightPosition.x, this.rightPosition.y,
           this.size.w, this.size.h, PADDLE_RADIUS);
-    // console.log(this.rightPosition.x, this.rightPosition.y,
-    //       this.size.w, this.size.h);
-    // console.log('window: ', window.innerHeight, window.innerWidth);
     }
 
   update (pos: paddelPair, canvasH: number) {

@@ -40,7 +40,6 @@ function Channels() : any
     let type = "PUBLIC";
     const create_channel = (event : any) => {
         event.preventDefault();
-        console.log(event.target[1].disabled);
         let obj : any = {name: event.target[0].value,type: type};
         if (type == "PROTECTED")
             obj.password = event.target[1].value;

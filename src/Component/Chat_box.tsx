@@ -36,8 +36,6 @@ function Messages(props : any)
 
 
 const Chat_box = (props : any) => {
-    if (props.chatId == "")
-        return null;
     const [amount,setAmount] = useState(100);
     const navigate = useNavigate();
     let avatar = "/api/v1/user/avatar?id=" + props.chatId;

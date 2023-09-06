@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 
 const Cards = (props :any) => {
     const navigate = useNavigate();
-    console.log(props);
     return (
     <div className={`flex h-fit gap-2 ${props.chosen ? "bg-[#01101F]" : ""} border-b-[0.2px] py-1 px-2 border-b-ButtomMsgColor hover:bg-blue-600`} onClick={() => {props.setChatId(props.id);props.setName(props.name);props.setGtype(props.type)}}>
         <button onClick={props.Itype ? undefined : (() => {navigate("/profile/" + props.id)})} className='icon-container'>

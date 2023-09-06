@@ -87,7 +87,6 @@ function Box(props : any)
       return;
     const change_status = (status : any) => 
     {
-      console.log(status);
       var elements : any = document.querySelectorAll(".user" + status.userId);
       for (var i = 0; i < elements.length; i++) {
           if (status.status == "ONLINE")
@@ -156,7 +155,6 @@ function Box(props : any)
         {
           return (chat.id == act.payload.groupId);
         })
-        console.log(props.myId.current,act)
         if (act.actionType == "GROUP_CREATED" && props.myId.current == act.payload.ownerId && index == -1)
           return ([{name:act.payload.name,type:act.payload.type,ownerId:act.payload.ownerId,myId:props.myId.current,id:act.payload.groupId},...chats])
         else if (act.actionType == "USER_JOINED" && props.myId.current == act.payload.userId && index == -1)
@@ -204,13 +202,13 @@ function Box(props : any)
   return (
     <>
       <div id="inbox" className='flex-1 block max-iphone-chat:hidden max-h-[75vh] h-[75vh] max-w-fit'>
-        <Inbox {...props} chats={chats}/>socket
+        <Inbox {...props} setChats={setChats} chats={chats}/>socket
       </div>
       <button onClick={() => {expand_box(0)}} id="inbox_button" className='bar-chat h-[78vh] max-h-[75vh] h-[75vh] hidden max-iphone-chat:block  w-[10%]'>
         {"<>"}
       </button>
       <div id="chat_box" className='flex-[2] bar-chat max-h-[75vh] h-[75vh] block'>
-        <Chat_box myName={props.myName.current} myId={props.myId.current} name={props.name} chatId={props.chatId} type={props.type} messages={messages} setMessages={setMessages}/>
+        {(props.chatId != "") && <Chat_box myName={props.myName.current} myId={props.myId.current} name={props.name} chatId={props.chatId} type={props.type} messages={messages} setMessages={setMessages}/>}
       </div>
       <button onClick={() => {expand_box(1)}} id="chat_box_button" className='bar-chat max-h-[75vh] h-[75vh] hidden max-iphone-chat:hidden w-[10%]'>
         {"<>"}
@@ -258,7 +256,7 @@ const Chat = () => {
             <>
               <div id="scrollbar" className='flex flex-col gap-2 bar-chat overflow-x-hidden overflow-y-auto px-3 max-h-[75vh] h-[75vh]'>
               <Channels/>
-              <GroupInfo socket={socket} myId={myIdRef} myName={myNameRef} chatId={chatId} type={Gtype}/>
+              {(chatId != "") && <GroupInfo socket={socket} myId={myIdRef} myName={myNameRef} chatId={chatId} type={Gtype}/>}
               </div>
             </>
           ) : 

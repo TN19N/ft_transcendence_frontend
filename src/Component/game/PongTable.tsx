@@ -13,7 +13,6 @@ export default class MainCanvas {
   private p5?: p5Types;
   private ball?: Ball;
   private paddel?: Paddel;
-  // private ui?: Ui;
   private size: size;
   private score: scorePair;
   private ballPosition: Position;
@@ -65,7 +64,6 @@ export default class MainCanvas {
     this.p5 = p5;
     this.ball = new Ball(p5);
     this.paddel = new Paddel(p5);
-    // if (!this.invite) this.ui = new Ui(p5, canvasRef, this.size, this.socket);
     this.resize();
     p5.createCanvas(this.size.w, this.size.h).parent(canvasRef);
     p5.frameRate(FPS);
@@ -128,7 +126,6 @@ export default class MainCanvas {
     return res;
   }
 
-  // TODO: zoom is not handeled
   resize() {
     let size = Math.min(window.innerHeight, window.innerWidth);
     if (size === window.innerWidth) {
@@ -141,12 +138,10 @@ export default class MainCanvas {
       { x: this.size.w / 2, y: this.size.h / 2 },
       this.size.w
     );
-    // if (!this.invite) this.ui?.resize(this.size);
   }
 
   socketHandler() {
     this.socket.on("delay", (delay) => {
-      // console.log('-> ', delay)
       this.delay = delay;
     });
 
@@ -161,18 +156,15 @@ export default class MainCanvas {
     });
 
     this.socket.on("new-score", (data) => {
-      // console.log('game started.');
       this.score.op = data.other;
       this.score.tp = data.this;
     });
 
     this.socket.on("my-position", (data) => {
       this.paddelPosition.rp = data;
-      // console.log('data: ', data);
     });
 
     this.socket.on("player-position", (data) => {
-      // console.log('data: ', data);
       this.paddelPosition.lp = data;
     });
   }

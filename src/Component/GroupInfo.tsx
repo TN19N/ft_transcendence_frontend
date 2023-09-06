@@ -92,8 +92,6 @@ const uninvite=(gid : string,uid : string,canInvite : any[],setCanInvite : any,i
 
 
 function GroupInfo(props : any) {
-    if (!props.chatId)
-        return null
     const [members,setMembers] = useState<any[] | null | undefined>(null);
     const [canInvite,setCanInvite] = useState<any[] | null | undefined>(null);
     const [clicked,setClick] = useState<boolean | number>(0);
@@ -102,9 +100,7 @@ function GroupInfo(props : any) {
     {
         axios.get(`/api/v1/chat/group/${props.chatId}/members`).then((response) =>
         {
-            console.log(response.data);
             response.data.sort((a : any,b : any) => {return (roles.indexOf(b.role) - roles.indexOf(a.role))});
-            console.log(response.data);
             setMembers(response.data);
         }).catch(error =>
         {
