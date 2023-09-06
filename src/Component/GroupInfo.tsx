@@ -125,7 +125,7 @@ function GroupInfo(props : any) {
     {
         const change = (obj : any) =>
         {
-            if (props.chatId != obj.payload.groupId)
+            if (props.chatIdRef.current != obj.payload.groupId)
                 return;
             setMembers((m) => {
                 if (!m)

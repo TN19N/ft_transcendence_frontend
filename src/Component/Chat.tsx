@@ -232,6 +232,7 @@ const Chat = () => {
     const [socket,setSocket] = useState<any | null>(null);
     const socketRef = useRef(socket);
     const typeRef = useRef(type);
+    const chatIdRef = useRef(chatId);
     useEffect(() =>
     {
       socketRef.current = io(`${process.env.SERVER_HOST}/chat`);
@@ -247,8 +248,14 @@ const Chat = () => {
       return () =>
       {
         socketRef.current.disconnect();
+        socketRef.current = null;
+        setSocket(null);
       }
     },[])
+    useEffect(() =>
+    {
+      chatIdRef.current = chatId;
+    },[chatId])
     return (
     <div className="flex flex-col gap-4 bg-[#01101F] ring ring-white ring-opacity-10 rounded-lg w-[90%]">
       <LogoBar />
@@ -259,7 +266,7 @@ const Chat = () => {
             <>
               <div id="scrollbar" className='flex flex-col gap-2 bar-chat overflow-x-hidden overflow-y-auto px-3 max-h-[75vh] h-[75vh]'>
               <Channels/>
-              {(chatId != "") && <GroupInfo socket={socket} myId={myIdRef} myName={myNameRef} chatId={chatId} type={Gtype}/>}
+              {(chatId != "") && <GroupInfo chatIdRef={chatIdRef} socket={socket} myId={myIdRef} myName={myNameRef} chatId={chatId} type={Gtype}/>}
               </div>
             </>
           ) : 
