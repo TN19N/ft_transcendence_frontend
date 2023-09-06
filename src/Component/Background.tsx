@@ -8,7 +8,7 @@ const Background = () => {
         await loadSlim(engine);
     }, []);
 
-    const particlesLoaded = useCallback(async (container: Container | undefined) => {
+    const particlesLoaded = useCallback(async (_: Container | undefined) => {
     }, []);
     return (
         <div className="z-[-1] absolute ">
