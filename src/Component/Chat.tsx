@@ -165,12 +165,6 @@ function Box(props : any)
         if (act.actionType == "GROUP_DELETED" || ((act.actionType == "USER_LEAVED" || act.actionType == "USER_BANNED") && props.myId.current == act.payload.userId))
         {
           arr.splice(index,1);
-          props.setChatId((Id : string) => {
-            if (act.payload.groupId == Id)
-              return "";
-            else
-              return Id;
-          })
         }
         else if (act.actionType == "GROUP_UPDATED")
         {
@@ -189,6 +183,15 @@ function Box(props : any)
         }
         return arr;
       })
+      if (act.actionType == "GROUP_DELETED" || ((act.actionType == "USER_LEAVED" || act.actionType == "USER_BANNED") && props.myId.current == act.payload.userId))
+      {
+        props.setChatId((Id : string) => {
+          if (act.payload.groupId == Id)
+            return "";
+          else
+            return Id;
+        })
+      }
     }
     props.socket.on('message',recieve);
     props.socket.on('action',action);
