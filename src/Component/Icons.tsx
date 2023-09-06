@@ -211,7 +211,7 @@ export const LogoIcon = ({ className }: IconProps) => {
         <svg viewBox="0 0 93 83" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
 <circle cx="67.5" cy="25.5" r="25.5" fill="#2A7FCF"/>
 <rect y="56.0967" width="21" height="6" rx="3.42" transform="rotate(-36.1145 0 56.0967)" fill="#2A7FCF"/>
-<rect x="10.2588" y="64.502" width="39" height="6." rx="3.42" transform="rotate(-37.498 10.2588 64.502)" fill="#2A7FCF"/>
+<rect x="10.2588" y="64.502" width="39" height="6" rx="3.42" transform="rotate(-37.498 10.2588 64.502)" fill="#2A7FCF"/>
 <rect x="26.7544" y="67.916" width="28" height="6" rx="3.42" transform="rotate(-36.1145 26.7544 67.916)" fill="#2A7FCF"/>
 <rect x="14.6553" y="77.0928" width="9" height="6" rx="3.42" transform="rotate(-36.1145 14.6553 77.0928)" fill="#2A7FCF"/>
 <rect x="19.9531" y="41.4414" width="21" height="6" rx="3.42" transform="rotate(-36.1145 19.9531 41.4414)" fill="#2A7FCF"/>
